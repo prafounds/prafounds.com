@@ -184,7 +184,7 @@ const initThemeToggle = () => {
             
             // Update Three.js Fog for Light Mode
             if (sceneRef) {
-                sceneRef.fog.color.setHex(0xF3F4F6); // Light gray
+                sceneRef.fog.color.setHex(0xFFF7ED);
                 sceneRef.fog.density = 0.002;
             }
         } else {
