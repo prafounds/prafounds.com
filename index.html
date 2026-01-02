@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PraFounds — Architecting the Future</title>
+  <meta name="description" content="PraFounds is the venture studio and parent company building the operating system for the next century." />
+  <meta name="theme-color" content="#030304" />
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <!-- Modern, wide fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <!-- 3D Canvas Container -->
+  <div id="canvas-container"></div>
+  
+  <!-- Overlay Gradients -->
+  <div class="vignette"></div>
+  <div class="scanline"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-content">
+      <a href="#" class="logo">
+        <svg class="logo-icon" width="40" height="40" viewBox="0 0 64 64" role="img" aria-label="PraFounds logo" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#10B981"/>
+              <stop offset="0.55" stop-color="#22D3EE"/>
+              <stop offset="1" stop-color="#A3E635"/>
+            </linearGradient>
+            <radialGradient id="shine" cx="30%" cy="25%" r="75%">
+              <stop offset="0" stop-color="rgba(255,255,255,0.45)"/>
+              <stop offset="0.45" stop-color="rgba(255,255,255,0.12)"/>
+              <stop offset="1" stop-color="rgba(255,255,255,0)"/>
+            </radialGradient>
+            <linearGradient id="fg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#FFFFFF"/>
+              <stop offset="1" stop-color="#EAF2FF"/>
+            </linearGradient>
+            <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+              <feGaussianBlur stdDeviation="1.6" result="b"/>
+              <feColorMatrix in="b" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 .45 0" result="c"/>
+              <feMerge><feMergeNode in="c"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#bg)"/>
+          <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#shine)"/>
+          <rect x="2" y="2" width="60" height="60" rx="16" fill="none" stroke="rgba(255,255,255,0.38)"/>
+          <path d="M50 16c-6-6-19-6-28 3S13 41 19 47s19 6 28-3" fill="none" stroke="rgba(0,0,0,0.20)" stroke-width="4.4" stroke-linecap="round" opacity="0.22"/>
+          <path d="M50 16c-6-6-19-6-28 3S13 41 19 47s19 6 28-3" fill="none" stroke="url(#fg)" stroke-width="3.2" stroke-linecap="round" filter="url(#glow)"/>
+          <rect x="10" y="40" width="18" height="10" rx="3" fill="rgba(0,0,0,0.12)" stroke="rgba(255,255,255,0.40)"/>
+          <rect x="30" y="36" width="22" height="14" rx="4" fill="rgba(0,0,0,0.08)" stroke="rgba(255,255,255,0.36)"/>
+          <path d="M24 14h14c7 0 12 4 12 10s-5 10-12 10H34v9h-10V14zm10 9v8h5c3 0 5-2 5-4s-2-4-5-4h-5z" fill="rgba(0,0,0,0.20)"/>
+          <path d="M24 14h14c7 0 12 4 12 10s-5 10-12 10H34v9h-10V14zm10 9v8h5c3 0 5-2 5-4s-2-4-5-4h-5z" fill="url(#fg)" filter="url(#glow)"/>
+        </svg>
+        PRAFOUNDS
+      </a>
+      <div class="nav-links">
+        <a href="#vision">Vision</a>
+        <a href="#constellation">Constellation</a>
+        <a href="#join">Join</a>
+        <button id="theme-toggle" aria-label="Toggle Theme">
+          <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Scroll Container -->
+  <main>
+    
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-content">
+        
+        <h1 class="glitch-text fade-in-up" data-text="PraFounds builds">PraFounds builds</h1>
+        <h1 class="glitch-text highlight-text fade-in-up delay-1" data-text="future-ready products">future-ready products</h1>
+        <h1 class="glitch-text fade-in-up delay-2" data-text="for real life.">for real life.</h1>
+        
+        <p class="hero-sub fade-in-up delay-2">
+          A parent company focused on practical innovation—tools that help people think clearly, work smarter, stay secure, and grow. Designed to be simple for anyone, powerful for pros.
+        </p>
+        
+        <div class="hero-actions fade-in-up delay-2">
+          <a href="#" class="btn-primary">Get early access</a>
+          <a href="#constellation" class="btn-secondary">Explore products</a>
+        </div>
+
+        <p class="hero-support fade-in-up delay-3">
+          Private by design • Human-first UX • Fast, lightweight, global
+        </p>
+
+        <div class="scroll-indicator fade-in delay-3">
+          <span>SCROLL TO EXPLORE</span>
+          <div class="line"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Manifesto / Vision -->
+    <section id="vision" class="vision-section">
+      <div class="container">
+        <div class="split-layout">
+          <div class="sticky-text">
+            <h2>WHAT<br>PRAFOUNDS<br>MEANS</h2>
+          </div>
+          <div class="vision-content">
+            <p class="big-statement">
+              We don’t build “apps.” We build foundations.
+            </p>
+            <p class="narrative">
+              PraFounds is a product studio and holding company launching a family of tools—each focused on one human problem: focus, decision-making, identity, learning, productivity, and cloud workflows.
+            </p>
+            
+            <ul class="vision-bullets">
+              <li>
+                <strong>Simple for everyone</strong> — clean UI, no jargon, guided flows
+              </li>
+              <li>
+                <strong>Future-ready</strong> — AI where it helps, deterministic where it must
+              </li>
+              <li>
+                <strong>Trust-first</strong> — privacy, transparency, and user control
+              </li>
+            </ul>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The Constellation (Products) -->
+    <section id="constellation" class="products-section">
+      <div class="section-header">
+        <h2>OUR PRODUCTS</h2>
+        <div class="divider"></div>
+      </div>
+
+      <!-- Product 1 -->
+      <div class="product-row">
+        <div class="product-visual" style="--accent: #10B981">
+          <div class="holo-circle"></div>
+          <div class="number">01</div>
+        </div>
+        <div class="product-info">
+          <h3>ATTREBUTE</h3>
+          <span class="category">IDENTITY PROTOCOL</span>
+          <p>The universal standard for digital reputation. A decentralized meritocracy engine where skills are verified, and contribution is currency.</p>
+          <ul class="specs">
+            <li>Proof of Skill</li>
+            <li>Zero-Knowledge Identity</li>
+          </ul>
+          <a href="#" class="explore-btn">Explore Attrebute &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Product 2 -->
+      <div class="product-row reverse">
+        <div class="product-info">
+          <h3>NVICTION</h3>
+          <span class="category">DECISION INTELLIGENCE</span>
+          <p>AI that doesn't just generate text, but generates certainty. A strategic engine for leaders to model outcomes and eliminate bias.</p>
+          <ul class="specs">
+            <li>Bias Nullification</li>
+            <li>Probability Modeling</li>
+          </ul>
+          <a href="#" class="explore-btn">Explore Nviction &rarr;</a>
+        </div>
+        <div class="product-visual" style="--accent: #F59E0B">
+          <div class="holo-square"></div>
+          <div class="number">02</div>
+        </div>
+      </div>
+
+      <!-- Product 3 -->
+      <div class="product-row">
+        <div class="product-visual" style="--accent: #3B82F6">
+          <div class="holo-cloud"></div>
+          <div class="number">03</div>
+        </div>
+        <div class="product-info">
+          <h3>CLOUDALOGY</h3>
+          <span class="category">AUTONOMOUS INFRASTRUCTURE</span>
+          <p>Cloud infrastructure inspired by biology. Servers that breathe, networks that heal, and systems that evolve without human intervention.</p>
+          <ul class="specs">
+            <li>Organic Scaling</li>
+            <li>Self-Healing Mesh</li>
+          </ul>
+          <a href="#" class="explore-btn">Explore Cloudalogy &rarr;</a>
+        </div>
+      </div>
+
+       <!-- Product 4 -->
+       <div class="product-row reverse">
+        <div class="product-info">
+          <h3>VERNEV</h3>
+          <span class="category">SPATIAL REALITY</span>
+          <p>The bridge between the atomic and the digital. A platform for verifiable, high-fidelity virtual experiences that carry real-world weight.</p>
+          <ul class="specs">
+            <li>Haptic Feedback</li>
+            <li>Reality Bridges</li>
+          </ul>
+          <a href="#" class="explore-btn">Explore Vernev &rarr;</a>
+        </div>
+        <div class="product-visual" style="--accent: #EC4899">
+          <div class="holo-prism"></div>
+          <div class="number">04</div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Full Width Feature: The Ecosystem -->
+    <section class="ecosystem-banner">
+      <div class="banner-content">
+        <h2>COMPLETE<br>SYNCHRONIZATION</h2>
+        <p>Pragenx • Concentate • Pradontic</p>
+        <a href="#join" class="btn-mega">ENTER THE ECOSYSTEM</a>
+      </div>
+      <div class="moving-grid"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="join">
+      <div class="footer-grid">
+        <div class="f-col">
+          <h4>PRAFOUNDS</h4>
+          <p>United Kingdom</p>
+        </div>
+        <div class="f-col">
+          <h4>Sitemap</h4>
+          <a href="#">Vision</a>
+          <a href="#">Ventures</a>
+          <a href="#">Careers</a>
+        </div>
+        <div class="f-col">
+          <h4>Connect</h4>
+          <a href="#">X / Twitter</a>
+          <a href="#">LinkedIn</a>
+          <a href="#">GitHub</a>
+        </div>
+      </div>
+      <div class="copyright">
+        © 2026 PRAFOUNDS ALL RIGHTS RESERVED.
+      </div>
+    </footer>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
