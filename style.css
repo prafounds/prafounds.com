@@ -647,6 +647,11 @@ footer {
     margin-bottom: 6rem;
     gap: 2rem;
   }
+
+  /* Ensure visual is always on top for mobile consistency */
+  .product-row.reverse {
+    flex-direction: column-reverse;
+  }
   
   .product-visual {
     width: 100%;
@@ -660,6 +665,7 @@ footer {
   
   .sticky-text h2 {
     position: static;
+    margin-bottom: 2rem;
   }
   
   .navbar {
@@ -668,6 +674,9 @@ footer {
   
   .hero-section {
     padding: 0 2rem;
+    min-height: auto; /* Allow content to dictate height on mobile if needed */
+    padding-top: 8rem; /* Space for fixed nav */
+    padding-bottom: 4rem;
   }
   
   .products-section {
@@ -677,6 +686,69 @@ footer {
   .footer-grid {
     grid-template-columns: 1fr;
     gap: 3rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .nav-content {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .nav-links {
+    width: 100%;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .nav-links a {
+    margin-left: 0;
+    font-size: 0.8rem;
+  }
+
+  #theme-toggle {
+    margin-left: 0;
+  }
+
+  .hero-title {
+    font-size: 2.5rem; /* Fallback */
+    font-size: clamp(2rem, 10vw, 3rem);
+  }
+
+  .glitch-text {
+    font-size: clamp(2rem, 10vw, 3rem);
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+  }
+
+  .btn-primary, .btn-secondary {
+    width: 100%;
+    text-align: center;
+    display: block;
+  }
+
+  .product-info h3 {
+    font-size: 2rem;
+  }
+
+  .banner-content h2 {
+    font-size: 2.5rem;
+  }
+  
+  .btn-mega {
+    padding: 1rem 1.5rem;
+    width: 100%;
+    font-size: 0.9rem;
+  }
+
+  .scroll-indicator {
+    left: 2rem;
+    bottom: 2rem;
   }
 }
 
