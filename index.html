@@ -3,400 +3,438 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>PraFounds — Architecting the Future</title>
-  <meta name="description" content="PraFounds is the venture studio and parent company building the operating system for the next century." />
-  <meta name="theme-color" content="#030304" />
-  <link rel="canonical" href="https://prafounds.com/">
+  <title>PraFounds — Building Future-Ready Products</title>
+  <meta name="description" content="PraFounds builds practical, future-ready tools for thinking, working, identity, and cloud infrastructure. Simple for everyone, powerful for professionals." />
+  <meta name="theme-color" content="#FFFFFF" />
+  <link rel="canonical" href="https://www.prafounds.com/">
+
+  <!-- Open Graph -->
   <meta property="og:site_name" content="PraFounds">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://prafounds.com/">
-  <meta property="og:title" content="PraFounds builds future-ready products for real life.">
-  <meta property="og:description" content="PraFounds is the venture studio and parent company building the operating system for the next century.">
+  <meta property="og:url" content="https://www.prafounds.com/">
+  <meta property="og:title" content="PraFounds — Building Future-Ready Products">
+  <meta property="og:description" content="Practical innovation tools for thinking, working, identity, and cloud infrastructure.">
+
+  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:url" content="https://prafounds.com/">
-  <meta name="twitter:title" content="PraFounds builds future-ready products for real life.">
-  <meta name="twitter:description" content="PraFounds is the venture studio and parent company building the operating system for the next century.">
+  <meta name="twitter:url" content="https://www.prafounds.com/">
+  <meta name="twitter:title" content="PraFounds — Building Future-Ready Products">
+  <meta name="twitter:description" content="Practical innovation tools for thinking, working, identity, and cloud infrastructure.">
+
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-  <!-- Modern, wide fonts -->
+
+  <!-- Modern Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
-  <!-- 3D Canvas Container -->
-  <div id="canvas-container"></div>
-  
-  <!-- Overlay Gradients -->
-  <div class="vignette"></div>
-  <div class="scanline"></div>
-
   <!-- Navigation -->
   <nav class="navbar">
-    <div class="nav-content">
-      <a href="#" class="logo">
-        <svg class="logo-icon" width="40" height="40" viewBox="0 0 64 64" role="img" aria-label="PraFounds logo" xmlns="http://www.w3.org/2000/svg">
+    <div class="nav-container">
+      <a href="#" class="logo-link">
+        <svg class="logo-icon" width="32" height="32" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#10B981"/>
-              <stop offset="0.55" stop-color="#22D3EE"/>
-              <stop offset="1" stop-color="#A3E635"/>
+            <linearGradient id="logo-gradient" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#3B82F6"/>
+              <stop offset="1" stop-color="#1D4ED8"/>
             </linearGradient>
-            <radialGradient id="shine" cx="30%" cy="25%" r="75%">
-              <stop offset="0" stop-color="rgba(255,255,255,0.45)"/>
-              <stop offset="0.45" stop-color="rgba(255,255,255,0.12)"/>
-              <stop offset="1" stop-color="rgba(255,255,255,0)"/>
-            </radialGradient>
-            <linearGradient id="fg" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#FFFFFF"/>
-              <stop offset="1" stop-color="#EAF2FF"/>
-            </linearGradient>
-            <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
-              <feGaussianBlur stdDeviation="1.6" result="b"/>
-              <feColorMatrix in="b" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 .45 0" result="c"/>
-              <feMerge><feMergeNode in="c"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
           </defs>
-          <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#bg)"/>
-          <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#shine)"/>
-          <rect x="2" y="2" width="60" height="60" rx="16" fill="none" stroke="rgba(255,255,255,0.38)"/>
-          <path d="M50 16c-6-6-19-6-28 3S13 41 19 47s19 6 28-3" fill="none" stroke="rgba(0,0,0,0.20)" stroke-width="4.4" stroke-linecap="round" opacity="0.22"/>
-          <path d="M50 16c-6-6-19-6-28 3S13 41 19 47s19 6 28-3" fill="none" stroke="url(#fg)" stroke-width="3.2" stroke-linecap="round" filter="url(#glow)"/>
-          <rect x="10" y="40" width="18" height="10" rx="3" fill="rgba(0,0,0,0.12)" stroke="rgba(255,255,255,0.40)"/>
-          <rect x="30" y="36" width="22" height="14" rx="4" fill="rgba(0,0,0,0.08)" stroke="rgba(255,255,255,0.36)"/>
-          <path d="M24 14h14c7 0 12 4 12 10s-5 10-12 10H34v9h-10V14zm10 9v8h5c3 0 5-2 5-4s-2-4-5-4h-5z" fill="rgba(0,0,0,0.20)"/>
-          <path d="M24 14h14c7 0 12 4 12 10s-5 10-12 10H34v9h-10V14zm10 9v8h5c3 0 5-2 5-4s-2-4-5-4h-5z" fill="url(#fg)" filter="url(#glow)"/>
+          <rect x="4" y="4" width="56" height="56" rx="12" fill="url(#logo-gradient)"/>
+          <path d="M24 18h14c7 0 12 4 12 10s-5 10-12 10H34v8h-10V18zm10 8v8h5c3 0 5-2 5-4s-2-4-5-4h-5z" fill="white"/>
         </svg>
-        PRAFOUNDS
+        <span class="logo-text">PRAFOUNDS</span>
       </a>
-      <div class="nav-links">
-        <a href="#vision">Vision</a>
-        <a href="#constellation">Constellation</a>
-        <a href="#join">Join</a>
-        <button id="theme-toggle" aria-label="Toggle Theme">
-          <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-          <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-        </button>
+
+      <div class="nav-menu">
+        <a href="#platform" class="nav-link">Platform</a>
+        <a href="#products" class="nav-link">Products</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#contact" class="btn-nav-cta">Get Started</a>
       </div>
+
+      <button class="mobile-menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </nav>
 
-  <!-- Main Scroll Container -->
-  <main>
-    
-    <!-- Hero Section -->
-    <section class="hero-section">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
       <div class="hero-content">
-        
-        <h1 class="glitch-text fade-in-up" data-text="PraFounds builds">PraFounds builds</h1>
-        <h1 class="glitch-text highlight-text fade-in-up delay-1" data-text="future-ready products">future-ready products</h1>
-        <h1 class="glitch-text fade-in-up delay-2" data-text="for real life.">for real life.</h1>
-        
-        <p class="hero-sub fade-in-up delay-2">
-          A parent company focused on practical innovation—tools that help people think clearly, work smarter, stay secure, and grow. Designed to be simple for anyone, powerful for pros.
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          <span>Building the Future of Work</span>
+        </div>
+
+        <h1 class="hero-title">
+          Ship Faster with<br>
+          <span class="gradient-text">Future-Ready Products</span>
+        </h1>
+
+        <p class="hero-description">
+          PraFounds builds practical innovation tools—AI-powered solutions for focus, decision-making, identity, and cloud infrastructure. Simple for anyone, powerful for professionals.
         </p>
-        
-        <div class="hero-actions fade-in-up delay-2">
-          <a href="#" class="btn-primary">Get early access</a>
-          <a href="#constellation" class="btn-secondary">Explore products</a>
+
+        <div class="hero-cta">
+          <a href="#contact" class="btn-primary">Start Building</a>
+          <a href="#products" class="btn-secondary">
+            Explore Products
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
         </div>
 
-        
-
-        <div class="scroll-indicator fade-in delay-3">
-          <span>SCROLL TO EXPLORE</span>
-          <div class="line"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Manifesto / Vision -->
-    <section id="vision" class="vision-section">
-      <div class="container">
-        <div class="split-layout">
-          <div class="sticky-text">
-            <h2>WHAT<br>PRAFOUNDS<br>MEANS</h2>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-number">7</div>
+            <div class="stat-label">Products</div>
           </div>
-          <div class="vision-content">
-            <p class="big-statement">
-              We don’t build “apps.” We build foundations.
-            </p>
-            <p class="narrative">
-              PraFounds is a product studio and holding company launching a family of tools—each focused on one human problem: focus, decision-making, identity, learning, productivity, and cloud workflows.
-            </p>
-            
-            <ul class="vision-bullets">
-              <li>
-                <strong>Simple for everyone</strong> — clean UI, no jargon, guided flows
-              </li>
-              <li>
-                <strong>Future-ready</strong> — AI where it helps, deterministic where it must
-              </li>
-              <li>
-                <strong>Trust-first</strong> — privacy, transparency, and user control
-              </li>
-            </ul>
-
+          <div class="stat-item">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Privacy-First</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">AI+</div>
+            <div class="stat-label">Deterministic</div>
           </div>
         </div>
       </div>
-    </section>
 
-    <!-- The Constellation (Products) -->
-    <section id="constellation" class="products-section">
-      <div class="section-header">
-        <h2>OUR PRODUCTS</h2>
-        <div class="divider"></div>
+      <div class="hero-visual">
+        <div class="visual-grid"></div>
       </div>
+    </div>
+  </section>
 
-      <!-- Product 1 -->
-      <div class="product-row">
-        <div class="product-visual" style="--accent: #10B981">
-          <div class="holo-circle"></div>
-          <div class="number">01</div>
-        </div>
-        <div class="product-info">
-          <h3>ATTREBUTE</h3>
-          <span class="category">IDENTITY PROTOCOL</span>
-          <p>The universal standard for digital reputation. A decentralized meritocracy engine where skills are verified, and contribution is currency.</p>
-          <ul class="specs">
-            <li>Proof of Skill</li>
-            <li>Zero-Knowledge Identity</li>
-          </ul>
-          <a href="#" class="explore-btn">Explore Attrebute &rarr;</a>
-        </div>
-      </div>
-
-      <!-- Product 2 -->
-      <div class="product-row reverse">
-        <div class="product-info">
-          <h3>NVICTION</h3>
-          <span class="category">DECISION INTELLIGENCE</span>
-          <p>AI that doesn't just generate text, but generates certainty. A strategic engine for leaders to model outcomes and eliminate bias.</p>
-          <ul class="specs">
-            <li>Bias Nullification</li>
-            <li>Probability Modeling</li>
-          </ul>
-          <a href="#" class="explore-btn">Explore Nviction &rarr;</a>
-        </div>
-        <div class="product-visual" style="--accent: #F59E0B">
-          <div class="holo-square"></div>
-          <div class="number">02</div>
-        </div>
-      </div>
-
-      <!-- Product 3 -->
-      <div class="product-row">
-        <div class="product-visual" style="--accent: #3B82F6">
-          <div class="holo-cloud"></div>
-          <div class="number">03</div>
-        </div>
-        <div class="product-info">
-          <h3>CLOUDALOGY</h3>
-          <span class="category">AUTONOMOUS INFRASTRUCTURE</span>
-          <p>Cloud infrastructure inspired by biology. Servers that breathe, networks that heal, and systems that evolve without human intervention.</p>
-          <ul class="specs">
-            <li>Organic Scaling</li>
-            <li>Self-Healing Mesh</li>
-          </ul>
-          <a href="#" class="explore-btn">Explore Cloudalogy &rarr;</a>
-        </div>
-      </div>
-
-       <!-- Product 4 -->
-       <div class="product-row reverse">
-        <div class="product-info">
-          <h3>VERNEV</h3>
-          <span class="category">SPATIAL REALITY</span>
-          <p>The bridge between the atomic and the digital. A platform for verifiable, high-fidelity virtual experiences that carry real-world weight.</p>
-          <ul class="specs">
-            <li>Haptic Feedback</li>
-            <li>Reality Bridges</li>
-          </ul>
-          <a href="#" class="explore-btn">Explore Vernev &rarr;</a>
-        </div>
-        <div class="product-visual" style="--accent: #EC4899">
-          <div class="holo-prism"></div>
-          <div class="number">04</div>
-        </div>
-      </div>
-
-      <!-- Product 5 -->
-      <div class="product-row">
-        <div class="product-visual" style="--accent: #34D399">
-          <div class="holo-circle"></div>
-          <div class="number">05</div>
-        </div>
-        <div class="product-info">
-          <h3>PRAGENX</h3>
-          <span class="category">PERSONAL KNOWLEDGE ENGINE</span>
-          <p>Your second brain for everyday clarity. Capture ideas, link contexts, and surface the right insight at the right time.</p>
-          <ul class="specs">
-            <li>Graph Notes</li>
-            <li>Context Recall</li>
-          </ul>
-          <a href="#" class="explore-btn">Explore Pragenx &rarr;</a>
-        </div>
-      </div>
-
-      <!-- Product 6 -->
-      <div class="product-row reverse">
-        <div class="product-info">
-          <h3>CONCENTATE</h3>
-          <span class="category">FOCUS AND FLOW</span>
-          <p>Reduce noise and protect deep work. Intent-driven sessions that coordinate apps, notifications, and time.</p>
-          <ul class="specs">
-            <li>Session Guard</li>
-            <li>Adaptive Routines</li>
-          </ul>
-          <a href="#" class="explore-btn">Explore Concentate &rarr;</a>
-        </div>
-        <div class="product-visual" style="--accent: #8B5CF6">
-          <div class="holo-square"></div>
-          <div class="number">06</div>
-        </div>
-      </div>
-
-      <!-- Product 7 -->
-      <div class="product-row">
-        <div class="product-visual" style="--accent: #EF4444">
-          <div class="holo-prism"></div>
-          <div class="number">07</div>
-        </div>
-        <div class="product-info">
-          <h3>PRADONTIC</h3>
-          <span class="category">PRIVACY AND HEALTH</span>
-          <p>Private-by-default personal data vaults and wellness tools. Own your data, understand your habits, stay secure.</p>
-          <ul class="specs">
-            <li>Local Vault</li>
-            <li>Consent Controls</li>
-          </ul>
-          <a href="#" class="explore-btn">Explore Pradontic &rarr;</a>
-        </div>
-      </div>
-    </section>
-
-    <section id="about" class="content-section">
-      <div class="section-header">
-        <h2>ABOUT PRAFOUNDS</h2>
-        <div class="divider"></div>
-      </div>
-      <div class="container">
-        <p class="narrative">
-          PraFounds is a venture studio building essential tools for thinking, working, identity, learning, and cloud-native workflows. We focus on universal usability: simple defaults for everyone, power features for pros.
+  <!-- Value Proposition -->
+  <section id="platform" class="section-value-prop">
+    <div class="container-narrow">
+      <div class="section-header-center">
+        <span class="section-label">Why PraFounds</span>
+        <h2 class="section-title">Built for Real Work, Not Hype</h2>
+        <p class="section-subtitle">
+          We build foundational tools that solve real human problems—clear thinking, better decisions, secure identity, and resilient infrastructure.
         </p>
-        <div class="chips">
-          <span class="chip">Human-first — clear flows, readable UI, accessibility by default</span>
-          <span class="chip">Deterministic core — reliable behavior with optional AI assistance</span>
-          <span class="chip">Private by design — local-first storage and transparent data handling</span>
+      </div>
+
+      <div class="value-grid">
+        <div class="value-card">
+          <div class="value-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 6v6l4 2"/>
+            </svg>
+          </div>
+          <h3>Simple by Default</h3>
+          <p>Clean UI, no jargon, guided flows. Anyone can use our tools without training.</p>
+        </div>
+
+        <div class="value-card">
+          <div class="value-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+              <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <h3>Future-Ready</h3>
+          <p>AI where it helps, deterministic where it must. The best of both worlds.</p>
+        </div>
+
+        <div class="value-card">
+          <div class="value-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+          </div>
+          <h3>Privacy-First</h3>
+          <p>Local-first storage, transparent data handling, and complete user control.</p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section id="use-cases" class="content-section">
-      <div class="section-header">
-        <h2>USE CASES</h2>
-        <div class="divider"></div>
+  <!-- Products Section -->
+  <section id="products" class="section-products">
+    <div class="container">
+      <div class="section-header-center">
+        <span class="section-label">Our Products</span>
+        <h2 class="section-title">A Constellation of Tools</h2>
+        <p class="section-subtitle">
+          Seven interconnected products designed to work together seamlessly.
+        </p>
       </div>
-      <div class="container grid-2">
-        <div>
-          <h3>Individuals</h3>
-          <div class="chips">
-            <span class="chip">Clarity — note linking and context recall</span>
-            <span class="chip">Focus — guided deep work sessions</span>
-            <span class="chip">Privacy — personal data ownership</span>
+
+      <div class="products-grid">
+        <!-- Product 1 -->
+        <div class="product-card">
+          <div class="product-number">01</div>
+          <div class="product-icon" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%);">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </div>
+          <h3>Attrebute</h3>
+          <span class="product-category">Identity Protocol</span>
+          <p>Universal standard for digital reputation. Decentralized proof of skill and verified contributions.</p>
+          <div class="product-tags">
+            <span class="tag">Zero-Knowledge</span>
+            <span class="tag">Proof of Skill</span>
           </div>
         </div>
-        <div>
-          <h3>Teams</h3>
-          <div class="chips">
-            <span class="chip">Decisions — bias-aware modeling</span>
-            <span class="chip">Infrastructure — self-healing cloud patterns</span>
-            <span class="chip">Spatial — verifiable virtual experiences</span>
+
+        <!-- Product 2 -->
+        <div class="product-card">
+          <div class="product-number">02</div>
+          <div class="product-icon" style="background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+            </svg>
+          </div>
+          <h3>Nviction</h3>
+          <span class="product-category">Decision Intelligence</span>
+          <p>AI that generates certainty. Strategic modeling that eliminates bias and surfaces outcomes.</p>
+          <div class="product-tags">
+            <span class="tag">Bias Nullification</span>
+            <span class="tag">Probability</span>
+          </div>
+        </div>
+
+        <!-- Product 3 -->
+        <div class="product-card">
+          <div class="product-number">03</div>
+          <div class="product-icon" style="background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+              <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>
+            </svg>
+          </div>
+          <h3>Cloudalogy</h3>
+          <span class="product-category">Autonomous Infrastructure</span>
+          <p>Biology-inspired cloud systems. Self-healing networks and infrastructure that evolves.</p>
+          <div class="product-tags">
+            <span class="tag">Organic Scaling</span>
+            <span class="tag">Self-Healing</span>
+          </div>
+        </div>
+
+        <!-- Product 4 -->
+        <div class="product-card">
+          <div class="product-number">04</div>
+          <div class="product-icon" style="background: linear-gradient(135deg, #EC4899 0%, #BE185D 100%);">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+            </svg>
+          </div>
+          <h3>Vernev</h3>
+          <span class="product-category">Spatial Reality</span>
+          <p>Bridge between atomic and digital. Verifiable, high-fidelity virtual experiences.</p>
+          <div class="product-tags">
+            <span class="tag">Haptic Feedback</span>
+            <span class="tag">Reality Bridges</span>
+          </div>
+        </div>
+
+        <!-- Product 5 -->
+        <div class="product-card">
+          <div class="product-number">05</div>
+          <div class="product-icon" style="background: linear-gradient(135deg, #34D399 0%, #10B981 100%);">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+            </svg>
+          </div>
+          <h3>Pragenx</h3>
+          <span class="product-category">Knowledge Engine</span>
+          <p>Your second brain for everyday clarity. Graph notes with context-aware recall.</p>
+          <div class="product-tags">
+            <span class="tag">Graph Notes</span>
+            <span class="tag">Context Recall</span>
+          </div>
+        </div>
+
+        <!-- Product 6 -->
+        <div class="product-card">
+          <div class="product-number">06</div>
+          <div class="product-icon" style="background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/>
+            </svg>
+          </div>
+          <h3>Concentate</h3>
+          <span class="product-category">Focus & Flow</span>
+          <p>Protect deep work. Intent-driven sessions that coordinate apps and time.</p>
+          <div class="product-tags">
+            <span class="tag">Session Guard</span>
+            <span class="tag">Adaptive Routines</span>
+          </div>
+        </div>
+
+        <!-- Product 7 -->
+        <div class="product-card">
+          <div class="product-number">07</div>
+          <div class="product-icon" style="background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+            </svg>
+          </div>
+          <h3>Pradontic</h3>
+          <span class="product-category">Privacy & Health</span>
+          <p>Private-by-default personal vaults and wellness tools. Own your data.</p>
+          <div class="product-tags">
+            <span class="tag">Local Vault</span>
+            <span class="tag">Consent Controls</span>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section id="trust" class="content-section">
-      <div class="section-header">
-        <h2>TRUST & SECURITY</h2>
-        <div class="divider"></div>
-      </div>
-      <div class="container">
-        <div class="chips">
-          <span class="chip">Local-first — data stored on-device whenever possible</span>
-          <span class="chip">Encryption — modern cryptography for data in transit and at rest</span>
-          <span class="chip">Transparency — clear logs and export controls</span>
+  <!-- About Section -->
+  <section id="about" class="section-about">
+    <div class="container-narrow">
+      <div class="about-content">
+        <div class="about-text">
+          <span class="section-label">About PraFounds</span>
+          <h2 class="section-title">Building Essential Tools for the Next Century</h2>
+          <p class="large-text">
+            PraFounds is a venture studio focused on practical innovation. We build essential tools for thinking, working, identity, learning, and cloud-native workflows.
+          </p>
+          <p>
+            Our approach is simple: create universal usability with simple defaults for everyone and power features for professionals. We believe in human-first design, deterministic core behavior with optional AI assistance, and private-by-design architecture.
+          </p>
+
+          <div class="about-features">
+            <div class="feature-item">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              <span>Human-first design with accessibility by default</span>
+            </div>
+            <div class="feature-item">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              <span>Deterministic core with optional AI assistance</span>
+            </div>
+            <div class="feature-item">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              <span>Local-first storage and transparent data handling</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-stats-card">
+          <h3>Trusted by innovators</h3>
+          <div class="stats-row">
+            <div class="stat-large">
+              <div class="stat-value">7</div>
+              <div class="stat-desc">Interconnected Products</div>
+            </div>
+            <div class="stat-large">
+              <div class="stat-value">100%</div>
+              <div class="stat-desc">Open Source Commitment</div>
+            </div>
+          </div>
+          <div class="location">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            <span>Based in United Kingdom</span>
+          </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section id="faq" class="content-section">
-      <div class="section-header">
-        <h2>FAQ</h2>
-        <div class="divider"></div>
+  <!-- CTA Section -->
+  <section id="contact" class="section-cta">
+    <div class="container-narrow">
+      <div class="cta-card">
+        <h2>Ready to Build the Future?</h2>
+        <p>Join the waitlist for early access to our product constellation.</p>
+        <div class="cta-actions">
+          <a href="mailto:hello@prafounds.com" class="btn-primary-large">Get Early Access</a>
+          <span class="cta-note">No credit card required</span>
+        </div>
       </div>
-      <div class="container">
-        <dl class="faq-list">
-          <div>
-            <dt>What is PraFounds?</dt>
-            <dd>A parent company and venture studio launching interoperable tools focused on real human problems.</dd>
-          </div>
-          <div>
-            <dt>How do products work together?</dt>
-            <dd>Shared principles, portable data, and optional constellation integrations across identity, focus, and cloud.</dd>
-          </div>
-          <div>
-            <dt>When can I get access?</dt>
-            <dd>Sign up for early access and we’ll invite cohorts as products reach milestones.</dd>
-          </div>
-          <div>
-            <dt>Is my data private?</dt>
-            <dd>Yes. Local-first storage, explicit consent, and clear off-ramps with data export.</dd>
-          </div>
-        </dl>
-      </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Full Width Feature: The Ecosystem -->
-    <section class="ecosystem-banner">
-      <div class="banner-content">
-        <h2>COMPLETE<br>SYNCHRONIZATION</h2>
-        <p>Pragenx • Concentate • Pradontic</p>
-        <a href="#join" class="btn-mega">ENTER THE ECOSYSTEM</a>
-      </div>
-      <div class="moving-grid"></div>
-    </section>
-
-    <!-- Footer -->
-    <footer id="join">
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
       <div class="footer-grid">
-        <div class="f-col">
-          <h4>PRAFOUNDS</h4>
-          <p>United Kingdom</p>
+        <div class="footer-col footer-brand">
+          <div class="footer-logo">
+            <svg class="logo-icon" width="32" height="32" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="footer-logo-gradient" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#3B82F6"/>
+                  <stop offset="1" stop-color="#1D4ED8"/>
+                </linearGradient>
+              </defs>
+              <rect x="4" y="4" width="56" height="56" rx="12" fill="url(#footer-logo-gradient)"/>
+              <path d="M24 18h14c7 0 12 4 12 10s-5 10-12 10H34v8h-10V18zm10 8v8h5c3 0 5-2 5-4s-2-4-5-4h-5z" fill="white"/>
+            </svg>
+            <span class="logo-text">PRAFOUNDS</span>
+          </div>
+          <p class="footer-desc">Building future-ready products for real life.</p>
         </div>
-        <div class="f-col">
-          <h4>Sitemap</h4>
-          <a href="#">Vision</a>
-          <a href="#">Ventures</a>
-          <a href="#">Careers</a>
-        </div>
-        <div class="f-col">
-          <h4>Connect</h4>
-          <a href="#">X / Twitter</a>
-          <a href="#">LinkedIn</a>
-          <a href="#">GitHub</a>
-        </div>
-      </div>
-      <div class="copyright">
-        © 2026 PRAFOUNDS ALL RIGHTS RESERVED.
-      </div>
-    </footer>
 
-  </main>
+        <div class="footer-col">
+          <h4>Products</h4>
+          <ul>
+            <li><a href="#products">Attrebute</a></li>
+            <li><a href="#products">Nviction</a></li>
+            <li><a href="#products">Cloudalogy</a></li>
+            <li><a href="#products">View All</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Blog</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="#">Twitter</a></li>
+            <li><a href="#">LinkedIn</a></li>
+            <li><a href="#">GitHub</a></li>
+            <li><a href="#">Discord</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 PraFounds. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Security</a>
+        </div>
+      </div>
+    </div>
+  </footer>
 
   <script src="script.js"></script>
 </body>
