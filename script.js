@@ -1,10 +1,20 @@
 
 // Three.js Network Wave Animation
 let sceneRef = null;
+const isMobile = () => /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+const isWebGLSupported = () => {
+    try {
+        const canvas = document.createElement('canvas');
+        return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+    } catch (e) {
+        return false;
+    }
+};
 
 const initThreeJS = () => {
     const canvasContainer = document.getElementById('canvas-container');
     if (!canvasContainer) return;
+    if (!isWebGLSupported()) return;
 
     const scene = new THREE.Scene();
     sceneRef = scene; // Store reference for theme toggling
@@ -16,7 +26,7 @@ const initThreeJS = () => {
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isMobile() ? 1.5 : 2));
     canvasContainer.appendChild(renderer.domElement);
 
     // Group to hold the terrain
@@ -24,7 +34,7 @@ const initThreeJS = () => {
     scene.add(terrainGroup);
 
     // Create a wireframe terrain
-    const geometry = new THREE.PlaneGeometry(60, 60, 40, 40);
+    const geometry = new THREE.PlaneGeometry(60, 60, isMobile() ? 24 : 40, isMobile() ? 24 : 40);
     
     const count = geometry.attributes.position.count;
     
@@ -58,7 +68,7 @@ const initThreeJS = () => {
 
     // Floating Particles (Stars/Data)
     const starsGeometry = new THREE.BufferGeometry();
-    const starsCount = 1000;
+    const starsCount = isMobile() ? 300 : 1000;
     const starsPos = new Float32Array(starsCount * 3);
     
     for(let i = 0; i < starsCount * 3; i++) {
@@ -87,6 +97,12 @@ const initThreeJS = () => {
         mouseX = (event.clientX / window.innerWidth) * 2 - 1;
         mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
     });
+    window.addEventListener('touchmove', (event) => {
+        const t = event.touches && event.touches[0];
+        if (!t) return;
+        mouseX = (t.clientX / window.innerWidth) * 2 - 1;
+        mouseY = -(t.clientY / window.innerHeight) * 2 + 1;
+    }, { passive: true });
 
     // Resize handler
     window.addEventListener('resize', () => {

@@ -785,6 +785,13 @@ footer {
     flex-direction: column;
     gap: 1.5rem;
   }
+  
+  .navbar {
+    mix-blend-mode: normal;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--glass-border);
+  }
 
   .nav-links {
     width: 100%;
