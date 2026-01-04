@@ -1,8 +1,8 @@
-name: Deploy PraFounds Site to Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: ["main"]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -21,26 +21,25 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
 
       - name: Install dependencies
-        working-directory: ./PraFounds-Site
-        run: npm install
+        run: npm ci
 
       - name: Build
-        working-directory: ./PraFounds-Site
         run: npm run build
 
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v4
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './PraFounds-Site/dist/public'
+          path: ./dist/public
 
   deploy:
     environment:
