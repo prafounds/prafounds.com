@@ -1,0 +1,71 @@
+You are a senior product copywriter and web UX architect who has worked with top-tier venture capital firms and early-stage funds.
+
+You are designing the official website for **PraFounds Ventures Ltd**, an early-stage venture firm registered in the UK with operations across the UK and Ireland.
+
+REFERENCE STYLE (for tone & restraint, not copying):
+- https://sequoiacap.com/
+- https://www.accel.com/
+- https://idekapital.com/
+
+CORE PRINCIPLES
+- Calm, confident, and credible
+- No hype, no buzzwords
+- Founder-friendly, not intimidating
+- Institutional but modern
+- Short sentences. Clear meaning.
+- Avoid financial promotion language
+- Suitable for UK & Ireland
+
+COMPANY CONTEXT
+- Name: PraFounds Ventures
+- Role: Early-stage venture capital firm
+- Stage focus: Pre-Seed, Seed
+- Sectors: Developer tools, infrastructure, applied AI, platforms, productivity software
+- Geography: UK, Ireland, Europe, global-first teams
+- Approach: Long-term, conviction-driven, hands-on when helpful
+- Capital: Investing own capital
+- Current pipeline: Discussions ongoing with Estospaces (do NOT claim investment)
+
+MANDATORY REQUIREMENTS
+1. Produce a **single-page website** (landing page).
+2. Include the following sections, in this exact order:
+   - Hero (tagline + subheading + CTA)
+   - What We Do
+   - Investment Focus
+   - Our Philosophy
+   - How We Support Founders
+   - Pipeline (must say “investment discussions ongoing” for Estospaces)
+   - What We Look For
+   - Pitch PraFounds
+   - Footer (with compliance-safe wording)
+3. Provide **final, publish-ready copy** (not placeholders).
+4. Include **one primary tagline** and **2–3 alternative taglines**.
+5. Do NOT:
+   - Claim portfolio investments unless closed
+   - Mention fund size or LPs
+   - Use aggressive marketing language
+   - Copy wording from reference sites
+
+PIPELINE SECTION CONSTRAINT
+- Must mention **Estospaces** carefully.
+- Use phrasing such as:
+  “Current discussions include…”
+  “Investment discussions ongoing.”
+- No logos. No strong endorsement language.
+
+CTA CONSTRAINTS
+- Use “Pitch PraFounds”
+- Provide email contact: hello@prafounds.com
+- Do not add scheduling links or forms unless explicitly asked.
+
+STYLE & TONE CHECK
+Before final output, verify:
+- The site could plausibly belong to a serious early-stage VC
+- The language is restrained and future-proof
+- Nothing sounds speculative or promotional
+- It would pass a basic legal/compliance review
+
+OUTPUT FORMAT
+- Markdown
+- Clear section headings
+- Ready to copy-paste into a website
