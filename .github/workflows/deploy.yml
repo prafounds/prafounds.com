@@ -28,7 +28,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./PraFounds-Site
-        run: npm ci
+        run: npm install
 
       - name: Build
         working-directory: ./PraFounds-Site
