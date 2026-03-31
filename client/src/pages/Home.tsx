@@ -1,530 +1,687 @@
 import * as React from "react";
 import { Navigation } from "@/components/Navigation";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { Check, Mail, ArrowRight, Activity, Cpu, Globe, Target, Users, TrendingUp, Building2, Lightbulb, MessageSquare } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowRight, ArrowUpRight, Mail } from "lucide-react";
 
+/* ─── Design tokens ─── */
+const DARK = "#0B0D14";
+const WARM = "#F7F6F3";
+const AMBER = "#C9884A";
+const AMBER_DARK = "#B5763A";
+
+/* ─── Motion helpers ─── */
+const inView = {
+  initial: { opacity: 0, y: 22 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-80px" as const },
+};
+const t = (dur = 0.7, delay = 0) => ({
+  duration: dur,
+  delay,
+  ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
+});
+
+/* ─── Section label ─── */
+function SectionLabel({ number, label }: { number: string; label: string }) {
+  return (
+    <motion.div
+      className="flex items-center gap-3"
+      initial={{ opacity: 0, x: -16 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={t(0.55)}
+    >
+      <span className="text-[11px] font-semibold tracking-[0.22em]" style={{ color: AMBER }}>
+        {number}
+      </span>
+      <span className="w-6 h-px bg-gray-300 block" />
+      <span className="text-[11px] font-medium tracking-[0.16em] uppercase text-gray-400">
+        {label}
+      </span>
+    </motion.div>
+  );
+}
+
+/* ─── Focus card ─── */
+function FocusCard({
+  title,
+  items,
+  note,
+  delay,
+}: {
+  title: string;
+  items: string[];
+  note: string;
+  delay: number;
+}) {
+  return (
+    <motion.div
+      className="bg-white p-10 flex flex-col hover:bg-gray-50/80 transition-colors duration-300"
+      {...inView}
+      transition={t(0.65, delay)}
+    >
+      <h3 className="text-lg font-bold mb-7 font-display text-gray-900">{title}</h3>
+      <ul className="space-y-3 mb-8 flex-1">
+        {items.map((item, i) => (
+          <li key={i} className="flex items-start gap-3 text-[15px] text-gray-600 leading-snug">
+            <span
+              className="w-[5px] h-[5px] rounded-full mt-[7px] shrink-0"
+              style={{ backgroundColor: AMBER }}
+            />
+            {item}
+          </li>
+        ))}
+      </ul>
+      <p className="text-[12px] text-gray-400 leading-relaxed border-t border-gray-100 pt-6">
+        {note}
+      </p>
+    </motion.div>
+  );
+}
+
+/* ─── Criteria row ─── */
+function CriteriaRow({
+  title,
+  description,
+  index,
+}: {
+  title: string;
+  description: string;
+  index: number;
+}) {
+  return (
+    <motion.div
+      className="py-7 grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-4 md:gap-12 group border-b border-gray-200 last:border-0"
+      {...inView}
+      transition={t(0.6, index * 0.08)}
+    >
+      <h3 className="text-[17px] font-semibold text-gray-900 font-display">{title}</h3>
+      <p className="text-[15px] text-gray-500 leading-relaxed">{description}</p>
+    </motion.div>
+  );
+}
+
+/* ─── Main page ─── */
 export default function Home() {
-  const { scrollY } = useScroll();
-  const heroOpacity = useTransform(scrollY, [0, 300], [1, 0]);
-  const heroScale = useTransform(scrollY, [0, 300], [1, 0.95]);
+  const [amberHover1, setAmberHover1] = React.useState(false);
 
   return (
-    <div className="min-h-screen bg-white text-gray-900 font-sans selection:bg-gray-200 overflow-x-hidden relative">
+    <div className="min-h-screen overflow-x-hidden">
       <Navigation />
 
-      {/* Hero Section */}
-      <motion.section
-        className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-50 to-white"
-        style={{ opacity: heroOpacity, scale: heroScale }}
+      {/* ══════════════════════════════════════════
+          HERO — dark
+      ══════════════════════════════════════════ */}
+      <section
+        className="relative min-h-screen flex flex-col justify-end pb-16 md:pb-24 overflow-hidden"
+        style={{ backgroundColor: DARK }}
       >
-        <motion.div
-          className="absolute inset-0 opacity-[0.015]"
-          style={{ y: useTransform(scrollY, [0, 500], [0, 150]) }}
-        >
-          <div className="absolute inset-0" style={{
+        {/* Ambient warm glow — bottom-left */}
+        <div
+          className="absolute bottom-0 left-0 w-[700px] h-[700px] pointer-events-none"
+          style={{
+            background: `radial-gradient(circle, ${AMBER}0D 0%, transparent 65%)`,
+            transform: "translate(-25%, 35%)",
+          }}
+        />
+        {/* Ambient cool glow — top-right */}
+        <div
+          className="absolute top-0 right-0 w-[500px] h-[500px] pointer-events-none"
+          style={{
+            background: "radial-gradient(circle, rgba(100,130,200,0.05) 0%, transparent 65%)",
+            transform: "translate(25%, -25%)",
+          }}
+        />
+
+        {/* Very subtle grid */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
             backgroundImage: `
-              linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px)
+              linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px)
             `,
-            backgroundSize: '60px 60px',
-          }} />
-        </motion.div>
+            backgroundSize: "72px 72px",
+          }}
+        />
 
-        <div className="relative z-10 container mx-auto px-6 lg:px-20 max-w-7xl">
+        <div className="container-width relative z-10 pt-36">
+          {/* Overline */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="max-w-5xl"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.15 }}
+            className="flex items-center gap-3 mb-10"
           >
-            <div className="inline-block mb-8 px-5 py-2 rounded-full bg-gray-900 text-white">
-              <span className="text-sm font-medium uppercase tracking-wider">Early Stage Venture Capital</span>
-            </div>
+            <span className="w-5 h-px block" style={{ backgroundColor: AMBER }} />
+            <span
+              className="text-[11px] font-medium tracking-[0.22em] uppercase"
+              style={{ color: AMBER }}
+            >
+              Early-Stage Venture Capital · UK & Europe
+            </span>
+          </motion.div>
 
-            <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-10 leading-[1.1] text-gray-900">
-              Backing founders<br />who build foundations,<br />not just features
-            </h1>
+          {/* Headline */}
+          <motion.h1
+            className="font-display font-bold leading-[1.04] text-white mb-8 max-w-[820px]"
+            style={{ fontSize: "clamp(42px, 7vw, 86px)" }}
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={t(0.9, 0.2)}
+          >
+            Backing founders who build foundations,{" "}
+            <em className="not-italic font-normal text-white/45">not just features.</em>
+          </motion.h1>
 
-            <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl leading-relaxed font-light">
-              Early-stage venture capital for technical teams solving hard problems. Pre-seed and seed investments across the UK, Ireland, and Europe.
-            </p>
+          {/* Subtext */}
+          <motion.p
+            className="text-[17px] md:text-[18px] text-white/45 max-w-[580px] mb-12 leading-relaxed font-light"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={t(0.9, 0.35)}
+          >
+            PraFounds Ventures partners with technical founders at pre-seed and seed stage to build
+            durable, category-defining companies. We invest with conviction and think long-term.
+          </motion.p>
 
-            <div className="flex flex-col sm:flex-row gap-4 items-start">
-              <motion.a
-                href="#pitch"
-                whileHover={{ scale: 1.02, y: -2 }}
-                whileTap={{ scale: 0.98 }}
-                className="group px-10 py-5 bg-gray-900 text-white rounded-full font-semibold text-lg flex items-center gap-3 hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl"
-              >
-                Pitch PraFounds
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </motion.a>
-
-              <motion.a
-                href="#focus"
-                whileHover={{ scale: 1.02, y: -2 }}
-                className="px-10 py-5 bg-white border-2 border-gray-900 text-gray-900 rounded-full font-semibold text-lg hover:bg-gray-50 transition-all duration-300"
-              >
-                Investment Focus
-              </motion.a>
-            </div>
+          {/* CTAs */}
+          <motion.div
+            className="flex flex-col sm:flex-row gap-3"
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={t(0.9, 0.5)}
+          >
+            <a
+              href="#pitch"
+              className="inline-flex items-center gap-3 px-7 py-[14px] text-[13px] font-medium tracking-wide text-white transition-all duration-300"
+              style={{ backgroundColor: amberHover1 ? AMBER_DARK : AMBER }}
+              onMouseEnter={() => setAmberHover1(true)}
+              onMouseLeave={() => setAmberHover1(false)}
+            >
+              Pitch PraFounds
+              <ArrowRight className="w-4 h-4" />
+            </a>
+            <a
+              href="#focus"
+              className="inline-flex items-center gap-3 px-7 py-[14px] text-[13px] font-medium tracking-wide text-white/55 border border-white/15 hover:border-white/35 hover:text-white/80 transition-all duration-300"
+            >
+              Investment Focus
+            </a>
           </motion.div>
         </div>
 
+        {/* Scroll hint — right side */}
         <motion.div
-          className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 2 }}
+          className="absolute bottom-10 right-12 hidden lg:flex flex-col items-center gap-3"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.4, duration: 0.8 }}
         >
-          <div className="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center pt-2">
-            <div className="w-1.5 h-3 bg-gray-400 rounded-full" />
-          </div>
-        </motion.div>
-      </motion.section>
-
-      {/* What We Do */}
-      <section className="relative py-32 bg-white border-y border-gray-200 overflow-hidden">
-        <div className="container mx-auto px-6 lg:px-20 max-w-7xl">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
+          <span
+            className="text-[10px] tracking-[0.28em] uppercase text-white/20"
+            style={{ writingMode: "vertical-rl" }}
           >
-            <div className="max-w-4xl">
-              <motion.span
-                className="text-sm font-medium uppercase tracking-wider text-gray-500 mb-4 block"
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-              >
-                What We Do
-              </motion.span>
-              <motion.h2
-                className="text-5xl md:text-6xl font-bold mb-12 leading-tight text-gray-900"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3, duration: 0.8 }}
+            Scroll
+          </span>
+          <motion.div
+            className="w-px h-14 origin-top"
+            style={{ backgroundColor: "rgba(255,255,255,0.12)" }}
+            animate={{ scaleY: [1, 0.25, 1] }}
+            transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" }}
+          />
+        </motion.div>
+      </section>
+
+      {/* ══════════════════════════════════════════
+          WHAT WE DO — white
+      ══════════════════════════════════════════ */}
+      <section className="bg-white section-pad">
+        <div className="container-width">
+          <SectionLabel number="01" label="What We Do" />
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 mt-14">
+            <motion.div {...inView} transition={t()}>
+              <h2
+                className="font-display font-bold leading-[1.1] text-balance"
+                style={{ fontSize: "clamp(30px, 4vw, 52px)" }}
               >
                 Early conviction.<br />Long-term thinking.
-              </motion.h2>
+              </h2>
+            </motion.div>
 
-              <div className="space-y-6">
-                <motion.p
-                  className="text-xl text-gray-600 leading-relaxed"
-                  initial={{ opacity: 0, x: -30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.4, duration: 0.8 }}
-                >
-                  PraFounds Ventures backs technical founders at the earliest and most critical phase of company building.
-                </motion.p>
-                <motion.p
-                  className="text-xl text-gray-600 leading-relaxed"
-                  initial={{ opacity: 0, x: -30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.5, duration: 0.8 }}
-                >
-                  We invest in pre-seed and seed stages, focusing on teams building developer tools, infrastructure, applied AI platforms, and productivity software.
-                </motion.p>
-                <motion.p
-                  className="text-xl text-gray-600 leading-relaxed"
-                  initial={{ opacity: 0, x: -30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.6, duration: 0.8 }}
-                >
-                  Our approach is hands-on when helpful, patient when not. We work with small, focused teams to help turn strong ideas into enduring businesses.
-                </motion.p>
-              </div>
-            </div>
-          </motion.div>
+            <motion.div
+              className="space-y-5 text-[16px] md:text-[17px] text-gray-500 leading-relaxed"
+              {...inView}
+              transition={t(0.7, 0.15)}
+            >
+              <p>
+                PraFounds Ventures focuses on the earliest and most critical phase of company
+                building—when clarity, judgment, and execution matter more than scale.
+              </p>
+              <p>
+                We work closely with small, focused teams to help turn strong ideas into enduring
+                businesses, while staying disciplined about fundamentals and trust.
+              </p>
+              <p className="font-medium text-gray-800">
+                Our approach is calm, selective, and founder-first.
+              </p>
+            </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* Investment Focus */}
-      <section id="focus" className="relative py-32 bg-gray-50 overflow-hidden">
-        <div className="container mx-auto px-6 lg:px-20 max-w-7xl">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
-            className="mb-20"
-          >
-            <motion.span
-              className="text-sm font-medium uppercase tracking-wider text-gray-500 mb-4 block"
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-            >
-              Investment Focus
-            </motion.span>
-            <motion.h2
-              className="text-5xl md:text-6xl font-bold text-gray-900"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3, duration: 0.8 }}
-            >
-              Where we invest
-            </motion.h2>
-          </motion.div>
+      {/* ══════════════════════════════════════════
+          INVESTMENT FOCUS — warm
+      ══════════════════════════════════════════ */}
+      <section id="focus" style={{ backgroundColor: WARM }} className="section-pad">
+        <div className="container-width">
+          <SectionLabel number="02" label="Investment Focus" />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <motion.h2
+            className="font-display font-bold mt-8 mb-14"
+            style={{ fontSize: "clamp(30px, 4vw, 50px)" }}
+            {...inView}
+            transition={t(0.7, 0.1)}
+          >
+            Where we invest.
+          </motion.h2>
+
+          {/* 1px grid lines between cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-gray-200">
             <FocusCard
-              icon={<Activity className="w-8 h-8" />}
               title="Stage"
               items={["Pre-Seed", "Seed"]}
+              note="We invest at the earliest, most critical phase of company building."
               delay={0}
             />
             <FocusCard
-              icon={<Cpu className="w-8 h-8" />}
               title="Sectors"
               items={[
                 "Developer tools & infrastructure",
                 "Applied AI & platforms",
                 "Productivity software",
-                "Systems, reliability & trust"
+                "Systems, reliability & trust",
               ]}
-              delay={0.15}
+              note="We back foundational, high-leverage technology categories."
+              delay={0.1}
             />
             <FocusCard
-              icon={<Globe className="w-8 h-8" />}
               title="Geography"
-              items={[
-                "United Kingdom & Ireland",
-                "Europe",
-                "Global-first teams"
-              ]}
-              delay={0.3}
+              items={["United Kingdom", "Ireland", "Europe", "Global-first teams"]}
+              note="We partner with exceptional founders wherever they build."
+              delay={0.2}
             />
           </div>
         </div>
       </section>
 
-      {/* Our Philosophy */}
-      <section className="relative py-32 bg-white border-y border-gray-200 overflow-hidden">
-        <div className="container mx-auto px-6 lg:px-20 max-w-7xl">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
-            className="mb-20"
-          >
-            <motion.span
-              className="text-sm font-medium uppercase tracking-wider text-gray-500 mb-4 block"
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-            >
-              Our Philosophy
-            </motion.span>
-            <motion.h2
-              className="text-5xl md:text-6xl font-bold text-gray-900"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3, duration: 0.8 }}
-            >
-              Foundations first
-            </motion.h2>
-          </motion.div>
+      {/* ══════════════════════════════════════════
+          PHILOSOPHY — white
+      ══════════════════════════════════════════ */}
+      <section id="philosophy" className="bg-white section-pad">
+        <div className="container-width">
+          <SectionLabel number="03" label="Our Philosophy" />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <motion.h2
+            className="font-display font-bold mt-8 mb-14"
+            style={{ fontSize: "clamp(30px, 4vw, 50px)" }}
+            {...inView}
+            transition={t(0.7, 0.1)}
+          >
+            Foundations first.
+          </motion.h2>
+
+          {/* 2×2 grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-gray-100">
             {[
-              { title: "Clear problem understanding", icon: <Target /> },
-              { title: "Strong technical & product fundamentals", icon: <Lightbulb /> },
-              { title: "Disciplined, thoughtful execution", icon: <Activity /> },
-              { title: "Respect for users' trust, data & time", icon: <Users /> }
-            ].map((principle, i) => (
-              <PrincipleCard key={i} {...principle} delay={i * 0.15} />
+              {
+                num: "01",
+                title: "Clear problem understanding",
+                desc: "We back founders who understand the problem deeply before pursuing scale. Clarity beats momentum every time.",
+              },
+              {
+                num: "02",
+                title: "Strong technical & product fundamentals",
+                desc: "Execution quality matters more than roadmaps. We invest in teams who can build as well as they think.",
+              },
+              {
+                num: "03",
+                title: "Disciplined, thoughtful execution",
+                desc: "Building carefully compounds over time. We value deliberate decision-making over reactive growth.",
+              },
+              {
+                num: "04",
+                title: "Respect for users' trust, data & time",
+                desc: "Products built on genuine respect for users last longer. Trust is a durable competitive advantage.",
+              },
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                className="bg-white p-10 hover:bg-gray-50/70 transition-colors duration-300"
+                {...inView}
+                transition={t(0.6, i * 0.1)}
+              >
+                <span
+                  className="text-[11px] font-semibold tracking-[0.22em] block mb-6"
+                  style={{ color: AMBER }}
+                >
+                  {item.num}
+                </span>
+                <h3 className="text-[18px] font-bold font-display mb-4 text-gray-900">
+                  {item.title}
+                </h3>
+                <p className="text-[15px] text-gray-500 leading-relaxed">{item.desc}</p>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* How We Support Founders */}
-      <section id="support" className="relative py-32 bg-gray-50 overflow-hidden">
-        <div className="container mx-auto px-6 lg:px-20 max-w-7xl">
-          <div className="max-w-6xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8 }}
-              className="mb-16"
-            >
-              <motion.span
-                className="text-sm font-medium uppercase tracking-wider text-gray-500 mb-4 block"
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
+      {/* ══════════════════════════════════════════
+          HOW WE SUPPORT — warm
+      ══════════════════════════════════════════ */}
+      <section id="support" style={{ backgroundColor: WARM }} className="section-pad">
+        <div className="container-width">
+          <SectionLabel number="04" label="How We Support Founders" />
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 mt-14">
+            <motion.div {...inView} transition={t()}>
+              <h2
+                className="font-display font-bold leading-[1.1] mb-6"
+                style={{ fontSize: "clamp(30px, 4vw, 50px)" }}
               >
-                How We Support Founders
-              </motion.span>
-              <motion.h2
-                className="text-5xl md:text-6xl font-bold mb-6 text-gray-900"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3, duration: 0.8 }}
-              >
-                More than capital
-              </motion.h2>
-              <motion.p
-                className="text-xl text-gray-600 max-w-3xl"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.4, duration: 0.8 }}
-              >
-                We're hands-on partners when it's helpful—and stay out of the way when it's not.
-              </motion.p>
+                More than capital.
+              </h2>
+              <p className="text-[16px] text-gray-500 leading-relaxed">
+                PraFounds is a hands-on partner when it's helpful—and stays out of the way when
+                it's not. Our goal is simple: help founders make better decisions, earlier.
+              </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <motion.div
+              className="divide-y divide-gray-200"
+              {...inView}
+              transition={t(0.7, 0.15)}
+            >
               {[
                 "Product clarity & early positioning",
                 "Technical & architectural guidance",
-                "Infrastructure reliability & scaling",
+                "Infrastructure, reliability & scaling",
                 "Hiring strategy for early teams",
-                "Preparation for the next stage",
-                "Network & introductions"
+                "Preparation for the next stage of growth",
+                "Network & introductions",
               ].map((item, i) => (
-                <SupportCard key={i} text={item} delay={i * 0.1} />
+                <motion.div
+                  key={i}
+                  className="flex items-center justify-between py-4 group cursor-default"
+                  initial={{ opacity: 0, x: -10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={t(0.5, 0.1 + i * 0.06)}
+                >
+                  <span className="text-[15px] text-gray-700 font-medium group-hover:text-gray-900 transition-colors">
+                    {item}
+                  </span>
+                  <ArrowUpRight
+                    className="w-4 h-4 text-gray-300 opacity-0 group-hover:opacity-100 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shrink-0"
+                    style={{ color: AMBER }}
+                  />
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Pipeline */}
-      <section className="relative py-32 bg-white border-y border-gray-200">
-        <div className="container mx-auto px-6 lg:px-20 max-w-7xl">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="max-w-4xl mx-auto"
-          >
-            <span className="text-sm font-medium uppercase tracking-wider text-gray-500 mb-4 block">
-              Current Pipeline
-            </span>
-            <h2 className="text-5xl md:text-6xl font-bold mb-12 text-gray-900">
-              Active discussions
-            </h2>
+      {/* ══════════════════════════════════════════
+          PIPELINE — white
+      ══════════════════════════════════════════ */}
+      <section id="pipeline" className="bg-white section-pad">
+        <div className="container-width">
+          <SectionLabel number="05" label="Current Pipeline" />
 
-            <div className="p-10 border-2 border-gray-200 bg-gray-50">
-              <div className="flex items-start gap-4 mb-4">
-                <MessageSquare className="w-6 h-6 text-gray-900 mt-1 flex-shrink-0" />
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-3">Estospaces</h3>
-                  <p className="text-lg text-gray-600 leading-relaxed">
-                    Investment discussions ongoing. No commitment has been made.
-                  </p>
-                </div>
-              </div>
+          <motion.h2
+            className="font-display font-bold mt-8 mb-14"
+            style={{ fontSize: "clamp(30px, 4vw, 50px)" }}
+            {...inView}
+            transition={t(0.7, 0.1)}
+          >
+            Active discussions.
+          </motion.h2>
+
+          <motion.div
+            className="border border-gray-200 p-8 md:p-10 max-w-xl hover:border-gray-400 transition-colors duration-300 group"
+            {...inView}
+            transition={t(0.6, 0.15)}
+          >
+            <div className="flex items-center gap-2 mb-6">
+              <span
+                className="w-[7px] h-[7px] rounded-full animate-pulse-dot"
+                style={{ backgroundColor: AMBER }}
+              />
+              <span
+                className="text-[11px] font-semibold tracking-[0.18em] uppercase"
+                style={{ color: AMBER }}
+              >
+                Investment discussions ongoing
+              </span>
             </div>
 
-            <p className="text-sm text-gray-500 mt-6">
-              Pipeline companies are under evaluation. Inclusion does not indicate investment commitment or endorsement.
+            <h3 className="text-[22px] font-bold font-display text-gray-900 mb-4">Estospaces</h3>
+            <p className="text-[15px] text-gray-500 leading-relaxed mb-6">
+              Exploring next-generation spatial platforms and digital infrastructure. No commitment
+              has been made.
+            </p>
+            <p className="text-[12px] text-gray-400 leading-relaxed">
+              Pipeline companies are under active evaluation. Inclusion does not indicate
+              investment commitment or endorsement.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* What We Look For */}
-      <section className="relative py-32 bg-gray-50">
-        <div className="container mx-auto px-6 lg:px-20 max-w-7xl">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="max-w-4xl mx-auto"
-          >
-            <span className="text-sm font-medium uppercase tracking-wider text-gray-500 mb-4 block">
-              What We Look For
-            </span>
-            <h2 className="text-5xl md:text-6xl font-bold mb-12 text-gray-900">
-              Investment criteria
-            </h2>
+      {/* ══════════════════════════════════════════
+          WHAT WE LOOK FOR — warm
+      ══════════════════════════════════════════ */}
+      <section id="criteria" style={{ backgroundColor: WARM }} className="section-pad">
+        <div className="container-width">
+          <SectionLabel number="06" label="What We Look For" />
 
-            <div className="space-y-8">
-              <CriteriaItem
-                title="Technical founders"
-                description="Deep expertise in the problem space. Track record of building systems or products that people use."
-              />
-              <CriteriaItem
-                title="Real problems"
-                description="Clear understanding of user pain. Not solutions looking for problems."
-              />
-              <CriteriaItem
-                title="Early traction"
-                description="Some signal of product-market fit. Could be users, revenue, usage growth, or strong partnerships."
-              />
-              <CriteriaItem
-                title="Thoughtful execution"
-                description="Disciplined approach to building. Clear roadmap. Smart prioritization."
-              />
-              <CriteriaItem
-                title="Long-term thinking"
-                description="Building for durability, not just growth. Focused on trust, reliability, and user respect."
-              />
-            </div>
-          </motion.div>
+          <motion.h2
+            className="font-display font-bold mt-8 mb-14"
+            style={{ fontSize: "clamp(30px, 4vw, 50px)" }}
+            {...inView}
+            transition={t(0.7, 0.1)}
+          >
+            Investment criteria.
+          </motion.h2>
+
+          <div className="max-w-3xl border-t border-gray-200">
+            {[
+              {
+                title: "Technical founders",
+                description:
+                  "Deep expertise in the problem space. Track record of building systems or products that people actually use.",
+              },
+              {
+                title: "Real problems",
+                description:
+                  "Clear understanding of user pain. Not solutions looking for problems—genuine insight into what's broken.",
+              },
+              {
+                title: "Early traction",
+                description:
+                  "Some signal of product-market fit. Users, revenue, usage growth, or strong early partnerships.",
+              },
+              {
+                title: "Thoughtful execution",
+                description:
+                  "Disciplined approach to building. Clear roadmap, smart prioritisation, willingness to say no.",
+              },
+              {
+                title: "Long-term thinking",
+                description:
+                  "Building for durability, not just growth. Focused on trust, reliability, and genuine user respect.",
+              },
+            ].map((item, i) => (
+              <CriteriaRow key={i} {...item} index={i} />
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Pitch PraFounds */}
-      <section id="pitch" className="relative py-32 bg-gray-900 text-white">
-        <div className="container mx-auto px-6 lg:px-20 max-w-5xl text-center">
+      {/* ══════════════════════════════════════════
+          PITCH CTA — dark
+      ══════════════════════════════════════════ */}
+      <section id="pitch" className="relative section-pad overflow-hidden" style={{ backgroundColor: DARK }}>
+        {/* Ambient glow — centre */}
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] pointer-events-none"
+          style={{
+            background: `radial-gradient(circle, ${AMBER}09 0%, transparent 65%)`,
+          }}
+        />
+
+        <div className="container-width relative z-10 text-center">
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={t(0.8)}
           >
-            <h2 className="text-5xl md:text-6xl font-bold mb-8">Ready to build something that lasts?</h2>
-            <p className="text-xl text-gray-300 mb-12 max-w-3xl mx-auto font-light leading-relaxed">
-              If you're building foundational technology at the earliest stages, we'd like to hear from you.
+            {/* Overline */}
+            <div className="flex items-center justify-center gap-3 mb-10">
+              <span className="w-6 h-px block" style={{ backgroundColor: AMBER + "80" }} />
+              <span
+                className="text-[11px] font-medium tracking-[0.22em] uppercase"
+                style={{ color: AMBER }}
+              >
+                Pitch PraFounds
+              </span>
+              <span className="w-6 h-px block" style={{ backgroundColor: AMBER + "80" }} />
+            </div>
+
+            <h2
+              className="font-display font-bold text-white text-balance max-w-[640px] mx-auto mb-8"
+              style={{ fontSize: "clamp(32px, 5vw, 60px)", lineHeight: 1.08 }}
+            >
+              Ready to build something that lasts?
+            </h2>
+
+            <p className="text-[16px] md:text-[17px] text-white/40 mb-12 max-w-[520px] mx-auto leading-relaxed font-light">
+              If you're building foundational technology at the earliest stages, we'd like to hear
+              from you. Tell us what you're building, the problem you're solving, your team, and any
+              early traction.
             </p>
 
             <motion.a
               href="mailto:hello@prafounds.com"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center gap-4 px-10 py-6 bg-white text-gray-900 text-xl font-semibold rounded-full hover:bg-gray-100 transition-all duration-300 shadow-2xl"
+              className="inline-flex items-center gap-4 px-8 py-[15px] text-[14px] font-medium tracking-wide transition-all duration-300"
+              style={{ border: `1px solid ${AMBER}55`, color: "#fff" }}
+              whileHover={{
+                backgroundColor: AMBER,
+                borderColor: AMBER,
+              }}
             >
-              <Mail className="w-6 h-6" />
+              <Mail className="w-[17px] h-[17px] shrink-0" />
               hello@prafounds.com
-              <ArrowRight className="w-6 h-6" />
+              <ArrowRight className="w-4 h-4 shrink-0" />
             </motion.a>
+
+            {/* What to include */}
+            <div className="mt-12 flex flex-col sm:flex-row flex-wrap justify-center gap-4">
+              {[
+                "What you're building & why now",
+                "The problem you're solving",
+                "Your team & background",
+                "Early traction (if any)",
+              ].map((item) => (
+                <span
+                  key={item}
+                  className="text-[12px] text-white/25 border border-white/8 px-4 py-2"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-20 bg-white border-t border-gray-200">
-        <div className="container mx-auto px-6 lg:px-20 max-w-7xl">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
-            <div className="col-span-1 md:col-span-2">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">PraFounds Ventures Ltd</h3>
-              <p className="text-gray-600 max-w-md mb-4 font-light">
-                Early-stage venture capital. Registered in the United Kingdom.
+      {/* ══════════════════════════════════════════
+          FOOTER — white
+      ══════════════════════════════════════════ */}
+      <footer className="bg-white border-t border-gray-100 py-16">
+        <div className="container-width">
+          <div className="flex flex-col md:flex-row justify-between items-start gap-10 mb-10">
+            {/* Brand */}
+            <div>
+              <div className="text-[22px] font-bold font-display text-gray-900 mb-3">
+                PraFounds<span style={{ color: AMBER }}>.</span>
+              </div>
+              <p className="text-[14px] text-gray-400 leading-relaxed max-w-[240px]">
+                Early-stage, founder-led investing.<br />
+                Registered in the United Kingdom.
               </p>
-              <p className="text-gray-500 text-sm">United Kingdom · Ireland · Europe</p>
+            </div>
+
+            {/* Nav links */}
+            <div className="flex gap-10 md:gap-16 text-[13px]">
+              <div className="space-y-3">
+                {[
+                  { label: "Philosophy", href: "#philosophy" },
+                  { label: "Investment Focus", href: "#focus" },
+                  { label: "Support", href: "#support" },
+                ].map((l) => (
+                  <div key={l.label}>
+                    <a
+                      href={l.href}
+                      className="text-gray-400 hover:text-gray-800 transition-colors"
+                    >
+                      {l.label}
+                    </a>
+                  </div>
+                ))}
+              </div>
+              <div className="space-y-3">
+                {[
+                  { label: "Pipeline", href: "#pipeline" },
+                  { label: "Criteria", href: "#criteria" },
+                  { label: "Contact", href: "#pitch" },
+                ].map((l) => (
+                  <div key={l.label}>
+                    <a
+                      href={l.href}
+                      className="text-gray-400 hover:text-gray-800 transition-colors"
+                    >
+                      {l.label}
+                    </a>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
-          <div className="pt-8 border-t border-gray-200 space-y-3">
-            <p className="text-gray-500 text-sm">
-              © {new Date().getFullYear()} PraFounds Ventures Ltd. All rights reserved.
-            </p>
-            <p className="text-gray-400 text-xs max-w-3xl">
-              This website does not constitute an offer to sell or a solicitation of an offer to purchase any securities. Past performance is not indicative of future results. Investment in early-stage companies involves significant risk, including loss of capital.
+          {/* Bottom */}
+          <div className="border-t border-gray-100 pt-8 space-y-2">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <p className="text-[13px] text-gray-400">
+                © {new Date().getFullYear()} PraFounds Ventures Ltd. All rights reserved.
+              </p>
+              <p className="text-[12px] text-gray-300">
+                United Kingdom · Ireland · Europe
+              </p>
+            </div>
+            <p className="text-[12px] text-gray-300 leading-relaxed max-w-3xl">
+              PraFounds Ventures invests its own capital. This website does not constitute an offer
+              to sell or a solicitation to purchase any securities. Past performance is not
+              indicative of future results. Investment in early-stage companies involves significant
+              risk, including potential loss of capital.
             </p>
           </div>
         </div>
       </footer>
     </div>
-  );
-}
-
-// Components
-
-function FocusCard({ icon, title, items, delay = 0 }: any) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.8, delay }}
-      className="p-10 bg-white border border-gray-200 hover:border-gray-900 hover:shadow-lg transition-all duration-300"
-    >
-      <div className="inline-flex p-4 bg-gray-900 text-white mb-8">
-        {icon}
-      </div>
-
-      <h3 className="text-2xl font-bold mb-8 text-gray-900">
-        {title}
-      </h3>
-
-      <ul className="space-y-4">
-        {items.map((item: string, i: number) => (
-          <motion.li
-            key={i}
-            className="flex items-start gap-3 text-gray-600"
-            initial={{ opacity: 0, x: -10 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: delay + (i * 0.1) }}
-          >
-            <div className="w-1.5 h-1.5 bg-gray-900 rounded-full mt-2 shrink-0" />
-            <span className="font-light">{item}</span>
-          </motion.li>
-        ))}
-      </ul>
-    </motion.div>
-  );
-}
-
-function PrincipleCard({ title, icon, delay }: any) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ delay, duration: 0.7 }}
-      className="p-8 bg-white border border-gray-200 hover:border-gray-900 hover:shadow-lg transition-all duration-300"
-    >
-      <div className="mb-6 text-gray-900">
-        {React.cloneElement(icon, { className: "w-10 h-10" })}
-      </div>
-      <h3 className="text-lg font-semibold text-gray-900 leading-snug">
-        {title}
-      </h3>
-    </motion.div>
-  );
-}
-
-function SupportCard({ text, delay }: any) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ delay, duration: 0.6 }}
-      className="p-6 bg-white border border-gray-200 hover:border-gray-900 hover:shadow-lg transition-all duration-300"
-    >
-      <div className="flex items-center gap-3">
-        <Check className="w-5 h-5 text-gray-900 shrink-0" />
-        <span className="text-gray-700 font-light">{text}</span>
-      </div>
-    </motion.div>
-  );
-}
-
-function CriteriaItem({ title, description }: { title: string; description: string }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, x: -30 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
-      className="border-l-4 border-gray-900 pl-6"
-    >
-      <h3 className="text-2xl font-bold text-gray-900 mb-3">{title}</h3>
-      <p className="text-lg text-gray-600 leading-relaxed">{description}</p>
-    </motion.div>
   );
 }
