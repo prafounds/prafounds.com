@@ -1,683 +1,529 @@
 import * as React from "react";
+import type { MotionProps } from "framer-motion";
 import { Navigation } from "@/components/Navigation";
-import { motion } from "framer-motion";
-import { ArrowRight, ArrowUpRight, Mail } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ArrowRight, Mail, ArrowUpRight, Check } from "lucide-react";
 
-/* ─── Design tokens ─── */
-const DARK = "#0B0D14";
-const WARM = "#F7F6F3";
-const AMBER = "#C9884A";
-const AMBER_DARK = "#B5763A";
-
-/* ─── Motion helpers ─── */
-const inView = {
-  initial: { opacity: 0, y: 22 },
+/* ── Animation helpers ── */
+const anim = (delay = 0): MotionProps => ({
+  initial:     { opacity: 0, y: 22 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-80px" as const },
-};
-const t = (dur = 0.7, delay = 0) => ({
-  duration: dur,
-  delay,
-  ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
+  viewport:    { once: true, margin: "-72px" },
+  transition:  { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] as number[] },
 });
 
-/* ─── Section label ─── */
-function SectionLabel({ number, label }: { number: string; label: string }) {
+const fadeIn = (delay = 0): MotionProps => ({
+  initial:     { opacity: 0 },
+  whileInView: { opacity: 1 },
+  viewport:    { once: true, margin: "-72px" },
+  transition:  { duration: 0.6, delay },
+});
+
+/* ── Section label ── */
+function Label({ children }: { children: React.ReactNode }) {
   return (
-    <motion.div
-      className="flex items-center gap-3"
-      initial={{ opacity: 0, x: -16 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true }}
-      transition={t(0.55)}
-    >
-      <span className="text-[11px] font-semibold tracking-[0.22em]" style={{ color: AMBER }}>
-        {number}
-      </span>
-      <span className="w-6 h-px bg-gray-300 block" />
-      <span className="text-[11px] font-medium tracking-[0.16em] uppercase text-gray-400">
-        {label}
-      </span>
-    </motion.div>
+    <span className="text-[11px] font-mono font-medium text-white/30 uppercase tracking-[0.18em]">
+      {children}
+    </span>
   );
 }
 
-/* ─── Focus card ─── */
-function FocusCard({
-  title,
-  items,
-  note,
-  delay,
-}: {
-  title: string;
-  items: string[];
-  note: string;
-  delay: number;
-}) {
-  return (
-    <motion.div
-      className="bg-white p-10 flex flex-col hover:bg-gray-50/80 transition-colors duration-300"
-      {...inView}
-      transition={t(0.65, delay)}
-    >
-      <h3 className="text-lg font-bold mb-7 font-display text-gray-900">{title}</h3>
-      <ul className="space-y-3 mb-8 flex-1">
-        {items.map((item, i) => (
-          <li key={i} className="flex items-start gap-3 text-[15px] text-gray-600 leading-snug">
-            <span
-              className="w-[5px] h-[5px] rounded-full mt-[7px] shrink-0"
-              style={{ backgroundColor: AMBER }}
-            />
-            {item}
-          </li>
-        ))}
-      </ul>
-      <p className="text-[12px] text-gray-400 leading-relaxed border-t border-gray-100 pt-6">
-        {note}
-      </p>
-    </motion.div>
-  );
+/* ── Divider ── */
+function Divider() {
+  return <div className="border-t border-white/[0.06]" />;
 }
 
-/* ─── Criteria row ─── */
-function CriteriaRow({
-  title,
-  description,
-  index,
-}: {
-  title: string;
-  description: string;
-  index: number;
-}) {
-  return (
-    <motion.div
-      className="py-7 grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-4 md:gap-12 group border-b border-gray-200 last:border-0"
-      {...inView}
-      transition={t(0.6, index * 0.08)}
-    >
-      <h3 className="text-[17px] font-semibold text-gray-900 font-display">{title}</h3>
-      <p className="text-[15px] text-gray-500 leading-relaxed">{description}</p>
-    </motion.div>
-  );
-}
-
-/* ─── Main page ─── */
 export default function Home() {
-  const [amberHover1, setAmberHover1] = React.useState(false);
+  const { scrollY } = useScroll();
+  const heroY       = useTransform(scrollY, [0, 600], [0, -60]);
+  const heroOpacity = useTransform(scrollY, [0, 380], [1, 0]);
 
   return (
-    <div className="min-h-screen overflow-x-hidden">
+    <div className="min-h-screen bg-[#09090E] text-white font-sans overflow-x-hidden">
+
+      {/* Global grain overlay */}
+      <div
+        className="fixed inset-0 pointer-events-none z-[200] opacity-[0.022] bg-noise"
+        style={{ backgroundSize: "200px 200px" }}
+      />
+
       <Navigation />
 
-      {/* ══════════════════════════════════════════
-          HERO — dark
-      ══════════════════════════════════════════ */}
-      <section
-        className="relative min-h-screen flex flex-col justify-end pb-16 md:pb-24 overflow-hidden"
-        style={{ backgroundColor: DARK }}
-      >
-        {/* Ambient warm glow — bottom-left */}
-        <div
-          className="absolute bottom-0 left-0 w-[700px] h-[700px] pointer-events-none"
-          style={{
-            background: `radial-gradient(circle, ${AMBER}0D 0%, transparent 65%)`,
-            transform: "translate(-25%, 35%)",
-          }}
-        />
-        {/* Ambient cool glow — top-right */}
-        <div
-          className="absolute top-0 right-0 w-[500px] h-[500px] pointer-events-none"
-          style={{
-            background: "radial-gradient(circle, rgba(100,130,200,0.05) 0%, transparent 65%)",
-            transform: "translate(25%, -25%)",
-          }}
-        />
+      {/* ════════════════════════════════════════
+          HERO
+      ════════════════════════════════════════ */}
+      <section className="relative min-h-screen flex items-center overflow-hidden">
+        {/* Dot grid */}
+        <div className="absolute inset-0 dot-grid opacity-[0.055]" />
+        {/* Gradient fade bottom */}
+        <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-[#09090E] to-transparent" />
+        {/* Indigo ambient glow */}
+        <div className="absolute top-1/4 left-[15%] w-[700px] h-[700px] rounded-full bg-indigo-600 opacity-[0.055] blur-[130px] pointer-events-none" />
+        <div className="absolute bottom-1/3 right-[10%] w-[400px] h-[400px] rounded-full bg-violet-600 opacity-[0.04] blur-[100px] pointer-events-none" />
 
-        {/* Very subtle grid */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px)
-            `,
-            backgroundSize: "72px 72px",
-          }}
-        />
-
-        <div className="container-width relative z-10 pt-36">
-          {/* Overline */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            className="flex items-center gap-3 mb-10"
-          >
-            <span className="w-5 h-px block" style={{ backgroundColor: AMBER }} />
-            <span
-              className="text-[11px] font-medium tracking-[0.22em] uppercase"
-              style={{ color: AMBER }}
-            >
-              Early-Stage Venture Capital · UK & Europe
+        <motion.div
+          className="relative z-10 max-w-7xl mx-auto px-6 lg:px-16 pt-28 pb-28 w-full"
+          style={{ y: heroY, opacity: heroOpacity }}
+        >
+          {/* Badge */}
+          <motion.div {...anim(0)} className="mb-10">
+            <span className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-white/[0.1] bg-white/[0.04] text-white/50 text-[11px] font-mono uppercase tracking-widest">
+              <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse shrink-0" />
+              Early Stage Venture Capital
             </span>
           </motion.div>
 
           {/* Headline */}
           <motion.h1
-            className="font-display font-bold leading-[1.04] text-white mb-8 max-w-[820px]"
-            style={{ fontSize: "clamp(42px, 7vw, 86px)" }}
-            initial={{ opacity: 0, y: 28 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={t(0.9, 0.2)}
+            {...anim(0.08)}
+            className="font-display font-bold leading-[0.93] tracking-[-0.04em] mb-10 text-[clamp(3.2rem,9vw,8rem)]"
           >
-            Backing founders who build foundations,{" "}
-            <em className="not-italic font-normal text-white/45">not just features.</em>
+            We back the<br />
+            <span className="text-white/25">builders of</span><br />
+            tomorrow's<br />
+            foundations.
           </motion.h1>
 
-          {/* Subtext */}
+          {/* Sub */}
           <motion.p
-            className="text-[17px] md:text-[18px] text-white/45 max-w-[580px] mb-12 leading-relaxed font-light"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={t(0.9, 0.35)}
+            {...anim(0.16)}
+            className="text-white/45 text-lg md:text-xl font-light max-w-[480px] leading-relaxed mb-14"
           >
-            PraFounds Ventures partners with technical founders at pre-seed and seed stage to build
-            durable, category-defining companies. We invest with conviction and think long-term.
+            Pre-seed and seed investments in developer tools, infrastructure, and applied AI. Based in the UK, investing globally.
           </motion.p>
 
           {/* CTAs */}
-          <motion.div
-            className="flex flex-col sm:flex-row gap-3"
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={t(0.9, 0.5)}
-          >
+          <motion.div {...anim(0.22)} className="flex flex-wrap gap-4">
             <a
               href="#pitch"
-              className="inline-flex items-center gap-3 px-7 py-[14px] text-[13px] font-medium tracking-wide text-white transition-all duration-300"
-              style={{ backgroundColor: amberHover1 ? AMBER_DARK : AMBER }}
-              onMouseEnter={() => setAmberHover1(true)}
-              onMouseLeave={() => setAmberHover1(false)}
+              onClick={(e) => { e.preventDefault(); document.getElementById("pitch")?.scrollIntoView({ behavior: "smooth" }); }}
+              className="group inline-flex items-center gap-2.5 px-7 py-3.5 bg-white text-[#09090E] text-sm font-semibold rounded-full hover:bg-white/90 active:scale-[0.97] transition-all duration-200 shadow-[0_0_40px_rgba(255,255,255,0.08)]"
             >
               Pitch PraFounds
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-200" />
             </a>
             <a
               href="#focus"
-              className="inline-flex items-center gap-3 px-7 py-[14px] text-[13px] font-medium tracking-wide text-white/55 border border-white/15 hover:border-white/35 hover:text-white/80 transition-all duration-300"
+              onClick={(e) => { e.preventDefault(); document.getElementById("focus")?.scrollIntoView({ behavior: "smooth" }); }}
+              className="inline-flex items-center gap-2.5 px-7 py-3.5 border border-white/[0.12] text-white/55 text-sm font-medium rounded-full hover:border-white/25 hover:text-white/80 active:scale-[0.97] transition-all duration-200"
             >
               Investment Focus
             </a>
           </motion.div>
-        </div>
+        </motion.div>
 
-        {/* Scroll hint — right side */}
+        {/* Scroll cue */}
         <motion.div
-          className="absolute bottom-10 right-12 hidden lg:flex flex-col items-center gap-3"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.4, duration: 0.8 }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2"
+          animate={{ y: [0, 7, 0] }}
+          transition={{ repeat: Infinity, duration: 2.6, ease: "easeInOut" }}
         >
-          <span
-            className="text-[10px] tracking-[0.28em] uppercase text-white/20"
-            style={{ writingMode: "vertical-rl" }}
-          >
-            Scroll
-          </span>
-          <motion.div
-            className="w-px h-14 origin-top"
-            style={{ backgroundColor: "rgba(255,255,255,0.12)" }}
-            animate={{ scaleY: [1, 0.25, 1] }}
-            transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" }}
-          />
+          <div className="w-px h-14 bg-gradient-to-b from-transparent via-white/30 to-transparent" />
         </motion.div>
       </section>
 
-      {/* ══════════════════════════════════════════
-          WHAT WE DO — white
-      ══════════════════════════════════════════ */}
-      <section className="bg-white section-pad">
-        <div className="container-width">
-          <SectionLabel number="01" label="What We Do" />
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 mt-14">
-            <motion.div {...inView} transition={t()}>
-              <h2
-                className="font-display font-bold leading-[1.1] text-balance"
-                style={{ fontSize: "clamp(30px, 4vw, 52px)" }}
+      {/* ════════════════════════════════════════
+          WHAT WE DO
+      ════════════════════════════════════════ */}
+      <section className="relative py-28 md:py-36">
+        <Divider />
+        <div className="max-w-7xl mx-auto px-6 lg:px-16 pt-24">
+          <div className="grid lg:grid-cols-[220px_1fr] gap-12 lg:gap-24 items-start">
+            <motion.div {...fadeIn(0)}>
+              <Label>What We Do</Label>
+            </motion.div>
+            <div>
+              <motion.h2
+                {...anim(0)}
+                className="font-display font-bold text-4xl md:text-5xl lg:text-[3.5rem] leading-[1.05] tracking-[-0.03em] mb-10"
               >
                 Early conviction.<br />Long-term thinking.
-              </h2>
-            </motion.div>
+              </motion.h2>
+              <div className="space-y-5 text-white/48 text-[17px] leading-[1.75] font-light max-w-2xl">
+                <motion.p {...anim(0.06)}>
+                  PraFounds Ventures backs technical founders at the earliest and most critical phase of company building.
+                </motion.p>
+                <motion.p {...anim(0.12)}>
+                  We invest at pre-seed and seed, focusing on teams building developer tools, infrastructure, applied AI platforms, and productivity software.
+                </motion.p>
+                <motion.p {...anim(0.18)}>
+                  Our approach is hands-on when helpful, patient when not. We work with small, focused teams to turn strong ideas into enduring businesses.
+                </motion.p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            <motion.div
-              className="space-y-5 text-[16px] md:text-[17px] text-gray-500 leading-relaxed"
-              {...inView}
-              transition={t(0.7, 0.15)}
+      {/* ════════════════════════════════════════
+          INVESTMENT FOCUS
+      ════════════════════════════════════════ */}
+      <section id="focus" className="relative py-28 md:py-36">
+        <Divider />
+        <div className="max-w-7xl mx-auto px-6 lg:px-16 pt-24">
+          {/* Header */}
+          <div className="grid lg:grid-cols-[220px_1fr] gap-12 lg:gap-24 mb-16">
+            <motion.div {...fadeIn(0)}>
+              <Label>Investment Focus</Label>
+            </motion.div>
+            <motion.h2
+              {...anim(0)}
+              className="font-display font-bold text-4xl md:text-5xl tracking-[-0.03em]"
             >
-              <p>
-                PraFounds Ventures focuses on the earliest and most critical phase of company
-                building—when clarity, judgment, and execution matter more than scale.
-              </p>
-              <p>
-                We work closely with small, focused teams to help turn strong ideas into enduring
-                businesses, while staying disciplined about fundamentals and trust.
-              </p>
-              <p className="font-medium text-gray-800">
-                Our approach is calm, selective, and founder-first.
-              </p>
-            </motion.div>
+              Where we invest.
+            </motion.h2>
           </div>
-        </div>
-      </section>
 
-      {/* ══════════════════════════════════════════
-          INVESTMENT FOCUS — warm
-      ══════════════════════════════════════════ */}
-      <section id="focus" style={{ backgroundColor: WARM }} className="section-pad">
-        <div className="container-width">
-          <SectionLabel number="02" label="Investment Focus" />
-
-          <motion.h2
-            className="font-display font-bold mt-8 mb-14"
-            style={{ fontSize: "clamp(30px, 4vw, 50px)" }}
-            {...inView}
-            transition={t(0.7, 0.1)}
-          >
-            Where we invest.
-          </motion.h2>
-
-          {/* 1px grid lines between cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-gray-200">
-            <FocusCard
-              title="Stage"
-              items={["Pre-Seed", "Seed"]}
-              note="We invest at the earliest, most critical phase of company building."
-              delay={0}
-            />
-            <FocusCard
-              title="Sectors"
-              items={[
-                "Developer tools & infrastructure",
-                "Applied AI & platforms",
-                "Productivity software",
-                "Systems, reliability & trust",
-              ]}
-              note="We back foundational, high-leverage technology categories."
-              delay={0.1}
-            />
-            <FocusCard
-              title="Geography"
-              items={["United Kingdom", "Ireland", "Europe", "Global-first teams"]}
-              note="We partner with exceptional founders wherever they build."
-              delay={0.2}
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════
-          PHILOSOPHY — white
-      ══════════════════════════════════════════ */}
-      <section id="philosophy" className="bg-white section-pad">
-        <div className="container-width">
-          <SectionLabel number="03" label="Our Philosophy" />
-
-          <motion.h2
-            className="font-display font-bold mt-8 mb-14"
-            style={{ fontSize: "clamp(30px, 4vw, 50px)" }}
-            {...inView}
-            transition={t(0.7, 0.1)}
-          >
-            Foundations first.
-          </motion.h2>
-
-          {/* 2×2 grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-gray-100">
+          {/* Cards grid — separated by 1px "gap" via bg on the wrapper */}
+          <div className="grid md:grid-cols-3 gap-px bg-white/[0.06] border border-white/[0.06]">
             {[
               {
                 num: "01",
-                title: "Clear problem understanding",
-                desc: "We back founders who understand the problem deeply before pursuing scale. Clarity beats momentum every time.",
+                title: "Stage",
+                items: ["Pre-Seed", "Seed"],
               },
               {
                 num: "02",
-                title: "Strong technical & product fundamentals",
-                desc: "Execution quality matters more than roadmaps. We invest in teams who can build as well as they think.",
+                title: "Sectors",
+                items: [
+                  "Developer tools & infrastructure",
+                  "Applied AI & platforms",
+                  "Productivity software",
+                  "Systems, reliability & trust",
+                ],
               },
               {
                 num: "03",
-                title: "Disciplined, thoughtful execution",
-                desc: "Building carefully compounds over time. We value deliberate decision-making over reactive growth.",
+                title: "Geography",
+                items: [
+                  "United Kingdom & Ireland",
+                  "Europe",
+                  "Global-first teams",
+                ],
               },
-              {
-                num: "04",
-                title: "Respect for users' trust, data & time",
-                desc: "Products built on genuine respect for users last longer. Trust is a durable competitive advantage.",
-              },
-            ].map((item, i) => (
+            ].map((card, i) => (
               <motion.div
-                key={i}
-                className="bg-white p-10 hover:bg-gray-50/70 transition-colors duration-300"
-                {...inView}
-                transition={t(0.6, i * 0.1)}
+                key={card.num}
+                {...anim(i * 0.1)}
+                className="bg-[#09090E] p-9 md:p-11 group hover:bg-white/[0.018] transition-colors duration-400"
               >
-                <span
-                  className="text-[11px] font-semibold tracking-[0.22em] block mb-6"
-                  style={{ color: AMBER }}
-                >
-                  {item.num}
+                <span className="font-mono text-[11px] text-white/18 block mb-8 tracking-widest">
+                  {card.num}
                 </span>
-                <h3 className="text-[18px] font-bold font-display mb-4 text-gray-900">
-                  {item.title}
+                <h3 className="font-display font-bold text-2xl mb-8 tracking-tight">
+                  {card.title}
                 </h3>
-                <p className="text-[15px] text-gray-500 leading-relaxed">{item.desc}</p>
+                <ul className="space-y-3.5">
+                  {card.items.map((item) => (
+                    <li key={item} className="flex items-start gap-3 text-white/45 text-[14px] leading-relaxed">
+                      <span className="mt-[7px] w-1 h-1 rounded-full bg-indigo-400/50 shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════
-          HOW WE SUPPORT — warm
-      ══════════════════════════════════════════ */}
-      <section id="support" style={{ backgroundColor: WARM }} className="section-pad">
-        <div className="container-width">
-          <SectionLabel number="04" label="How We Support Founders" />
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 mt-14">
-            <motion.div {...inView} transition={t()}>
-              <h2
-                className="font-display font-bold leading-[1.1] mb-6"
-                style={{ fontSize: "clamp(30px, 4vw, 50px)" }}
-              >
-                More than capital.
+      {/* ════════════════════════════════════════
+          PHILOSOPHY
+      ════════════════════════════════════════ */}
+      <section id="philosophy" className="relative py-28 md:py-36">
+        <Divider />
+        <div className="max-w-7xl mx-auto px-6 lg:px-16 pt-24">
+          <div className="grid lg:grid-cols-[220px_1fr] gap-12 lg:gap-24">
+            {/* Sticky label + heading */}
+            <motion.div {...fadeIn(0)} className="lg:sticky lg:top-32 self-start">
+              <Label>Philosophy</Label>
+              <h2 className="font-display font-bold text-4xl md:text-5xl tracking-[-0.03em] leading-tight mt-5">
+                Foundations<br />first.
               </h2>
-              <p className="text-[16px] text-gray-500 leading-relaxed">
-                PraFounds is a hands-on partner when it's helpful—and stays out of the way when
-                it's not. Our goal is simple: help founders make better decisions, earlier.
-              </p>
             </motion.div>
 
-            <motion.div
-              className="divide-y divide-gray-200"
-              {...inView}
-              transition={t(0.7, 0.15)}
-            >
+            {/* Principles */}
+            <div>
               {[
-                "Product clarity & early positioning",
-                "Technical & architectural guidance",
-                "Infrastructure, reliability & scaling",
-                "Hiring strategy for early teams",
-                "Preparation for the next stage of growth",
-                "Network & introductions",
+                {
+                  n: "01",
+                  title: "Clear problem understanding",
+                  body: "We spend time with founders to understand the root problem before discussing solutions. The strongest companies are built on pain points that genuinely matter.",
+                },
+                {
+                  n: "02",
+                  title: "Strong technical fundamentals",
+                  body: "Good architecture and thoughtful engineering pay dividends for years. We value founders who think deeply about how they build, not just what they build.",
+                },
+                {
+                  n: "03",
+                  title: "Disciplined, thoughtful execution",
+                  body: "Early focus matters more than early scale. We back teams that can prioritise well, move deliberately, and resist the temptation to spread thin.",
+                },
+                {
+                  n: "04",
+                  title: "Respect for users' trust, data & time",
+                  body: "The best products earn user trust through careful design decisions. We invest in teams that treat users as partners, not metrics.",
+                },
               ].map((item, i) => (
                 <motion.div
-                  key={i}
-                  className="flex items-center justify-between py-4 group cursor-default"
-                  initial={{ opacity: 0, x: -10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={t(0.5, 0.1 + i * 0.06)}
+                  key={item.n}
+                  {...anim(i * 0.07)}
+                  className="group py-9 border-t border-white/[0.06] first:border-t-0"
                 >
-                  <span className="text-[15px] text-gray-700 font-medium group-hover:text-gray-900 transition-colors">
-                    {item}
-                  </span>
-                  <ArrowUpRight
-                    className="w-4 h-4 text-gray-300 opacity-0 group-hover:opacity-100 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shrink-0"
-                    style={{ color: AMBER }}
-                  />
+                  <div className="flex gap-7 items-start">
+                    <span className="font-mono text-[11px] text-white/18 shrink-0 mt-[3px] tracking-widest">
+                      {item.n}
+                    </span>
+                    <div>
+                      <h3 className="text-[17px] font-semibold mb-3 leading-snug group-hover:text-indigo-300 transition-colors duration-300">
+                        {item.title}
+                      </h3>
+                      <p className="text-white/40 text-[14px] leading-relaxed max-w-2xl">
+                        {item.body}
+                      </p>
+                    </div>
+                  </div>
                 </motion.div>
               ))}
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════
-          PIPELINE — white
-      ══════════════════════════════════════════ */}
-      <section id="pipeline" className="bg-white section-pad">
-        <div className="container-width">
-          <SectionLabel number="05" label="Current Pipeline" />
-
-          <motion.h2
-            className="font-display font-bold mt-8 mb-14"
-            style={{ fontSize: "clamp(30px, 4vw, 50px)" }}
-            {...inView}
-            transition={t(0.7, 0.1)}
-          >
-            Active discussions.
-          </motion.h2>
-
-          <motion.div
-            className="border border-gray-200 p-8 md:p-10 max-w-xl hover:border-gray-400 transition-colors duration-300 group"
-            {...inView}
-            transition={t(0.6, 0.15)}
-          >
-            <div className="flex items-center gap-2 mb-6">
-              <span
-                className="w-[7px] h-[7px] rounded-full animate-pulse-dot"
-                style={{ backgroundColor: AMBER }}
-              />
-              <span
-                className="text-[11px] font-semibold tracking-[0.18em] uppercase"
-                style={{ color: AMBER }}
-              >
-                Investment discussions ongoing
-              </span>
+      {/* ════════════════════════════════════════
+          HOW WE SUPPORT
+      ════════════════════════════════════════ */}
+      <section id="support" className="relative py-28 md:py-36">
+        <Divider />
+        <div className="max-w-7xl mx-auto px-6 lg:px-16 pt-24">
+          {/* Header */}
+          <div className="grid lg:grid-cols-[220px_1fr] gap-12 lg:gap-24 mb-16 items-end">
+            <motion.div {...fadeIn(0)}>
+              <Label>How We Support</Label>
+            </motion.div>
+            <div>
+              <motion.h2 {...anim(0)} className="font-display font-bold text-4xl md:text-5xl tracking-[-0.03em] mb-4">
+                More than capital.
+              </motion.h2>
+              <motion.p {...anim(0.08)} className="text-white/40 text-[17px] font-light leading-relaxed max-w-lg">
+                We're hands-on partners when it's helpful — and stay out of the way when it's not.
+              </motion.p>
             </div>
+          </div>
 
-            <h3 className="text-[22px] font-bold font-display text-gray-900 mb-4">Estospaces</h3>
-            <p className="text-[15px] text-gray-500 leading-relaxed mb-6">
-              Exploring next-generation spatial platforms and digital infrastructure. No commitment
-              has been made.
-            </p>
-            <p className="text-[12px] text-gray-400 leading-relaxed">
-              Pipeline companies are under active evaluation. Inclusion does not indicate
-              investment commitment or endorsement.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════
-          WHAT WE LOOK FOR — warm
-      ══════════════════════════════════════════ */}
-      <section id="criteria" style={{ backgroundColor: WARM }} className="section-pad">
-        <div className="container-width">
-          <SectionLabel number="06" label="What We Look For" />
-
-          <motion.h2
-            className="font-display font-bold mt-8 mb-14"
-            style={{ fontSize: "clamp(30px, 4vw, 50px)" }}
-            {...inView}
-            transition={t(0.7, 0.1)}
-          >
-            Investment criteria.
-          </motion.h2>
-
-          <div className="max-w-3xl border-t border-gray-200">
+          {/* Support grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.06] border border-white/[0.06]">
             {[
               {
-                title: "Technical founders",
-                description:
-                  "Deep expertise in the problem space. Track record of building systems or products that people actually use.",
+                title: "Product clarity",
+                desc: "Early positioning and narrative that resonates with the right audience.",
               },
               {
-                title: "Real problems",
-                description:
-                  "Clear understanding of user pain. Not solutions looking for problems—genuine insight into what's broken.",
+                title: "Technical guidance",
+                desc: "Architecture, technology choices, and build-vs-buy decisions.",
               },
               {
-                title: "Early traction",
-                description:
-                  "Some signal of product-market fit. Users, revenue, usage growth, or strong early partnerships.",
+                title: "Infrastructure & scaling",
+                desc: "Building systems that won't collapse when growth arrives.",
               },
               {
-                title: "Thoughtful execution",
-                description:
-                  "Disciplined approach to building. Clear roadmap, smart prioritisation, willingness to say no.",
+                title: "Hiring strategy",
+                desc: "Finding and retaining the right first employees and advisors.",
               },
               {
-                title: "Long-term thinking",
-                description:
-                  "Building for durability, not just growth. Focused on trust, reliability, and genuine user respect.",
+                title: "Next stage preparation",
+                desc: "Getting investment-ready for Series A and beyond.",
+              },
+              {
+                title: "Network & introductions",
+                desc: "Access to customers, advisors, co-investors, and strategic partners.",
               },
             ].map((item, i) => (
-              <CriteriaRow key={i} {...item} index={i} />
+              <motion.div
+                key={item.title}
+                {...anim(i * 0.06)}
+                className="bg-[#09090E] p-7 md:p-9 group hover:bg-white/[0.018] transition-colors duration-300"
+              >
+                <div className="flex items-start gap-3 mb-3">
+                  <Check className="w-3.5 h-3.5 text-indigo-400 shrink-0 mt-[2px]" strokeWidth={3} />
+                  <h3 className="text-[14px] font-semibold text-white leading-snug">{item.title}</h3>
+                </div>
+                <p className="text-white/35 text-[13px] leading-relaxed pl-[26px]">{item.desc}</p>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════
-          PITCH CTA — dark
-      ══════════════════════════════════════════ */}
-      <section id="pitch" className="relative section-pad overflow-hidden" style={{ backgroundColor: DARK }}>
-        {/* Ambient glow — centre */}
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] pointer-events-none"
-          style={{
-            background: `radial-gradient(circle, ${AMBER}09 0%, transparent 65%)`,
-          }}
-        />
+      {/* ════════════════════════════════════════
+          PIPELINE
+      ════════════════════════════════════════ */}
+      <section id="pipeline" className="relative py-28 md:py-36">
+        <Divider />
+        <div className="max-w-7xl mx-auto px-6 lg:px-16 pt-24">
+          <div className="grid lg:grid-cols-[220px_1fr] gap-12 lg:gap-24 items-start">
+            <motion.div {...fadeIn(0)} className="lg:sticky lg:top-32 self-start">
+              <Label>Current Pipeline</Label>
+              <h2 className="font-display font-bold text-4xl tracking-[-0.03em] leading-tight mt-5">
+                Active<br />discussions.
+              </h2>
+            </motion.div>
 
-        <div className="container-width relative z-10 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={t(0.8)}
-          >
-            {/* Overline */}
-            <div className="flex items-center justify-center gap-3 mb-10">
-              <span className="w-6 h-px block" style={{ backgroundColor: AMBER + "80" }} />
-              <span
-                className="text-[11px] font-medium tracking-[0.22em] uppercase"
-                style={{ color: AMBER }}
+            <div>
+              <motion.div
+                {...anim(0.05)}
+                className="group p-8 md:p-10 border border-white/[0.08] bg-white/[0.018] hover:border-white/[0.14] hover:bg-white/[0.03] transition-all duration-300 rounded-sm"
               >
-                Pitch PraFounds
-              </span>
-              <span className="w-6 h-px block" style={{ backgroundColor: AMBER + "80" }} />
+                <div className="flex items-start justify-between gap-4 mb-5">
+                  <h3 className="font-display font-bold text-2xl tracking-tight">Estospaces</h3>
+                  <span className="shrink-0 px-3 py-1 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300/80 text-[11px] font-mono tracking-wide">
+                    Active
+                  </span>
+                </div>
+                <p className="text-white/40 text-[14px] leading-relaxed">
+                  Investment discussions ongoing. No commitment has been made.
+                </p>
+              </motion.div>
+
+              <motion.p {...fadeIn(0.15)} className="mt-5 text-white/20 text-[12px] font-mono leading-relaxed">
+                Pipeline companies are under evaluation. Inclusion does not indicate investment commitment or endorsement.
+              </motion.p>
             </div>
+          </div>
+        </div>
+      </section>
 
-            <h2
-              className="font-display font-bold text-white text-balance max-w-[640px] mx-auto mb-8"
-              style={{ fontSize: "clamp(32px, 5vw, 60px)", lineHeight: 1.08 }}
-            >
-              Ready to build something that lasts?
-            </h2>
+      {/* ════════════════════════════════════════
+          WHAT WE LOOK FOR
+      ════════════════════════════════════════ */}
+      <section className="relative py-28 md:py-36">
+        <Divider />
+        <div className="max-w-7xl mx-auto px-6 lg:px-16 pt-24">
+          {/* Header */}
+          <div className="grid lg:grid-cols-[220px_1fr] gap-12 lg:gap-24 mb-16 items-end">
+            <motion.div {...fadeIn(0)}>
+              <Label>What We Look For</Label>
+            </motion.div>
+            <motion.h2 {...anim(0)} className="font-display font-bold text-4xl md:text-5xl tracking-[-0.03em]">
+              Investment criteria.
+            </motion.h2>
+          </div>
 
-            <p className="text-[16px] md:text-[17px] text-white/40 mb-12 max-w-[520px] mx-auto leading-relaxed font-light">
-              If you're building foundational technology at the earliest stages, we'd like to hear
-              from you. Tell us what you're building, the problem you're solving, your team, and any
-              early traction.
-            </p>
+          {/* Criteria list */}
+          <div className="max-w-5xl">
+            {[
+              {
+                title: "Technical founders",
+                desc: "Deep expertise in the problem space. A track record of building systems or products that people use.",
+              },
+              {
+                title: "Real problems",
+                desc: "Clear understanding of user pain. Not solutions looking for problems.",
+              },
+              {
+                title: "Early traction",
+                desc: "Some signal of product-market fit — users, revenue, usage growth, or strong early partnerships.",
+              },
+              {
+                title: "Thoughtful execution",
+                desc: "Disciplined approach to building. A clear roadmap and smart prioritisation under constraints.",
+              },
+              {
+                title: "Long-term thinking",
+                desc: "Building for durability, not just growth. Focused on trust, reliability, and respect for users.",
+              },
+            ].map((item, i) => (
+              <motion.div
+                key={item.title}
+                {...anim(i * 0.07)}
+                className="grid md:grid-cols-[260px_1fr] gap-5 md:gap-14 py-8 border-t border-white/[0.06] group"
+              >
+                <h3 className="text-[15px] font-semibold text-white/80 group-hover:text-indigo-300 transition-colors duration-300 self-start mt-0.5">
+                  {item.title}
+                </h3>
+                <p className="text-white/40 text-[14px] leading-relaxed">
+                  {item.desc}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-            <motion.a
+      {/* ════════════════════════════════════════
+          CTA / PITCH
+      ════════════════════════════════════════ */}
+      <section id="pitch" className="relative py-36 md:py-48 overflow-hidden">
+        <Divider />
+        {/* Background glow */}
+        <div className="absolute inset-0 opacity-[0.12] bg-gradient-to-b from-indigo-900/60 via-transparent to-transparent pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[400px] bg-indigo-600 opacity-[0.06] blur-[120px] rounded-full pointer-events-none" />
+
+        <div className="relative z-10 max-w-5xl mx-auto px-6 lg:px-16 text-center pt-24">
+          <motion.div {...fadeIn(0)} className="mb-10">
+            <Label>Get in Touch</Label>
+          </motion.div>
+
+          <motion.h2
+            {...anim(0.05)}
+            className="font-display font-bold text-4xl md:text-6xl lg:text-[5rem] tracking-[-0.04em] leading-[0.95] mb-8 text-balance"
+          >
+            Ready to build<br />something that lasts?
+          </motion.h2>
+
+          <motion.p
+            {...anim(0.12)}
+            className="text-white/40 text-xl font-light leading-relaxed max-w-2xl mx-auto mb-14"
+          >
+            If you're building foundational technology at the earliest stages, we'd like to hear from you.
+          </motion.p>
+
+          <motion.div {...anim(0.18)}>
+            <a
               href="mailto:hello@prafounds.com"
-              className="inline-flex items-center gap-4 px-8 py-[15px] text-[14px] font-medium tracking-wide transition-all duration-300"
-              style={{ border: `1px solid ${AMBER}55`, color: "#fff" }}
-              whileHover={{
-                backgroundColor: AMBER,
-                borderColor: AMBER,
-              }}
+              className="group inline-flex items-center gap-4 px-9 py-5 bg-white text-[#09090E] text-[17px] font-semibold rounded-full hover:bg-white/92 active:scale-[0.97] transition-all duration-200 shadow-[0_0_80px_rgba(255,255,255,0.08)]"
             >
-              <Mail className="w-[17px] h-[17px] shrink-0" />
+              <Mail className="w-[18px] h-[18px] shrink-0" />
               hello@prafounds.com
-              <ArrowRight className="w-4 h-4 shrink-0" />
-            </motion.a>
-
-            {/* What to include */}
-            <div className="mt-12 flex flex-col sm:flex-row flex-wrap justify-center gap-4">
-              {[
-                "What you're building & why now",
-                "The problem you're solving",
-                "Your team & background",
-                "Early traction (if any)",
-              ].map((item) => (
-                <span
-                  key={item}
-                  className="text-[12px] text-white/25 border border-white/8 px-4 py-2"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
+              <ArrowUpRight className="w-[18px] h-[18px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
+            </a>
           </motion.div>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════
-          FOOTER — white
-      ══════════════════════════════════════════ */}
-      <footer className="bg-white border-t border-gray-100 py-16">
-        <div className="container-width">
-          <div className="flex flex-col md:flex-row justify-between items-start gap-10 mb-10">
-            {/* Brand */}
+      {/* ════════════════════════════════════════
+          FOOTER
+      ════════════════════════════════════════ */}
+      <footer className="py-14">
+        <Divider />
+        <div className="max-w-7xl mx-auto px-6 lg:px-16 pt-12">
+          <div className="flex flex-col md:flex-row justify-between gap-8 mb-10">
             <div>
-              <div className="text-[22px] font-bold font-display text-gray-900 mb-3">
-                PraFounds<span style={{ color: AMBER }}>.</span>
+              <div className="font-display font-bold text-[18px] tracking-tight mb-2">
+                PraFounds<span className="text-indigo-400">.</span>
               </div>
-              <p className="text-[14px] text-gray-400 leading-relaxed max-w-[240px]">
-                Early-stage, founder-led investing.<br />
-                Registered in the United Kingdom.
+              <p className="text-white/28 text-[13px]">
+                Early-stage venture capital. Registered in the United Kingdom.
               </p>
             </div>
-
-            {/* Nav links */}
-            <div className="flex gap-10 md:gap-16 text-[13px]">
-              <div className="space-y-3">
-                {[
-                  { label: "Philosophy", href: "#philosophy" },
-                  { label: "Investment Focus", href: "#focus" },
-                  { label: "Support", href: "#support" },
-                ].map((l) => (
-                  <div key={l.label}>
-                    <a
-                      href={l.href}
-                      className="text-gray-400 hover:text-gray-800 transition-colors"
-                    >
-                      {l.label}
-                    </a>
-                  </div>
-                ))}
-              </div>
-              <div className="space-y-3">
-                {[
-                  { label: "Pipeline", href: "#pipeline" },
-                  { label: "Criteria", href: "#criteria" },
-                  { label: "Contact", href: "#pitch" },
-                ].map((l) => (
-                  <div key={l.label}>
-                    <a
-                      href={l.href}
-                      className="text-gray-400 hover:text-gray-800 transition-colors"
-                    >
-                      {l.label}
-                    </a>
-                  </div>
-                ))}
-              </div>
+            <div className="text-[13px] space-y-1">
+              <p className="text-white/28">United Kingdom · Ireland · Europe</p>
+              <a
+                href="mailto:hello@prafounds.com"
+                className="text-white/40 hover:text-white/70 transition-colors duration-200 block"
+              >
+                hello@prafounds.com
+              </a>
             </div>
           </div>
 
-          {/* Bottom */}
-          <div className="border-t border-gray-100 pt-8 space-y-2">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <p className="text-[13px] text-gray-400">
-                © {new Date().getFullYear()} PraFounds Ventures Ltd. All rights reserved.
-              </p>
-              <p className="text-[12px] text-gray-300">
-                United Kingdom · Ireland · Europe
-              </p>
-            </div>
-            <p className="text-[12px] text-gray-300 leading-relaxed max-w-3xl">
-              PraFounds Ventures invests its own capital. This website does not constitute an offer
-              to sell or a solicitation to purchase any securities. Past performance is not
-              indicative of future results. Investment in early-stage companies involves significant
-              risk, including potential loss of capital.
+          <div className="border-t border-white/[0.05] pt-8 space-y-3">
+            <p className="text-white/25 text-[12px]">
+              © {new Date().getFullYear()} PraFounds Ventures Ltd. All rights reserved.
+            </p>
+            <p className="text-white/14 text-[11px] max-w-3xl leading-relaxed">
+              This website does not constitute an offer to sell or a solicitation of an offer to purchase any securities. Past performance is not indicative of future results. Investment in early-stage companies involves significant risk, including loss of capital.
             </p>
           </div>
         </div>

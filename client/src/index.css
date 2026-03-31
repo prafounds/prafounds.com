@@ -1,123 +1,122 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Inter:ital,opsz,wght@0,14..32,300..700;1,14..32,300..700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: 0 0% 100%;
-  --foreground: 226 22% 8%;
+  /* ── Dark Premium Palette ── */
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 94%;
 
-  --card: 0 0% 100%;
-  --card-foreground: 226 22% 8%;
+  --card: 240 8% 5.5%;
+  --card-foreground: 0 0% 94%;
+  --card-border: 240 6% 12%;
 
-  --popover: 0 0% 100%;
-  --popover-foreground: 226 22% 8%;
+  --popover: 240 8% 5.5%;
+  --popover-foreground: 0 0% 94%;
+  --popover-border: 240 6% 12%;
 
-  --primary: 226 22% 8%;
-  --primary-foreground: 0 0% 100%;
+  --primary: 234 89% 74%;
+  --primary-foreground: 240 10% 3.9%;
+  --primary-border: rgba(99, 102, 241, 0.35);
 
-  --secondary: 30 15% 96%;
-  --secondary-foreground: 226 22% 8%;
+  --secondary: 240 5% 11%;
+  --secondary-foreground: 0 0% 68%;
+  --secondary-border: rgba(255, 255, 255, 0.07);
 
-  --muted: 220 10% 96%;
-  --muted-foreground: 220 8% 50%;
+  --muted: 240 5% 9.5%;
+  --muted-foreground: 240 4% 52%;
+  --muted-border: rgba(255, 255, 255, 0.05);
 
-  --accent: 28 52% 52%;
-  --accent-foreground: 0 0% 100%;
+  --accent: 234 89% 74%;
+  --accent-foreground: 240 10% 3.9%;
+  --accent-border: rgba(129, 140, 248, 0.3);
 
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 98%;
+  --destructive-border: rgba(239, 68, 68, 0.3);
 
-  --border: 220 13% 90%;
-  --input: 220 13% 91%;
-  --ring: 226 22% 8%;
+  --border: 240 6% 12%;
+  --input: 240 6% 9.5%;
+  --ring: 234 89% 74%;
+  --radius: 0.5rem;
 
-  --radius: 0.25rem;
+  /* Charts */
+  --chart-1: 234 89% 74%;
+  --chart-2: 262 83% 75%;
+  --chart-3: 291 70% 70%;
+  --chart-4: 326 69% 68%;
+  --chart-5: 355 80% 72%;
+
+  /* Sidebar */
+  --sidebar: 240 8% 4.5%;
+  --sidebar-foreground: 240 5% 72%;
+  --sidebar-border: 240 6% 11%;
+  --sidebar-ring: 234 89% 74%;
+  --sidebar-primary: 234 89% 74%;
+  --sidebar-primary-foreground: 240 10% 3.9%;
+  --sidebar-accent: 240 5% 11%;
+  --sidebar-accent-foreground: 0 0% 78%;
+  --sidebar-primary-border: rgba(99, 102, 241, 0.3);
+  --sidebar-accent-border: rgba(255, 255, 255, 0.07);
 }
 
+/* ── Base ── */
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border box-border;
   }
-
   html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
-
-  body {
-    @apply bg-background text-foreground;
-    font-family: 'Inter', sans-serif;
-  }
-
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Bricolage Grotesque', system-ui, sans-serif;
     @apply tracking-tight;
+  }
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+  }
+  ::selection {
+    background: rgba(99, 102, 241, 0.28);
+    color: #fff;
   }
 }
 
+/* ── Shadcn accordion ── */
+@keyframes accordion-down {
+  from { height: 0; }
+  to   { height: var(--radix-accordion-content-height); }
+}
+@keyframes accordion-up {
+  from { height: var(--radix-accordion-content-height); }
+  to   { height: 0; }
+}
+
+/* ── Custom utilities ── */
 @layer utilities {
-  .container-width {
-    @apply max-w-[1300px] mx-auto px-6 md:px-12 lg:px-20;
+  .font-display {
+    font-family: 'Bricolage Grotesque', system-ui, sans-serif;
   }
-
-  .section-pad {
-    @apply py-24 md:py-32 lg:py-40;
-  }
-
   .text-balance {
     text-wrap: balance;
   }
-
-  .font-display {
-    font-family: 'Playfair Display', serif;
+  /* Subtle dot grid helper */
+  .dot-grid {
+    background-image: radial-gradient(circle, rgba(255,255,255,0.55) 1px, transparent 1px);
+    background-size: 28px 28px;
   }
 }
 
-/* Accordion animation */
-@keyframes accordion-down {
-  from { height: 0; }
-  to { height: var(--radix-accordion-content-height); }
-}
-
-@keyframes accordion-up {
-  from { height: var(--radix-accordion-content-height); }
-  to { height: 0; }
-}
-
-.animate-accordion-down {
-  animation: accordion-down 0.2s ease-out;
-}
-
-.animate-accordion-up {
-  animation: accordion-up 0.2s ease-out;
-}
-
-/* Scroll-triggered line animation */
-@keyframes line-grow {
-  from { transform: scaleX(0); }
-  to { transform: scaleX(1); }
-}
-
-/* Pulse dot */
-@keyframes pulse-dot {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.8); }
-}
-
-.animate-pulse-dot {
-  animation: pulse-dot 2s ease-in-out infinite;
-}
-
-/* Vertical scan line for hero */
-@keyframes scan {
-  0% { transform: scaleY(0); transform-origin: top; opacity: 1; }
-  50% { transform: scaleY(1); transform-origin: top; opacity: 0.4; }
-  100% { transform: scaleY(1); transform-origin: top; opacity: 0; }
-}
-
-.animate-scan {
-  animation: scan 2.5s ease-in-out infinite;
+/* ── Noise grain overlay (applied via bg-noise class) ── */
+.bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
 }
