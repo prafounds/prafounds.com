@@ -33,6 +33,43 @@ function Divider() {
   return <div className="border-t border-white/[0.06]" />;
 }
 
+/* ── Marquee ticker ── */
+const TICKER = [
+  "Pre-Seed",
+  "Seed",
+  "Developer Tools",
+  "Applied AI",
+  "Infrastructure",
+  "Platforms",
+  "United Kingdom",
+  "Ireland",
+  "Europe",
+  "Founder-First",
+  "Long-Term Thinking",
+  "Technical Founders",
+];
+
+function MarqueeBanner() {
+  const doubled = [...TICKER, ...TICKER];
+  return (
+    <div
+      className="overflow-hidden border-y border-white/[0.06] py-4 select-none"
+      aria-hidden="true"
+    >
+      <div className="marquee-track">
+        {doubled.map((item, i) => (
+          <span key={i} className="inline-flex items-center gap-6 px-6">
+            <span className="text-[10px] font-mono font-medium tracking-[0.22em] uppercase text-white/28">
+              {item}
+            </span>
+            <span className="w-[3px] h-[3px] rounded-full bg-indigo-500/50 shrink-0" />
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const { scrollY } = useScroll();
   const heroY       = useTransform(scrollY, [0, 600], [0, -60]);
@@ -121,6 +158,8 @@ export default function Home() {
           <div className="w-px h-14 bg-gradient-to-b from-transparent via-white/30 to-transparent" />
         </motion.div>
       </section>
+
+      <MarqueeBanner />
 
       {/* ════════════════════════════════════════
           WHAT WE DO
