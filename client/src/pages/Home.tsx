@@ -1,7 +1,7 @@
 import * as React from "react";
 import type { MotionProps } from "framer-motion";
 import { Navigation } from "@/components/Navigation";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Mail, ArrowUpRight, Check } from "lucide-react";
 
 /* ── Colour tokens ── */
@@ -76,6 +76,43 @@ function MarqueeBanner() {
   );
 }
 
+/* ── Rolling word cycler ── */
+const ROLLING_WORDS = ["builders", "founders", "pioneers", "architects", "engineers", "makers"];
+
+function RollingWord() {
+  const [index, setIndex] = React.useState(0);
+
+  React.useEffect(() => {
+    const id = setInterval(() => setIndex(i => (i + 1) % ROLLING_WORDS.length), 2600);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <span
+      style={{
+        display: "inline-block",
+        overflow: "hidden",
+        height: "0.92em",
+        verticalAlign: "bottom",
+        position: "relative",
+      }}
+    >
+      <AnimatePresence mode="popLayout" initial={false}>
+        <motion.span
+          key={index}
+          initial={{ y: "105%", opacity: 0 }}
+          animate={{ y: "0%",   opacity: 1 }}
+          exit={{    y: "-105%", opacity: 0 }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          style={{ display: "block", color: `${CREAM}35`, whiteSpace: "nowrap" }}
+        >
+          {ROLLING_WORDS[index]}
+        </motion.span>
+      </AnimatePresence>
+    </span>
+  );
+}
+
 export default function Home() {
   const { scrollY } = useScroll();
   const heroY       = useTransform(scrollY, [0, 700], [0, -70]);
@@ -138,7 +175,7 @@ export default function Home() {
             style={{ color: CREAM }}
           >
             We back the<br />
-            <span style={{ color: `${CREAM}28` }}>builders of</span><br />
+            <RollingWord /><span style={{ color: `${CREAM}28` }}> of</span><br />
             tomorrow's<br />
             foundations.
           </motion.h1>
