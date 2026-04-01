@@ -1,0 +1,23 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#06101F"/>
+  <!-- Dot grid -->
+  <defs>
+    <pattern id="dots" x="0" y="0" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="rgba(235,242,255,0.14)"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+  <!-- Ambient glow -->
+  <ellipse cx="600" cy="315" rx="420" ry="210" fill="#6366F1" opacity="0.10"/>
+  <!-- Logo mark (large, centered-left) -->
+  <g transform="translate(390, 195) scale(6)">
+    <rect width="40" height="40" rx="8" fill="#6366F1"/>
+    <path fill-rule="evenodd" fill="white" d="M8 7 L18 7 Q28 7 28 16 Q28 25 18 25 L13 25 L13 33 L8 33 Z M13 11 L16 11 Q23 11 23 16 Q23 21 16 21 L13 21 Z"/>
+  </g>
+  <!-- Wordmark -->
+  <text x="660" y="285" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="80" font-weight="700" fill="#EBF2FF" letter-spacing="-2">Pra</text>
+  <text x="660" y="375" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="80" font-weight="700" fill="#6366F1" letter-spacing="-2">Founds</text>
+  <!-- Tagline -->
+  <text x="660" y="435" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="28" font-weight="400" fill="rgba(235,242,255,0.5)" letter-spacing="0">Early Stage Venture Capital</text>
+</svg>

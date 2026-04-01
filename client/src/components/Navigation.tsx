@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Logo } from "@/components/Logo";
 
 const NAV_LINKS = [
   { label: "Philosophy", id: "philosophy" },
@@ -81,10 +82,9 @@ export function Navigation() {
           {/* Logo */}
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="text-[17px] font-bold font-display tracking-[-0.02em] transition-colors duration-300"
-            style={{ color: C.logo }}
+            aria-label="PraFounds — go to top"
           >
-            PraFounds<span style={{ color: C.dot }}>.</span>
+            <Logo textColor={C.logo} dotColor={C.dot} />
           </button>
 
           {/* Desktop links */}
