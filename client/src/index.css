@@ -5,60 +5,58 @@
 @tailwind utilities;
 
 :root {
-  /* ── Warm Off-White Premium Palette ── */
-  --background: 42 20% 96%;          /* #F5F4EF warm stone */
-  --foreground: 28 6% 8%;            /* #141210 near-black */
+  /* ── Light section tokens (content areas) ── */
+  --background: 216 40% 97%;         /* #F2F6FB cool light blue-gray */
+  --foreground: 220 40% 11%;         /* #0D1627 deep navy-black */
 
-  --card: 40 14% 93%;                /* #EDEBE4 */
-  --card-foreground: 28 6% 8%;
-  --card-border: 38 10% 86%;         /* #DDD9D1 */
+  --card: 0 0% 100%;                 /* #FFFFFF */
+  --card-foreground: 220 40% 11%;
+  --card-border: 216 20% 90%;        /* #E1E8F0 */
 
   --popover: 0 0% 100%;
-  --popover-foreground: 28 6% 8%;
-  --popover-border: 38 10% 86%;
+  --popover-foreground: 220 40% 11%;
+  --popover-border: 216 20% 90%;
 
-  --primary: 239 84% 65%;            /* #5B5EE8 indigo */
+  --primary: 239 84% 67%;            /* #6366F1 indigo */
   --primary-foreground: 0 0% 100%;
-  --primary-border: rgba(91, 94, 232, 0.25);
+  --primary-border: rgba(99, 102, 241, 0.25);
 
-  --secondary: 38 10% 91%;           /* #E8E4DC */
-  --secondary-foreground: 28 6% 20%;
+  --secondary: 216 30% 94%;
+  --secondary-foreground: 220 30% 25%;
   --secondary-border: rgba(0, 0, 0, 0.07);
 
-  --muted: 38 10% 91%;
-  --muted-foreground: 30 4% 45%;     /* #706D66 */
+  --muted: 216 25% 93%;
+  --muted-foreground: 220 15% 48%;
   --muted-border: rgba(0, 0, 0, 0.05);
 
-  --accent: 239 84% 65%;
+  --accent: 239 84% 67%;
   --accent-foreground: 0 0% 100%;
-  --accent-border: rgba(91, 94, 232, 0.25);
+  --accent-border: rgba(99, 102, 241, 0.25);
 
   --destructive: 0 84% 55%;
   --destructive-foreground: 0 0% 98%;
   --destructive-border: rgba(220, 50, 47, 0.2);
 
-  --border: 38 10% 87%;
-  --input: 38 10% 91%;
-  --ring: 239 84% 65%;
+  --border: 216 20% 90%;
+  --input: 216 25% 93%;
+  --ring: 239 84% 67%;
   --radius: 0.5rem;
 
-  /* Charts */
-  --chart-1: 239 84% 65%;
+  --chart-1: 239 84% 67%;
   --chart-2: 262 75% 60%;
   --chart-3: 291 65% 55%;
   --chart-4: 326 65% 55%;
   --chart-5: 355 75% 58%;
 
-  /* Sidebar */
-  --sidebar: 40 16% 94%;
-  --sidebar-foreground: 28 6% 30%;
-  --sidebar-border: 38 10% 87%;
-  --sidebar-ring: 239 84% 65%;
-  --sidebar-primary: 239 84% 65%;
+  --sidebar: 216 35% 96%;
+  --sidebar-foreground: 220 40% 20%;
+  --sidebar-border: 216 20% 90%;
+  --sidebar-ring: 239 84% 67%;
+  --sidebar-primary: 239 84% 67%;
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 38 10% 91%;
-  --sidebar-accent-foreground: 28 6% 20%;
-  --sidebar-primary-border: rgba(91, 94, 232, 0.25);
+  --sidebar-accent: 216 25% 93%;
+  --sidebar-accent-foreground: 220 30% 25%;
+  --sidebar-primary-border: rgba(99, 102, 241, 0.25);
   --sidebar-accent-border: rgba(0, 0, 0, 0.07);
 }
 
@@ -86,8 +84,8 @@
     font-family: 'JetBrains Mono', 'Courier New', monospace;
   }
   ::selection {
-    background: rgba(91, 94, 232, 0.2);
-    color: #1a1917;
+    background: rgba(99, 102, 241, 0.2);
+    color: #0d1627;
   }
 }
 
@@ -101,27 +99,31 @@
   to   { height: 0; }
 }
 
-/* ── Custom utilities ── */
+/* ── Utilities ── */
 @layer utilities {
   .font-display {
     font-family: 'Bricolage Grotesque', system-ui, sans-serif;
   }
-  .text-balance {
-    text-wrap: balance;
+  .text-balance { text-wrap: balance; }
+
+  /* Dot grid — dark dots for light sections */
+  .dot-grid-light {
+    background-image: radial-gradient(circle, rgba(13,22,39,0.14) 1px, transparent 1px);
+    background-size: 28px 28px;
   }
-  /* Dot grid — tuned for light backgrounds */
-  .dot-grid {
-    background-image: radial-gradient(circle, rgba(0,0,0,0.18) 1px, transparent 1px);
+  /* Dot grid — light dots for dark sections */
+  .dot-grid-dark {
+    background-image: radial-gradient(circle, rgba(235,242,255,0.18) 1px, transparent 1px);
     background-size: 28px 28px;
   }
 }
 
-/* ── Noise grain overlay ── */
+/* ── Grain overlay ── */
 .bg-noise {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* ── Marquee ticker ── */
+/* ── Marquee ── */
 @keyframes marquee-scroll {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
@@ -131,6 +133,4 @@
   width: max-content;
   animation: marquee-scroll 28s linear infinite;
 }
-.marquee-track:hover {
-  animation-play-state: paused;
-}
+.marquee-track:hover { animation-play-state: paused; }
