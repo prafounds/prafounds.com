@@ -769,14 +769,14 @@ export default function Home() {
       {/* ════════════════════════════════════════
           FOOTER — dark navy
       ════════════════════════════════════════ */}
-      <footer style={{ background: DARK_BG, borderTop: "1px solid rgba(255,255,255,0.07)" }}>
+      <footer style={{ background: DARK_BG, borderTop: "1px solid rgba(255,255,255,0.1)" }}>
         <div className="max-w-7xl mx-auto px-6 lg:px-16 py-16">
           {/* Top row */}
           <div className="flex flex-col md:flex-row justify-between gap-10 mb-12">
             {/* Logo + tagline */}
             <div>
               <Logo textColor={CREAM} dotColor={INDIGO} size={28} />
-              <p className="text-[13px] mt-3" style={{ color: `${CREAM}35` }}>
+              <p className="text-[13px] mt-3" style={{ color: "rgba(235,242,255,0.6)" }}>
                 Early-stage venture capital. Registered in the United Kingdom.
               </p>
             </div>
@@ -784,29 +784,29 @@ export default function Home() {
             {/* Nav columns */}
             <div className="flex gap-16 text-[13px]">
               <div className="space-y-3">
-                <p className="font-mono uppercase tracking-widest text-[10px] mb-4" style={{ color: `${CREAM}28` }}>Company</p>
+                <p className="font-mono uppercase tracking-widest text-[10px] mb-4" style={{ color: "rgba(235,242,255,0.45)" }}>Company</p>
                 {["philosophy", "focus", "support", "pipeline"].map((id) => (
                   <button
                     key={id}
                     onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })}
                     className="block capitalize transition-colors duration-200"
-                    style={{ color: `${CREAM}45` }}
+                    style={{ color: "rgba(235,242,255,0.72)" }}
                     onMouseEnter={e => (e.currentTarget.style.color = CREAM)}
-                    onMouseLeave={e => (e.currentTarget.style.color = `${CREAM}45`)}
+                    onMouseLeave={e => (e.currentTarget.style.color = "rgba(235,242,255,0.72)")}
                   >
                     {id === "focus" ? "Investment Focus" : id.charAt(0).toUpperCase() + id.slice(1)}
                   </button>
                 ))}
               </div>
               <div className="space-y-3">
-                <p className="font-mono uppercase tracking-widest text-[10px] mb-4" style={{ color: `${CREAM}28` }}>Contact</p>
-                <p style={{ color: `${CREAM}38` }}>UK · Ireland · Europe</p>
+                <p className="font-mono uppercase tracking-widest text-[10px] mb-4" style={{ color: "rgba(235,242,255,0.45)" }}>Contact</p>
+                <p style={{ color: "rgba(235,242,255,0.65)" }}>UK · Ireland · Europe</p>
                 <a
                   href="mailto:hello@prafounds.com"
                   className="block transition-colors duration-200"
-                  style={{ color: `${CREAM}45` }}
+                  style={{ color: "rgba(235,242,255,0.72)" }}
                   onMouseEnter={e => (e.currentTarget.style.color = CREAM)}
-                  onMouseLeave={e => (e.currentTarget.style.color = `${CREAM}45`)}
+                  onMouseLeave={e => (e.currentTarget.style.color = "rgba(235,242,255,0.72)")}
                 >
                   hello@prafounds.com
                 </a>
@@ -815,11 +815,11 @@ export default function Home() {
           </div>
 
           {/* Bottom row */}
-          <div className="pt-8 flex flex-col md:flex-row justify-between gap-4" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-            <p className="text-[12px]" style={{ color: `${CREAM}30` }}>
+          <div className="pt-8 flex flex-col md:flex-row justify-between gap-4" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+            <p className="text-[12px]" style={{ color: "rgba(235,242,255,0.55)" }}>
               © {new Date().getFullYear()} PraFounds Ventures Ltd. All rights reserved.
             </p>
-            <p className="text-[11px] max-w-xl leading-relaxed text-right" style={{ color: `${CREAM}18` }}>
+            <p className="text-[11px] max-w-xl leading-relaxed md:text-right" style={{ color: "rgba(235,242,255,0.38)" }}>
               This website does not constitute an offer to sell or a solicitation of an offer to purchase any securities. Investment in early-stage companies involves significant risk.
             </p>
           </div>
