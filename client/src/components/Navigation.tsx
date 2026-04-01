@@ -11,8 +11,8 @@ const NAV_LINKS = [
 ];
 
 export function Navigation() {
-  const [scrolled,    setScrolled]    = useState(false);
-  const [mobileOpen,  setMobileOpen]  = useState(false);
+  const [scrolled,   setScrolled]   = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 48);
@@ -31,7 +31,7 @@ export function Navigation() {
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
           scrolled
-            ? "bg-[#09090E]/80 backdrop-blur-2xl border-b border-white/[0.06] shadow-[0_1px_0_rgba(255,255,255,0.03)]"
+            ? "bg-[#F5F4EF]/92 backdrop-blur-2xl border-b border-black/[0.07] shadow-[0_1px_0_rgba(0,0,0,0.04)]"
             : "bg-transparent"
         )}
       >
@@ -39,9 +39,9 @@ export function Navigation() {
           {/* Logo */}
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="text-[17px] font-bold font-display tracking-[-0.02em] text-white hover:text-white/80 transition-colors duration-200"
+            className="text-[17px] font-bold font-display tracking-[-0.02em] text-[#141210] hover:text-[#141210]/70 transition-colors duration-200"
           >
-            PraFounds<span className="text-indigo-400">.</span>
+            PraFounds<span className="text-indigo-600">.</span>
           </button>
 
           {/* Desktop links */}
@@ -50,7 +50,7 @@ export function Navigation() {
               <button
                 key={link.id}
                 onClick={() => scrollTo(link.id)}
-                className="text-[13px] font-medium text-white/40 hover:text-white/80 transition-colors duration-200 tracking-wide"
+                className="text-[13px] font-medium text-[#141210]/45 hover:text-[#141210]/80 transition-colors duration-200 tracking-wide"
               >
                 {link.label}
               </button>
@@ -61,7 +61,7 @@ export function Navigation() {
           <div className="hidden md:block">
             <button
               onClick={() => scrollTo("pitch")}
-              className="px-5 py-[9px] text-[13px] font-semibold text-[#09090E] bg-white rounded-full hover:bg-white/90 active:scale-95 transition-all duration-200"
+              className="px-5 py-[9px] text-[13px] font-semibold text-white bg-[#141210] rounded-full hover:bg-[#141210]/85 active:scale-95 transition-all duration-200"
             >
               Get in Touch
             </button>
@@ -69,7 +69,7 @@ export function Navigation() {
 
           {/* Mobile toggle */}
           <button
-            className="md:hidden p-2 text-white/50 hover:text-white transition-colors"
+            className="md:hidden p-2 text-[#141210]/50 hover:text-[#141210] transition-colors"
             onClick={() => setMobileOpen((v) => !v)}
             aria-label="Toggle menu"
           >
@@ -87,14 +87,14 @@ export function Navigation() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="fixed top-16 left-0 right-0 z-40 bg-[#09090E]/95 backdrop-blur-2xl border-b border-white/[0.06] px-6 py-8"
+            className="fixed top-16 left-0 right-0 z-40 bg-[#F5F4EF]/97 backdrop-blur-2xl border-b border-black/[0.07] px-6 py-8"
           >
             <div className="flex flex-col gap-6">
               {NAV_LINKS.map((link) => (
                 <button
                   key={link.id}
                   onClick={() => scrollTo(link.id)}
-                  className="text-left text-lg font-medium text-white/50 hover:text-white transition-colors"
+                  className="text-left text-lg font-medium text-[#141210]/50 hover:text-[#141210] transition-colors"
                 >
                   {link.label}
                 </button>
@@ -102,7 +102,7 @@ export function Navigation() {
               <div className="pt-2">
                 <button
                   onClick={() => scrollTo("pitch")}
-                  className="w-full py-4 text-base font-semibold text-[#09090E] bg-white rounded-full hover:bg-white/90 transition-all duration-200"
+                  className="w-full py-4 text-base font-semibold text-white bg-[#141210] rounded-full hover:bg-[#141210]/85 transition-all duration-200"
                 >
                   Get in Touch
                 </button>
