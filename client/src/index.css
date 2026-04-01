@@ -123,6 +123,57 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
+/* ── Gradient text (hero "foundations." accent) ── */
+@keyframes gradient-sweep {
+  0%, 100% { background-position: 0% 50%; }
+  50%       { background-position: 100% 50%; }
+}
+.text-gradient-hero {
+  background: linear-gradient(130deg, #EBF2FF 0%, #A5B4FC 40%, #818CF8 65%, #EBF2FF 100%);
+  background-size: 280% 280%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-sweep 5s ease infinite;
+}
+
+/* ── Card shimmer on hover ── */
+@keyframes card-shimmer {
+  from { transform: translateX(-100%) skewX(-12deg); }
+  to   { transform: translateX(300%)  skewX(-12deg); }
+}
+.shimmer-card {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 45%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.055) 50%,
+    transparent 100%
+  );
+  transform: translateX(-100%) skewX(-12deg);
+  pointer-events: none;
+  z-index: 1;
+}
+.shimmer-card:hover::after {
+  animation: card-shimmer 0.65s ease-out forwards;
+}
+
+/* ── Card interactive border (CSS hover, avoids inline style specificity fight) ── */
+.card-interactive {
+  border: 1px solid rgba(13, 22, 39, 0.07);
+  transition: border-color 0.25s ease, box-shadow 0.35s ease;
+}
+.card-interactive:hover {
+  border-color: rgba(99, 102, 241, 0.28);
+}
+
 /* ── Marquee ── */
 @keyframes marquee-scroll {
   from { transform: translateX(0); }

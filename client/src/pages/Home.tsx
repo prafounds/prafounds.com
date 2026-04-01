@@ -77,6 +77,38 @@ function MarqueeBanner() {
   );
 }
 
+/* ── Hero floating particles ── */
+const PARTICLES = [
+  { x: 15, y: 22, r: 1.5, dur: 18, del: 0,   dy: [-14,14], dx: [-7,7]   },
+  { x: 78, y: 38, r: 2,   dur: 22, del: 3.5, dy: [-18,18], dx: [-10,10] },
+  { x: 34, y: 67, r: 1,   dur: 16, del: 1.2, dy: [-10,10], dx: [-6,6]   },
+  { x: 88, y: 14, r: 2.5, dur: 25, del: 7,   dy: [-20,20], dx: [-12,12] },
+  { x: 52, y: 82, r: 1.5, dur: 20, del: 4,   dy: [-12,12], dx: [-8,8]   },
+  { x: 22, y: 52, r: 1,   dur: 17, del: 2,   dy: [-16,16], dx: [-9,9]   },
+  { x: 68, y: 44, r: 2,   dur: 23, del: 8.5, dy: [-11,11], dx: [-7,7]   },
+  { x: 92, y: 63, r: 1.5, dur: 19, del: 1,   dy: [-15,15], dx: [-10,10] },
+  { x:  8, y: 76, r: 1,   dur: 21, del: 6,   dy: [-13,13], dx: [-6,6]   },
+  { x: 46, y: 28, r: 2.5, dur: 15, del: 9.5, dy: [-17,17], dx: [-11,11] },
+  { x: 62, y: 90, r: 1,   dur: 24, del: 0.5, dy: [-10,10], dx: [-5,5]   },
+  { x: 30, y: 10, r: 2,   dur: 18, del: 5,   dy: [-18,18], dx: [-9,9]   },
+];
+
+function FloatingParticles() {
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      {PARTICLES.map((p, i) => (
+        <motion.div
+          key={i}
+          className="absolute rounded-full"
+          style={{ left: `${p.x}%`, top: `${p.y}%`, width: p.r * 2, height: p.r * 2, background: INDIGO }}
+          animate={{ y: [p.dy[0], p.dy[1], p.dy[0]], x: [p.dx[0], p.dx[1], p.dx[0]], opacity: [0.06, 0.28, 0.06] }}
+          transition={{ duration: p.dur, delay: p.del, repeat: Infinity, ease: "easeInOut" }}
+        />
+      ))}
+    </div>
+  );
+}
+
 /* ── Rolling word cycler ── */
 const ROLLING_WORDS = ["builders", "founders", "pioneers", "architects", "engineers", "makers"];
 
@@ -139,16 +171,33 @@ export default function Home() {
       >
         {/* Dot grid */}
         <div className="absolute inset-0 dot-grid-dark opacity-60" />
-        {/* Bottom fade into light content */}
+        {/* Floating particles */}
+        <FloatingParticles />
+        {/* Bottom fade */}
         <div
           className="absolute inset-x-0 bottom-0 h-40 pointer-events-none"
           style={{ background: `linear-gradient(to bottom, transparent, ${DARK_BG})` }}
         />
-        {/* Indigo ambient */}
-        <div className="absolute top-1/4 left-[10%] w-[700px] h-[700px] rounded-full opacity-[0.07] blur-[140px] pointer-events-none"
-             style={{ background: INDIGO }} />
-        <div className="absolute bottom-1/4 right-[5%] w-[400px] h-[400px] rounded-full opacity-[0.05] blur-[100px] pointer-events-none"
-             style={{ background: "#818CF8" }} />
+        {/* Animated indigo ambient blobs */}
+        <motion.div
+          className="absolute top-1/4 left-[10%] w-[700px] h-[700px] rounded-full pointer-events-none"
+          style={{ background: INDIGO, filter: "blur(140px)" }}
+          animate={{ x: [0, 40, -20, 0], y: [0, -50, 30, 0], opacity: [0.07, 0.11, 0.06, 0.07], scale: [1, 1.14, 0.92, 1] }}
+          transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", repeatType: "mirror" }}
+        />
+        <motion.div
+          className="absolute bottom-1/4 right-[5%] w-[420px] h-[420px] rounded-full pointer-events-none"
+          style={{ background: "#818CF8", filter: "blur(110px)" }}
+          animate={{ x: [0, -35, 22, 0], y: [0, 32, -22, 0], opacity: [0.05, 0.09, 0.04, 0.05], scale: [1, 1.2, 0.88, 1] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", repeatType: "mirror", delay: 3 }}
+        />
+        {/* Third small orb — bottom-left */}
+        <motion.div
+          className="absolute bottom-[15%] left-[30%] w-[280px] h-[280px] rounded-full pointer-events-none"
+          style={{ background: "#A5B4FC", filter: "blur(90px)" }}
+          animate={{ x: [0, 20, -15, 0], y: [0, -25, 18, 0], opacity: [0.03, 0.07, 0.02, 0.03] }}
+          transition={{ duration: 16, repeat: Infinity, ease: "easeInOut", repeatType: "mirror", delay: 6 }}
+        />
 
         <motion.div
           className="relative z-10 max-w-7xl mx-auto px-6 lg:px-16 pt-28 pb-28 w-full"
@@ -178,7 +227,7 @@ export default function Home() {
             We back the<br />
             <RollingWord /><span style={{ color: `${CREAM}28` }}> of</span><br />
             tomorrow's<br />
-            foundations.
+            <span className="text-gradient-hero">foundations.</span>
           </motion.h1>
 
           {/* Sub */}
@@ -301,13 +350,19 @@ export default function Home() {
               <motion.div
                 key={card.num}
                 {...anim(i * 0.09)}
-                className="relative overflow-hidden p-9 rounded-2xl border transition-all duration-300"
-                style={{ background: CARD_BG, borderColor: "rgba(13,22,39,0.07)" }}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = `rgba(99,102,241,0.25)`; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = `rgba(13,22,39,0.07)`; }}
+                whileHover={{ y: -6, transition: { type: "spring", stiffness: 340, damping: 28 } }}
+                className="relative p-9 rounded-2xl shimmer-card card-interactive"
+                style={{ background: CARD_BG }}
               >
-                {/* Indigo top accent */}
-                <div className="w-9 h-[3px] rounded-full mb-8" style={{ background: INDIGO }} />
+                {/* Animated indigo top bar — draws in on viewport enter */}
+                <motion.div
+                  className="h-[3px] rounded-full mb-8"
+                  style={{ background: INDIGO }}
+                  initial={{ width: 0 }}
+                  whileInView={{ width: "2.25rem" }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7, delay: i * 0.09 + 0.25, ease: [0.22, 1, 0.36, 1] }}
+                />
                 {/* Giant faded background number */}
                 <div
                   className="absolute top-0 right-3 font-display font-bold leading-none select-none pointer-events-none"
@@ -359,11 +414,18 @@ export default function Home() {
                 { n: "04", title: "Respect for users' trust, data & time",
                   body: "The best products earn user trust through careful design decisions. We invest in teams that treat users as partners, not metrics." },
               ].map((item, i) => (
+                <div key={item.n}>
+                  {/* Animated border line */}
+                  <motion.div
+                    style={{ height: 1, background: "rgba(13,22,39,0.08)", transformOrigin: "left" }}
+                    initial={{ scaleX: 0 }}
+                    whileInView={{ scaleX: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                  />
                 <motion.div
-                  key={item.n}
                   {...anim(i * 0.08)}
-                  className="grid sm:grid-cols-[72px_1fr] gap-6 py-11 border-t"
-                  style={{ borderColor: "rgba(13,22,39,0.08)" }}
+                  className="grid sm:grid-cols-[72px_1fr] gap-6 py-11"
                 >
                   {/* Large editorial number */}
                   <span
@@ -379,6 +441,7 @@ export default function Home() {
                     <p className="text-[15px] leading-[1.75]" style={{ color: `${INK}55` }}>{item.body}</p>
                   </div>
                 </motion.div>
+                </div>
               ))}
             </div>
           </div>
@@ -414,17 +477,20 @@ export default function Home() {
               <motion.div
                 key={item.title}
                 {...anim(i * 0.06)}
-                className="p-8 rounded-2xl border transition-all duration-300 group"
-                style={{ background: CARD_BG, borderColor: "rgba(13,22,39,0.07)" }}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = `rgba(99,102,241,0.22)`; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = `rgba(13,22,39,0.07)`; }}
+                whileHover={{ y: -5, transition: { type: "spring", stiffness: 340, damping: 28 } }}
+                className="p-8 rounded-2xl shimmer-card card-interactive"
+                style={{ background: CARD_BG }}
               >
-                <div
-                  className="w-9 h-9 rounded-xl flex items-center justify-center mb-6 transition-colors duration-300"
+                <motion.div
+                  className="w-9 h-9 rounded-xl flex items-center justify-center mb-6"
                   style={{ background: "rgba(99,102,241,0.09)" }}
+                  initial={{ scale: 0.5, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.06 + 0.2, ease: [0.22, 1, 0.36, 1] }}
                 >
                   <item.Icon className="w-[17px] h-[17px]" style={{ color: INDIGO }} strokeWidth={1.75} />
-                </div>
+                </motion.div>
                 <h3 className="text-[15px] font-semibold mb-2.5 leading-snug" style={{ color: INK }}>{item.title}</h3>
                 <p className="text-[13px] leading-relaxed" style={{ color: `${INK}50` }}>{item.desc}</p>
               </motion.div>
@@ -452,10 +518,9 @@ export default function Home() {
             <div>
               <motion.div
                 {...anim(0.05)}
-                className="rounded-2xl border p-8 md:p-10 transition-all duration-300"
-                style={{ background: LIGHT_BG, borderColor: "rgba(13,22,39,0.07)" }}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = `rgba(99,102,241,0.22)`; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = `rgba(13,22,39,0.07)`; }}
+                whileHover={{ y: -4, transition: { type: "spring", stiffness: 340, damping: 28 } }}
+                className="rounded-2xl shimmer-card card-interactive p-8 md:p-10"
+                style={{ background: LIGHT_BG }}
               >
                 <div className="flex items-start justify-between gap-4 mb-4">
                   <h3 className="font-display font-bold text-[1.35rem] tracking-tight" style={{ color: INK }}>
@@ -512,10 +577,9 @@ export default function Home() {
               <motion.div
                 key={item.title}
                 {...anim(i * 0.07)}
-                className="p-7 rounded-2xl border transition-all duration-300 group"
-                style={{ background: CARD_BG, borderColor: "rgba(13,22,39,0.07)" }}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = `rgba(99,102,241,0.22)`; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = `rgba(13,22,39,0.07)`; }}
+                whileHover={{ y: -4, transition: { type: "spring", stiffness: 340, damping: 28 } }}
+                className="p-7 rounded-2xl shimmer-card card-interactive"
+                style={{ background: CARD_BG }}
               >
                 <div className="w-1.5 h-1.5 rounded-full mb-5" style={{ background: INDIGO }} />
                 <h3 className="text-[16px] font-semibold mb-2.5 leading-snug" style={{ color: INK }}>
