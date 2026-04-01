@@ -1,0 +1,33 @@
+<svg viewBox="0 0 340 80" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="badge" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#818CF8"/>
+      <stop offset="100%" stop-color="#4338CA"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Badge (80×80) -->
+  <rect width="80" height="80" rx="17" fill="url(#badge)"/>
+  <!-- P mark — scaled 80% of 100×100 → multiply coords ×0.8 -->
+  <!-- Stem x=22.4–35.2, y=12–68 | outer r=21.6 center(35.2,33.6) | inner r=12.8 -->
+  <path
+    fill-rule="evenodd"
+    fill="white"
+    d="M22 68 L35 68 L35 55
+       A22 22 0 0 1 35 12
+       L22 12 Z
+       M35 21 A13 13 0 0 1 35 46 Z"
+  />
+
+  <!-- Wordmark -->
+  <!-- "Pra" in light weight, "Founds" in bold — using font-weight to differentiate -->
+  <text
+    x="100" y="51"
+    font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif"
+    font-size="38"
+    letter-spacing="-1"
+    fill="#0D1627"
+  >
+    <tspan font-weight="400">Pra</tspan><tspan font-weight="700">Founds</tspan>
+  </text>
+</svg>

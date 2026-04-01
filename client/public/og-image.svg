@@ -1,23 +1,71 @@
 <svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
-  <!-- Background -->
-  <rect width="1200" height="630" fill="#06101F"/>
-  <!-- Dot grid -->
   <defs>
+    <!-- Background -->
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#06101F"/>
+      <stop offset="100%" stop-color="#0D1A35"/>
+    </linearGradient>
+    <!-- Badge gradient -->
+    <linearGradient id="badge" x1="0" y1="0" x2="200" y2="200" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#818CF8"/>
+      <stop offset="100%" stop-color="#4338CA"/>
+    </linearGradient>
+    <!-- Glow -->
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#6366F1" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#6366F1" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Dot pattern -->
     <pattern id="dots" x="0" y="0" width="28" height="28" patternUnits="userSpaceOnUse">
-      <circle cx="1" cy="1" r="1" fill="rgba(235,242,255,0.14)"/>
+      <circle cx="1" cy="1" r="1" fill="rgba(235,242,255,0.12)"/>
     </pattern>
   </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
   <rect width="1200" height="630" fill="url(#dots)"/>
   <!-- Ambient glow -->
-  <ellipse cx="600" cy="315" rx="420" ry="210" fill="#6366F1" opacity="0.10"/>
-  <!-- Logo mark (large, centered-left) -->
-  <g transform="translate(390, 195) scale(6)">
-    <rect width="40" height="40" rx="8" fill="#6366F1"/>
-    <path fill-rule="evenodd" fill="white" d="M8 7 L18 7 Q28 7 28 16 Q28 25 18 25 L13 25 L13 33 L8 33 Z M13 11 L16 11 Q23 11 23 16 Q23 21 16 21 L13 21 Z"/>
-  </g>
-  <!-- Wordmark -->
-  <text x="660" y="285" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="80" font-weight="700" fill="#EBF2FF" letter-spacing="-2">Pra</text>
-  <text x="660" y="375" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="80" font-weight="700" fill="#6366F1" letter-spacing="-2">Founds</text>
+  <ellipse cx="600" cy="315" rx="500" ry="280" fill="url(#glow)"/>
+
+  <!-- Horizontal rule top -->
+  <rect x="80" y="80" width="1040" height="1" fill="rgba(235,242,255,0.07)"/>
+  <!-- Horizontal rule bottom -->
+  <rect x="80" y="549" width="1040" height="1" fill="rgba(235,242,255,0.07)"/>
+
+  <!-- Badge (200×200) — centered vertically, left-aligned in content area -->
+  <rect x="80" y="215" width="200" height="200" rx="44" fill="url(#badge)"/>
+  <!-- P mark inside badge — scale: 100×100 → 200×200, offset +80+215 -->
+  <!-- coords = original*2 + (80, 215) -->
+  <path
+    fill-rule="evenodd"
+    fill="white"
+    d="M136 385 L168 385 L168 353
+       A54 54 0 0 1 168 249
+       L136 249 Z
+       M168 271 A32 32 0 0 1 168 331 Z"
+  />
+
+  <!-- Wordmark block -->
+  <text x="320" y="305"
+    font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
+    fill="#EBF2FF" letter-spacing="-2">
+    <tspan font-size="88" font-weight="300">Pra</tspan><tspan font-size="88" font-weight="700">Founds</tspan>
+  </text>
+
+  <!-- Dot accent -->
+  <circle cx="897" cy="222" r="7" fill="#6366F1"/>
+
   <!-- Tagline -->
-  <text x="660" y="435" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="28" font-weight="400" fill="rgba(235,242,255,0.5)" letter-spacing="0">Early Stage Venture Capital</text>
+  <text x="320" y="370"
+    font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
+    font-size="28" font-weight="400" fill="rgba(235,242,255,0.45)" letter-spacing="0">
+    Early Stage Venture Capital · UK, Ireland &amp; Europe
+  </text>
+
+  <!-- Footer label -->
+  <text x="80" y="598"
+    font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
+    font-size="18" font-weight="500" fill="rgba(235,242,255,0.2)" letter-spacing="3">
+    WWW.PRAFOUNDS.COM
+  </text>
 </svg>
