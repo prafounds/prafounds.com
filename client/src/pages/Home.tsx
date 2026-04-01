@@ -109,6 +109,118 @@ function FloatingParticles() {
   );
 }
 
+/* ── FounderOrb — animated orbital network graphic ── */
+const CX = 180, CY = 180;
+
+function FounderOrb() {
+  return (
+    <div className="relative w-full select-none pointer-events-none" aria-hidden="true">
+      {/* Radial background glow */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: "radial-gradient(circle at 50% 50%, rgba(99,102,241,0.07) 0%, transparent 68%)",
+          borderRadius: "50%",
+        }}
+      />
+      <svg viewBox="0 0 360 360" className="w-full h-full" style={{ overflow: "visible" }}>
+        <defs>
+          <pattern id="orbGrid" x="0" y="0" width="22" height="22" patternUnits="userSpaceOnUse">
+            <circle cx="1" cy="1" r="0.7" fill="rgba(13,22,39,0.07)" />
+          </pattern>
+          <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#6366F1" stopOpacity="0.18" />
+            <stop offset="100%" stopColor="#6366F1" stopOpacity="0" />
+          </radialGradient>
+          <clipPath id="orbClip">
+            <circle cx={CX} cy={CY} r="172" />
+          </clipPath>
+        </defs>
+
+        {/* Dot grid background */}
+        <rect x="0" y="0" width="360" height="360" fill="url(#orbGrid)" clipPath="url(#orbClip)" />
+        {/* Center ambient glow */}
+        <circle cx={CX} cy={CY} r="152" fill="url(#centerGlow)" />
+
+        {/* Static radial spokes */}
+        {[0, 60, 120, 180, 240, 300].map((deg) => {
+          const r = (deg * Math.PI) / 180;
+          return (
+            <line key={deg}
+              x1={CX} y1={CY}
+              x2={CX + 152 * Math.cos(r)} y2={CY + 152 * Math.sin(r)}
+              stroke="rgba(99,102,241,0.06)" strokeWidth="1"
+            />
+          );
+        })}
+
+        {/* Static orbit rings */}
+        <circle cx={CX} cy={CY} r="152" fill="none" stroke="rgba(99,102,241,0.08)" strokeWidth="1" />
+        <circle cx={CX} cy={CY} r="108" fill="none" stroke="rgba(99,102,241,0.10)" strokeWidth="1" />
+        <circle cx={CX} cy={CY} r="64"  fill="none" stroke="rgba(99,102,241,0.13)" strokeWidth="1" />
+
+        {/* Animated dashed inner ring */}
+        <motion.circle cx={CX} cy={CY} r="64"
+          fill="none" stroke="rgba(99,102,241,0.24)" strokeWidth="1.5"
+          strokeDasharray="6 5"
+          animate={{ strokeDashoffset: [0, -176] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+        />
+
+        {/* Outer ring group — clockwise 42 s */}
+        <motion.g style={{ transformOrigin: `${CX}px ${CY}px` }}
+          animate={{ rotate: 360 }}
+          transition={{ duration: 42, repeat: Infinity, ease: "linear" }}
+        >
+          <circle cx={CX + 152} cy={CY}        r="5.5" fill="#818CF8" opacity="0.55" />
+          <circle cx={CX - 152} cy={CY}        r="4"   fill="#A5B4FC" opacity="0.4"  />
+          <circle cx={CX}       cy={CY - 152}  r="4.5" fill="#6366F1" opacity="0.45" />
+        </motion.g>
+
+        {/* Middle ring group — counter-clockwise 28 s */}
+        <motion.g style={{ transformOrigin: `${CX}px ${CY}px` }}
+          animate={{ rotate: -360 }}
+          transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
+        >
+          <circle cx={CX + 108} cy={CY}        r="7"   fill="#6366F1" opacity="0.65" />
+          <circle cx={CX - 108} cy={CY}        r="4.5" fill="#818CF8" opacity="0.5"  />
+          <circle cx={CX}       cy={CY + 108}  r="5"   fill="#6366F1" opacity="0.45" />
+        </motion.g>
+
+        {/* Inner ring group — clockwise 18 s */}
+        <motion.g style={{ transformOrigin: `${CX}px ${CY}px` }}
+          animate={{ rotate: 360 }}
+          transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+        >
+          <circle cx={CX + 64} cy={CY} r="4.5" fill="#6366F1" opacity="0.72" />
+          <circle cx={CX - 64} cy={CY} r="3"   fill="#A5B4FC" opacity="0.55" />
+        </motion.g>
+
+        {/* Pulse rings from centre */}
+        {[0, 1.4, 2.8].map((delay, i) => (
+          <motion.circle key={i} cx={CX} cy={CY}
+            fill="none" stroke="#6366F1" strokeWidth="1"
+            initial={{ r: 22, opacity: 0.35 }}
+            animate={{ r: 68, opacity: 0 }}
+            transition={{ duration: 3.4, delay, repeat: Infinity, ease: "easeOut" }}
+          />
+        ))}
+
+        {/* Centre node — breathing */}
+        <motion.circle cx={CX} cy={CY} r="22" fill="#6366F1"
+          animate={{ scale: [1, 1.06, 1] }}
+          style={{ transformOrigin: `${CX}px ${CY}px` }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        />
+        {/* P mark — centred at ~(179,181) inside the 22 px-radius circle */}
+        <path fillRule="evenodd" fill="white"
+          d="M174 191 L179 191 L179 189 A8 8 0 0 1 179 173 L174 173 Z M179 176 A5 5 0 0 1 179 186 Z"
+        />
+      </svg>
+    </div>
+  );
+}
+
 /* ── Rolling word cycler ── */
 const ROLLING_WORDS = ["builders", "founders", "pioneers", "architects", "engineers", "makers"];
 
@@ -278,43 +390,60 @@ export default function Home() {
       <MarqueeBanner />
 
       {/* ════════════════════════════════════════
-          WHAT WE DO — pure white bg
+          WHAT WE DO — white bg + orbital graphic
       ════════════════════════════════════════ */}
       <section className="py-28 md:py-36" style={{ background: CARD_BG }}>
         <div className="max-w-7xl mx-auto px-6 lg:px-16">
-          {/* Two-column header */}
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start mb-20">
+
+          {/* Header + orb */}
+          <div className="grid lg:grid-cols-[1fr_1fr] gap-12 lg:gap-16 items-center mb-20">
+            {/* Left — text */}
             <div>
               <motion.div {...fadeIn(0)} className="mb-6"><Label>What We Do</Label></motion.div>
               <motion.h2
                 {...anim(0.04)}
-                className="font-display font-bold text-[2.8rem] md:text-5xl lg:text-[3.5rem] leading-[1.05] tracking-[-0.035em]"
+                className="font-display font-bold text-[2.8rem] md:text-5xl lg:text-[3.5rem] leading-[1.05] tracking-[-0.035em] mb-8"
                 style={{ color: INK }}
               >
                 Early conviction.<br />Long-term thinking.
               </motion.h2>
+              <div className="space-y-4 text-[16px] leading-[1.8] font-light" style={{ color: `${INK}60` }}>
+                <motion.p {...anim(0.1)}>PraFounds Ventures backs technical founders at the earliest and most critical phase of company building.</motion.p>
+                <motion.p {...anim(0.16)}>We invest at pre-seed and seed, focusing on developer tools, infrastructure, applied AI platforms, and productivity software.</motion.p>
+                <motion.p {...anim(0.22)}>Our approach is hands-on when helpful, patient when not. Small focused teams turning strong ideas into enduring businesses.</motion.p>
+              </div>
             </div>
-            <div className="space-y-5 text-[17px] leading-[1.8] font-light lg:pt-16" style={{ color: `${INK}62` }}>
-              <motion.p {...anim(0.1)}>PraFounds Ventures backs technical founders at the earliest and most critical phase of company building.</motion.p>
-              <motion.p {...anim(0.16)}>We invest at pre-seed and seed, focusing on teams building developer tools, infrastructure, applied AI platforms, and productivity software.</motion.p>
-              <motion.p {...anim(0.22)}>Our approach is hands-on when helpful, patient when not. We work with small, focused teams to turn strong ideas into enduring businesses.</motion.p>
-            </div>
+
+            {/* Right — FounderOrb animation */}
+            <motion.div
+              {...fadeIn(0.1)}
+              className="hidden lg:block w-full max-w-[420px] ml-auto"
+            >
+              <FounderOrb />
+            </motion.div>
           </div>
 
-          {/* Three conviction cards */}
+          {/* Three conviction stat cards with icons */}
           <div className="grid md:grid-cols-3 gap-4">
-            {[
-              { stat: "Pre-Seed & Seed",      sub: "Stage focus" },
-              { stat: "UK, IE & Europe",      sub: "Geography" },
-              { stat: "Technical Founders",   sub: "Who we back" },
-            ].map((item, i) => (
+            {([
+              { Icon: TrendingUp, stat: "Pre-Seed & Seed",    sub: "Stage focus"  },
+              { Icon: Globe,      stat: "UK, IE & Europe",    sub: "Geography"    },
+              { Icon: Code2,      stat: "Technical Founders", sub: "Who we back"  },
+            ] as const).map((item, i) => (
               <motion.div
                 key={item.sub}
                 {...anim(0.08 + i * 0.07)}
-                className="p-7 rounded-2xl"
-                style={{ background: LIGHT_BG, border: "1px solid rgba(13,22,39,0.06)" }}
+                whileHover={{ y: -4, transition: { type: "spring", stiffness: 340, damping: 28 } }}
+                className="p-7 rounded-2xl shimmer-card card-interactive"
+                style={{ background: LIGHT_BG }}
               >
-                <div className="font-display font-bold text-xl leading-snug tracking-tight mb-2" style={{ color: INK }}>
+                <div
+                  className="w-8 h-8 rounded-lg flex items-center justify-center mb-5"
+                  style={{ background: "rgba(99,102,241,0.1)" }}
+                >
+                  <item.Icon className="w-4 h-4" style={{ color: INDIGO }} strokeWidth={1.75} />
+                </div>
+                <div className="font-display font-bold text-xl leading-snug tracking-tight mb-1.5" style={{ color: INK }}>
                   {item.stat}
                 </div>
                 <div className="text-[11px] font-mono uppercase tracking-[0.16em]" style={{ color: `${INK}38` }}>
@@ -323,6 +452,7 @@ export default function Home() {
               </motion.div>
             ))}
           </div>
+
         </div>
       </section>
 
@@ -518,36 +648,30 @@ export default function Home() {
             <div>
               <motion.div
                 {...anim(0.05)}
-                whileHover={{ y: -4, transition: { type: "spring", stiffness: 340, damping: 28 } }}
-                className="rounded-2xl shimmer-card card-interactive p-8 md:p-10"
+                className="rounded-2xl p-8 md:p-10 card-interactive"
                 style={{ background: LIGHT_BG }}
               >
-                <div className="flex items-start justify-between gap-4 mb-4">
-                  <h3 className="font-display font-bold text-[1.35rem] tracking-tight" style={{ color: INK }}>
-                    Estospaces
-                  </h3>
-                  <span
-                    className="shrink-0 px-3 py-1 rounded-full text-[11px] font-mono tracking-wide"
-                    style={{
-                      border: `1px solid rgba(99,102,241,0.25)`,
-                      background: "rgba(99,102,241,0.07)",
-                      color: INDIGO,
-                    }}
-                  >
-                    Active
+                {/* Pulsing dot */}
+                <div className="flex items-center gap-3 mb-5">
+                  <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: INDIGO }} />
+                  <span className="text-[11px] font-mono uppercase tracking-widest" style={{ color: `${INDIGO}90` }}>
+                    Evaluating
                   </span>
                 </div>
-                <p className="text-[14px] leading-relaxed" style={{ color: `${INK}58` }}>
-                  Investment discussions ongoing. No commitment has been made.
+                <p className="text-[16px] font-medium leading-snug mb-3" style={{ color: INK }}>
+                  No public disclosures at this time.
+                </p>
+                <p className="text-[14px] leading-relaxed" style={{ color: `${INK}55` }}>
+                  We evaluate opportunities quietly and disclose investments when appropriate. If you're building something foundational, we'd like to hear from you.
                 </p>
               </motion.div>
 
               <motion.p
                 {...fadeIn(0.18)}
-                className="mt-5 text-[12px] font-mono leading-relaxed"
+                className="mt-4 text-[12px] font-mono leading-relaxed"
                 style={{ color: `${INK}28` }}
               >
-                Pipeline companies are under evaluation. Inclusion does not indicate investment commitment or endorsement.
+                Pipeline information is not disclosed publicly. This section is updated as and when investments are confirmed.
               </motion.p>
             </div>
           </div>
