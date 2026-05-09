@@ -185,3 +185,84 @@
   animation: marquee-scroll 28s linear infinite;
 }
 .marquee-track:hover { animation-play-state: paused; }
+
+/* ════════════════════════════════════════════════════════════════════
+   prafounds 2026 redesign — editorial paper layer
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root {
+  --prf-paper:       #f5f1e6;
+  --prf-paper-2:     #ede7d4;
+  --prf-paper-3:     #e3dac0;
+  --prf-card:        #ffffff;
+
+  --prf-ink:         #0e1325;
+  --prf-ink-muted:   #4d5470;
+  --prf-ink-dim:     #82869a;
+
+  --prf-rule:        rgba(14, 19, 37, 0.10);
+  --prf-rule-strong: rgba(14, 19, 37, 0.20);
+
+  --prf-indigo:      #4f46e5;
+  --prf-indigo-2:    #6366f1;
+  --prf-violet:      #7c3aed;
+  --prf-amber:       #d97706;
+  --prf-amber-2:     #f59e0b;
+  --prf-leaf:        #166534;
+  --prf-rose:        #be123c;
+  --prf-bone:        #faf6e9;
+
+  --prf-display: "Bricolage Grotesque", "Fraunces", "Iowan Old Style", Georgia, ui-serif, serif;
+  --prf-sans:    "Inter", "Söhne", ui-sans-serif, system-ui, sans-serif;
+  --prf-mono:    "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace;
+}
+
+.text-ink { color: var(--prf-ink); }
+.bg-prf-paper { background: var(--prf-paper); }
+
+@keyframes prf-rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.prf-rise { animation: prf-rise 700ms ease-out both; }
+
+@keyframes prf-spin-slow { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+.prf-spin-slow { animation: prf-spin-slow 30s linear infinite; transform-origin: center; }
+
+@keyframes prf-orb {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(20px, -16px); }
+}
+.prf-orb { animation: prf-orb 16s ease-in-out infinite; }
+
+.prf-paper-grain {
+  background-color: var(--prf-paper);
+  background-image:
+    radial-gradient(circle at 18% 22%, rgba(79,70,229,0.05), transparent 35%),
+    radial-gradient(circle at 82% 78%, rgba(217,119,6,0.04), transparent 35%);
+}
+
+.prf-rule { border-color: var(--prf-rule); }
+.prf-rule-strong { border-color: var(--prf-rule-strong); }
+
+.prf-ticker {
+  display: flex;
+  width: max-content;
+  animation: prf-ticker 38s linear infinite;
+  gap: 32px;
+}
+@keyframes prf-ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.prf-dropcap::first-letter {
+  font-family: var(--prf-display);
+  font-size: 3.6em;
+  line-height: 0.85;
+  float: left;
+  margin: 0.05em 0.12em -0.05em 0;
+  color: var(--prf-indigo);
+  font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prf-rise, .prf-spin-slow, .prf-orb, .prf-ticker { animation: none !important; }
+}
