@@ -1,31 +1,31 @@
-import EditorialNav from "@/components/EditorialNav";
-import Masthead from "@/components/Masthead";
-import TickerStrip from "@/components/TickerStrip";
+import SiteNav from "@/components/SiteNav";
+import Hero from "@/components/Hero";
+import Marquee from "@/components/Marquee";
 import Thesis from "@/components/Thesis";
 import Portfolio from "@/components/Portfolio";
-import HowWePartner from "@/components/HowWePartner";
-import FounderVoices from "@/components/FounderVoices";
+import Process from "@/components/Process";
+import Voices from "@/components/Voices";
 import Dispatches from "@/components/Dispatches";
 import Team from "@/components/Team";
-import ApplyBlock from "@/components/ApplyBlock";
-import ColophonFooter from "@/components/ColophonFooter";
+import Apply from "@/components/Apply";
+import SiteFooter from "@/components/SiteFooter";
 
 export default function Home() {
   return (
-    <div className="min-h-screen text-ink" style={{ background: "var(--prf-paper)" }}>
-      <EditorialNav />
+    <div className="min-h-screen" style={{ background: "var(--pf-bg)", color: "var(--pf-text)" }}>
+      <SiteNav />
       <main>
-        <Masthead />
-        <TickerStrip />
+        <Hero />
+        <Marquee />
         <Thesis />
         <Portfolio />
-        <HowWePartner />
-        <FounderVoices />
+        <Process />
+        <Voices />
         <Dispatches />
         <Team />
-        <ApplyBlock />
+        <Apply />
       </main>
-      <ColophonFooter />
+      <SiteFooter />
     </div>
   );
 }

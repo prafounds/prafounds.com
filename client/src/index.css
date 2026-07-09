@@ -1,63 +1,90 @@
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Inter:ital,opsz,wght@0,14..32,300..700;1,14..32,300..700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ════════════════════════════════════════════════════════════════════
+   prafounds — "midnight / acid" design system
+   near-black canvas · acid-lime accent · hairline swiss grid
+   ═══════════════════════════════════════════════════════════════════ */
+
 :root {
-  /* ── Light section tokens (content areas) ── */
-  --background: 216 40% 97%;         /* #F2F6FB cool light blue-gray */
-  --foreground: 220 40% 11%;         /* #0D1627 deep navy-black */
+  /* ── shadcn tokens (dark, so ui components blend in) ── */
+  --background: 225 17% 5%;          /* #0A0B0E */
+  --foreground: 60 12% 95%;          /* #F4F4EF */
 
-  --card: 0 0% 100%;                 /* #FFFFFF */
-  --card-foreground: 220 40% 11%;
-  --card-border: 216 20% 90%;        /* #E1E8F0 */
+  --card: 225 15% 8%;
+  --card-foreground: 60 12% 95%;
+  --card-border: 60 12% 95% / 0.08;
 
-  --popover: 0 0% 100%;
-  --popover-foreground: 220 40% 11%;
-  --popover-border: 216 20% 90%;
+  --popover: 225 15% 8%;
+  --popover-foreground: 60 12% 95%;
+  --popover-border: 60 12% 95% / 0.08;
 
-  --primary: 239 84% 67%;            /* #6366F1 indigo */
-  --primary-foreground: 0 0% 100%;
-  --primary-border: rgba(99, 102, 241, 0.25);
+  --primary: 74 99% 66%;             /* #D7FE55 acid lime */
+  --primary-foreground: 225 17% 5%;
+  --primary-border: rgba(215, 254, 85, 0.25);
 
-  --secondary: 216 30% 94%;
-  --secondary-foreground: 220 30% 25%;
-  --secondary-border: rgba(0, 0, 0, 0.07);
+  --secondary: 225 12% 12%;
+  --secondary-foreground: 60 8% 85%;
+  --secondary-border: rgba(255, 255, 255, 0.07);
 
-  --muted: 216 25% 93%;
-  --muted-foreground: 220 15% 48%;
-  --muted-border: rgba(0, 0, 0, 0.05);
+  --muted: 225 12% 12%;
+  --muted-foreground: 222 7% 64%;
+  --muted-border: rgba(255, 255, 255, 0.05);
 
-  --accent: 239 84% 67%;
-  --accent-foreground: 0 0% 100%;
-  --accent-border: rgba(99, 102, 241, 0.25);
+  --accent: 74 99% 66%;
+  --accent-foreground: 225 17% 5%;
+  --accent-border: rgba(215, 254, 85, 0.25);
 
-  --destructive: 0 84% 55%;
+  --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 98%;
-  --destructive-border: rgba(220, 50, 47, 0.2);
+  --destructive-border: rgba(220, 50, 47, 0.3);
 
-  --border: 216 20% 90%;
-  --input: 216 25% 93%;
-  --ring: 239 84% 67%;
-  --radius: 0.5rem;
+  --border: 226 10% 16%;
+  --input: 225 12% 12%;
+  --ring: 74 99% 66%;
+  --radius: 0.375rem;
 
-  --chart-1: 239 84% 67%;
-  --chart-2: 262 75% 60%;
-  --chart-3: 291 65% 55%;
-  --chart-4: 326 65% 55%;
-  --chart-5: 355 75% 58%;
+  --chart-1: 74 99% 66%;
+  --chart-2: 160 60% 55%;
+  --chart-3: 200 70% 60%;
+  --chart-4: 280 60% 65%;
+  --chart-5: 30 90% 60%;
 
-  --sidebar: 216 35% 96%;
-  --sidebar-foreground: 220 40% 20%;
-  --sidebar-border: 216 20% 90%;
-  --sidebar-ring: 239 84% 67%;
-  --sidebar-primary: 239 84% 67%;
-  --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 216 25% 93%;
-  --sidebar-accent-foreground: 220 30% 25%;
-  --sidebar-primary-border: rgba(99, 102, 241, 0.25);
-  --sidebar-accent-border: rgba(0, 0, 0, 0.07);
+  --sidebar: 225 15% 7%;
+  --sidebar-foreground: 60 8% 85%;
+  --sidebar-border: 226 10% 16%;
+  --sidebar-ring: 74 99% 66%;
+  --sidebar-primary: 74 99% 66%;
+  --sidebar-primary-foreground: 225 17% 5%;
+  --sidebar-accent: 225 12% 12%;
+  --sidebar-accent-foreground: 60 8% 85%;
+  --sidebar-primary-border: rgba(215, 254, 85, 0.25);
+  --sidebar-accent-border: rgba(255, 255, 255, 0.07);
+
+  /* ── prafounds tokens ── */
+  --pf-bg:        #0a0b0e;
+  --pf-bg-2:      #0d0f13;
+  --pf-surface:   #111318;
+  --pf-surface-2: #16181f;
+
+  --pf-text:      #f4f4ef;
+  --pf-muted:     #a2a6b0;
+  --pf-dim:       #646874;
+
+  --pf-line:      rgba(244, 244, 239, 0.08);
+  --pf-line-2:    rgba(244, 244, 239, 0.18);
+
+  --pf-acid:      #d7fe55;
+  --pf-acid-soft: rgba(215, 254, 85, 0.12);
+  --pf-ink:       #0a0b0e;
+
+  --pf-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --pf-serif:   'Instrument Serif', Georgia, ui-serif, serif;
+  --pf-sans:    'Inter', ui-sans-serif, system-ui, sans-serif;
+  --pf-mono:    'JetBrains Mono', ui-monospace, monospace;
 }
 
 /* ── Base ── */
@@ -70,22 +97,23 @@
     -webkit-text-size-adjust: 100%;
   }
   body {
-    @apply bg-background text-foreground antialiased;
-    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--pf-bg);
+    color: var(--pf-text);
+    font-family: var(--pf-sans);
+    @apply antialiased;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+    font-family: var(--pf-display);
     @apply tracking-tight;
   }
-  code, pre, .font-mono {
-    font-family: 'JetBrains Mono', 'Courier New', monospace;
+  code, pre {
+    font-family: var(--pf-mono);
   }
   ::selection {
-    background: rgba(99, 102, 241, 0.2);
-    color: #0d1627;
+    background: var(--pf-acid);
+    color: var(--pf-ink);
   }
 }
 
@@ -99,170 +127,81 @@
   to   { height: 0; }
 }
 
-/* ── Utilities ── */
-@layer utilities {
-  .font-display {
-    font-family: 'Bricolage Grotesque', system-ui, sans-serif;
-  }
-  .text-balance { text-wrap: balance; }
+/* ── Font utilities ── */
+.pf-display { font-family: var(--pf-display); }
+.pf-serif   { font-family: var(--pf-serif); }
+.pf-mono    { font-family: var(--pf-mono); }
 
-  /* Dot grid — dark dots for light sections */
-  .dot-grid-light {
-    background-image: radial-gradient(circle, rgba(13,22,39,0.14) 1px, transparent 1px);
-    background-size: 28px 28px;
-  }
-  /* Dot grid — light dots for dark sections */
-  .dot-grid-dark {
-    background-image: radial-gradient(circle, rgba(235,242,255,0.18) 1px, transparent 1px);
-    background-size: 28px 28px;
-  }
+/* ── Hero blueprint grid ── */
+.pf-grid-bg {
+  background-image:
+    linear-gradient(var(--pf-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--pf-line) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 0%, black 40%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 0%, black 40%, transparent 100%);
 }
 
-/* ── Grain overlay ── */
-.bg-noise {
+/* ── Noise grain ── */
+.pf-noise {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* ── Gradient text (hero "foundations." accent) ── */
-@keyframes gradient-sweep {
-  0%, 100% { background-position: 0% 50%; }
-  50%       { background-position: 100% 50%; }
-}
-.text-gradient-hero {
-  background: linear-gradient(130deg, #EBF2FF 0%, #A5B4FC 40%, #818CF8 65%, #EBF2FF 100%);
-  background-size: 280% 280%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: gradient-sweep 5s ease infinite;
-}
-
-/* ── Card shimmer on hover ── */
-@keyframes card-shimmer {
-  from { transform: translateX(-100%) skewX(-12deg); }
-  to   { transform: translateX(300%)  skewX(-12deg); }
-}
-.shimmer-card {
-  position: relative;
-  overflow: hidden;
-}
-.shimmer-card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  width: 45%;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.055) 50%,
-    transparent 100%
-  );
-  transform: translateX(-100%) skewX(-12deg);
-  pointer-events: none;
-  z-index: 1;
-}
-.shimmer-card:hover::after {
-  animation: card-shimmer 0.65s ease-out forwards;
-}
-
-/* ── Card interactive border (CSS hover, avoids inline style specificity fight) ── */
-.card-interactive {
-  border: 1px solid rgba(13, 22, 39, 0.07);
-  transition: border-color 0.25s ease, box-shadow 0.35s ease;
-}
-.card-interactive:hover {
-  border-color: rgba(99, 102, 241, 0.28);
-}
-
 /* ── Marquee ── */
-@keyframes marquee-scroll {
+@keyframes pf-marquee {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
-.marquee-track {
+.pf-marquee {
   display: flex;
   width: max-content;
-  animation: marquee-scroll 28s linear infinite;
+  animation: pf-marquee 42s linear infinite;
 }
-.marquee-track:hover { animation-play-state: paused; }
+.pf-marquee:hover { animation-play-state: paused; }
 
-/* ════════════════════════════════════════════════════════════════════
-   prafounds 2026 redesign — editorial paper layer
-   ═══════════════════════════════════════════════════════════════════ */
-
-:root {
-  --prf-paper:       #f5f1e6;
-  --prf-paper-2:     #ede7d4;
-  --prf-paper-3:     #e3dac0;
-  --prf-card:        #ffffff;
-
-  --prf-ink:         #0e1325;
-  --prf-ink-muted:   #4d5470;
-  --prf-ink-dim:     #82869a;
-
-  --prf-rule:        rgba(14, 19, 37, 0.10);
-  --prf-rule-strong: rgba(14, 19, 37, 0.20);
-
-  --prf-indigo:      #4f46e5;
-  --prf-indigo-2:    #6366f1;
-  --prf-violet:      #7c3aed;
-  --prf-amber:       #d97706;
-  --prf-amber-2:     #f59e0b;
-  --prf-leaf:        #166534;
-  --prf-rose:        #be123c;
-  --prf-bone:        #faf6e9;
-
-  --prf-display: "Bricolage Grotesque", "Fraunces", "Iowan Old Style", Georgia, ui-serif, serif;
-  --prf-sans:    "Inter", "Söhne", ui-sans-serif, system-ui, sans-serif;
-  --prf-mono:    "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace;
+/* ── Dispatch rows: full acid invert on hover ── */
+.pf-invert-row {
+  transition: background 0.25s ease;
+}
+.pf-invert-row:hover {
+  background: var(--pf-acid);
+}
+.pf-invert-row:hover,
+.pf-invert-row:hover * {
+  color: var(--pf-ink) !important;
+  border-color: rgba(10, 11, 14, 0.25) !important;
 }
 
-.text-ink { color: var(--prf-ink); }
-.bg-prf-paper { background: var(--prf-paper); }
-
-@keyframes prf-rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-.prf-rise { animation: prf-rise 700ms ease-out both; }
-
-@keyframes prf-spin-slow { from { transform: rotate(0); } to { transform: rotate(360deg); } }
-.prf-spin-slow { animation: prf-spin-slow 30s linear infinite; transform-origin: center; }
-
-@keyframes prf-orb {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(20px, -16px); }
+/* ── Portfolio card ── */
+.pf-card {
+  border: 1px solid var(--pf-line);
+  background: var(--pf-surface);
+  transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
 }
-.prf-orb { animation: prf-orb 16s ease-in-out infinite; }
-
-.prf-paper-grain {
-  background-color: var(--prf-paper);
-  background-image:
-    radial-gradient(circle at 18% 22%, rgba(79,70,229,0.05), transparent 35%),
-    radial-gradient(circle at 82% 78%, rgba(217,119,6,0.04), transparent 35%);
+.pf-card:hover {
+  border-color: rgba(215, 254, 85, 0.4);
+  background: var(--pf-surface-2);
+  transform: translateY(-3px);
 }
 
-.prf-rule { border-color: var(--prf-rule); }
-.prf-rule-strong { border-color: var(--prf-rule-strong); }
-
-.prf-ticker {
-  display: flex;
-  width: max-content;
-  animation: prf-ticker 38s linear infinite;
-  gap: 32px;
+/* ── Outline wordmark (footer) ── */
+.pf-outline-text {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(244, 244, 239, 0.22);
+  transition: -webkit-text-stroke-color 0.4s ease;
 }
-@keyframes prf-ticker {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+.pf-outline-text:hover {
+  -webkit-text-stroke-color: rgba(215, 254, 85, 0.6);
 }
 
-.prf-dropcap::first-letter {
-  font-family: var(--prf-display);
-  font-size: 3.6em;
-  line-height: 0.85;
-  float: left;
-  margin: 0.05em 0.12em -0.05em 0;
-  color: var(--prf-indigo);
-  font-weight: 600;
+/* ── Blinking cursor ── */
+@keyframes pf-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
 }
+.pf-blink { animation: pf-blink 1.1s step-end infinite; }
 
 @media (prefers-reduced-motion: reduce) {
-  .prf-rise, .prf-spin-slow, .prf-orb, .prf-ticker { animation: none !important; }
+  .pf-marquee, .pf-blink { animation: none !important; }
+  html { scroll-behavior: auto; }
 }
