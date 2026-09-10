@@ -1,0 +1,5 @@
+{
+  "startCommand": ["node", "dist/index.cjs"],
+  "buildCommand": ["npm", "run", "build"],
+  "port": 5000
+}
