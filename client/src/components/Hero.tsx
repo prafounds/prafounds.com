@@ -63,7 +63,7 @@ export default function Hero() {
           <span aria-hidden="true" style={{ color: "var(--pf-dim)" }}>/</span>
           <span>Pre-seed · Seed</span>
           <span aria-hidden="true" style={{ color: "var(--pf-dim)" }}>/</span>
-          <span>UK · IE · EU</span>
+          <span>UK · IE · EU · IN</span>
         </motion.div>
 
         {/* headline */}

@@ -9,7 +9,7 @@ export default function Marquee() {
     <section
       aria-hidden="true"
       className="overflow-hidden border-b py-4"
-      style={{ borderColor: "var(--pf-line)", background: "var(--pf-bg-2)" }}
+      style={{ borderColor: "var(--pf-line)", background: "var(--pf-veil)" }}
     >
       <div className="pf-marquee">
         {[...ITEMS, ...ITEMS].map((item, i) => (

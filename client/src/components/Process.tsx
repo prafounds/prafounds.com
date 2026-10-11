@@ -13,7 +13,7 @@ export default function Process() {
     <section id="process" className="relative border-b py-24 sm:py-32" style={{ borderColor: "var(--pf-line)" }}>
       <div className="mx-auto max-w-[1320px] px-5 sm:px-10">
         <Reveal>
-          <Eyebrow index="03">How we partner</Eyebrow>
+          <Eyebrow index="02">How we partner</Eyebrow>
           <h2
             className="pf-display mt-6 max-w-2xl font-semibold leading-[1.02] tracking-[-0.025em]"
             style={{ fontSize: "clamp(36px, 5vw, 64px)", color: "var(--pf-text)" }}
