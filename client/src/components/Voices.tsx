@@ -9,10 +9,10 @@ const QUOTES = [
 
 export default function Voices() {
   return (
-    <section className="relative border-b py-24 sm:py-32" style={{ borderColor: "var(--pf-line)", background: "var(--pf-bg-2)" }}>
+    <section className="relative border-b py-24 sm:py-32" style={{ borderColor: "var(--pf-line)", background: "var(--pf-veil)" }}>
       <div className="mx-auto max-w-[1320px] px-5 sm:px-10">
         <Reveal>
-          <Eyebrow index="04">Founder references</Eyebrow>
+          <Eyebrow index="03">Founder references</Eyebrow>
           <div className="mt-6 grid gap-4 md:grid-cols-[1fr_auto] md:items-end md:gap-10">
             <h2
               className="pf-display font-semibold leading-[1.02] tracking-[-0.025em]"
@@ -42,7 +42,7 @@ export default function Voices() {
               key={q.who}
               variants={fadeUp}
               className="flex flex-col justify-between rounded-sm border p-7"
-              style={{ borderColor: "var(--pf-line)", background: "var(--pf-surface)" }}
+              style={{ borderColor: "var(--pf-line)", background: "var(--pf-veil-2)" }}
             >
               <div>
                 <span aria-hidden="true" className="pf-serif text-[44px] leading-none" style={{ fontStyle: "italic", color: "var(--pf-acid)" }}>

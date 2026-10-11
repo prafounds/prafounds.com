@@ -35,8 +35,13 @@ export async function setupVite(server: Server, app: Express) {
     const url = req.originalUrl;
 
     try {
+      // `import.meta.dirname` is the ESM-native form, which is what `tsx`
+      // runs in dev ("type": "module"). The production CJS bundle rewrites
+      // it to `__dirname` via esbuild's `define` in script/build.ts, so one
+      // spelling works in both. Using bare `__dirname` here breaks dev with
+      // "ReferenceError: __dirname is not defined" on every page request.
       const clientTemplate = path.resolve(
-        __dirname,
+        import.meta.dirname,
         "..",
         "client",
         "index.html",

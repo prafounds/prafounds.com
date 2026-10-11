@@ -54,6 +54,10 @@ async function buildAll() {
     outfile: "dist/index.cjs",
     define: {
       "process.env.NODE_ENV": '"production"',
+      // The server sources are ESM and use `import.meta.dirname`, which has
+      // no meaning once bundled to CJS. Map it onto the CJS `__dirname` so
+      // the same source runs under `tsx` in dev and in dist/index.cjs.
+      "import.meta.dirname": "__dirname",
     },
     minify: true,
     external: externals,

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { insertSubscriberSchema } from './schema';
+import { insertSubscriberSchema, insertApplicationSchema } from './schema';
 
 export const errorSchemas = {
   validation: z.object({
@@ -11,6 +11,11 @@ export const errorSchemas = {
   }),
   internal: z.object({
     message: z.string(),
+  }),
+  unavailable: z.object({
+    message: z.string(),
+    /** Where to write instead when submissions can't be stored. */
+    fallbackEmail: z.string().optional(),
   }),
 };
 
@@ -26,16 +31,22 @@ export const api = {
       },
     },
   },
+  applications: {
+    create: {
+      method: 'POST' as const,
+      path: '/api/applications',
+      input: insertApplicationSchema,
+      responses: {
+        201: z.object({ id: z.number(), companyName: z.string() }),
+        400: errorSchemas.validation,
+        503: errorSchemas.unavailable,
+      },
+    },
+  },
 };
 
-export function buildUrl(path: string, params?: Record<string, string | number>): string {
-  let url = path;
-  if (params) {
-    Object.entries(params).forEach(([key, value]) => {
-      if (url.includes(`:${key}`)) {
-        url = url.replace(`:${key}`, String(value));
-      }
-    });
-  }
-  return url;
-}
+// Re-exported so client code can import request types from the route
+// contract alongside the paths it already pulls from here.
+export type { InsertSubscriber } from './schema';
+export type { InsertApplication } from './schema';
+export { SECTORS, STAGES } from './schema';

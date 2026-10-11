@@ -13,7 +13,7 @@ export default function Dispatches() {
     <section id="dispatches" className="relative border-b py-24 sm:py-32" style={{ borderColor: "var(--pf-line)" }}>
       <div className="mx-auto max-w-[1320px] px-5 sm:px-10">
         <Reveal>
-          <Eyebrow index="05">Dispatches</Eyebrow>
+          <Eyebrow index="04">Dispatches</Eyebrow>
           <div className="mt-6 grid gap-4 md:grid-cols-[1fr_minmax(0,1fr)] md:items-end md:gap-12">
             <h2
               className="pf-display font-semibold leading-[1.02] tracking-[-0.025em]"
