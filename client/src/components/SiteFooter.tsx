@@ -36,7 +36,7 @@ export default function SiteFooter() {
               <ul className="mt-4 space-y-2.5">
                 {c.l.map((x) => (
                   <li key={x}>
-                    <a href="#" className="inline-block py-1.5 text-[13px] transition-colors hover:text-[#d7fe55] sm:py-0" style={{ color: "var(--pf-muted)" }}>
+                    <a href="#" className="inline-block py-1.5 text-[13px] transition-colors hover:text-[#f4f4f4] sm:py-0" style={{ color: "var(--pf-muted)" }}>
                       {x}
                     </a>
                   </li>

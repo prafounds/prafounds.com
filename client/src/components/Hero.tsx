@@ -40,7 +40,7 @@ export default function Hero() {
         style={{
           top: "-180px",
           right: "-160px",
-          background: "radial-gradient(ellipse, rgba(215,254,85,0.09), transparent 65%)",
+          background: "radial-gradient(ellipse, rgba(245,245,245,0.07), transparent 65%)",
           filter: "blur(60px)",
           opacity: glowOpacity,
         }}
@@ -111,7 +111,7 @@ export default function Hero() {
             </a>
             <a
               href="#thesis"
-              className="pf-mono inline-flex items-center gap-2 rounded-sm border px-6 py-3.5 text-[12.5px] font-medium uppercase tracking-[0.14em] transition-colors hover:border-[#d7fe55]"
+              className="pf-mono inline-flex items-center gap-2 rounded-sm border px-6 py-3.5 text-[12.5px] font-medium uppercase tracking-[0.14em] transition-colors hover:border-[#f4f4f4]"
               style={{ borderColor: "var(--pf-line-2)", color: "var(--pf-text)" }}
             >
               Read the thesis
