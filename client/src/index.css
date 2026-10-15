@@ -143,16 +143,6 @@
 .pf-serif   { font-family: var(--pf-serif); }
 .pf-mono    { font-family: var(--pf-mono); }
 
-/* ── Hero blueprint grid ── */
-.pf-grid-bg {
-  background-image:
-    linear-gradient(var(--pf-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--pf-line) 1px, transparent 1px);
-  background-size: 72px 72px;
-  mask-image: radial-gradient(ellipse 90% 80% at 50% 0%, black 40%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 0%, black 40%, transparent 100%);
-}
-
 /* ── Noise grain ── */
 .pf-noise {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
