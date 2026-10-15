@@ -27,20 +27,19 @@ function HeadlineLine({ children, delay }: { children: React.ReactNode; delay: n
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const gridY = useTransform(scrollYProgress, [0, 1], [0, 120]);
   const glowOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
     <section ref={ref} id="top" className="relative isolate flex min-h-screen flex-col overflow-hidden pt-16">
-      {/* background: blueprint grid + acid glow + grain */}
-      <motion.div aria-hidden="true" className="pf-grid-bg pointer-events-none absolute inset-0 -z-20" style={{ y: gridY }} />
+      {/* background: soft glow + grain. The blueprint wireframe grid that
+          used to sit behind these was removed. */}
       <motion.div
         aria-hidden="true"
         className="pointer-events-none absolute -z-10 h-[560px] w-[820px] rounded-full"
         style={{
           top: "-180px",
           right: "-160px",
-          background: "radial-gradient(ellipse, rgba(215,254,85,0.09), transparent 65%)",
+          background: "radial-gradient(ellipse, rgba(245,245,245,0.07), transparent 65%)",
           filter: "blur(60px)",
           opacity: glowOpacity,
         }}
@@ -111,7 +110,7 @@ export default function Hero() {
             </a>
             <a
               href="#thesis"
-              className="pf-mono inline-flex items-center gap-2 rounded-sm border px-6 py-3.5 text-[12.5px] font-medium uppercase tracking-[0.14em] transition-colors hover:border-[#d7fe55]"
+              className="pf-mono inline-flex items-center gap-2 rounded-sm border px-6 py-3.5 text-[12.5px] font-medium uppercase tracking-[0.14em] transition-colors hover:border-[#f4f4f4]"
               style={{ borderColor: "var(--pf-line-2)", color: "var(--pf-text)" }}
             >
               Read the thesis

@@ -8,8 +8,8 @@ const DETAILS: [string, string][] = [
 ];
 
 const INK = "var(--pf-ink)";
-const INK_MUTED = "rgba(10, 11, 14, 0.62)";
-const INK_LINE = "rgba(10, 11, 14, 0.18)";
+const INK_MUTED = "rgba(11, 11, 11, 0.62)";
+const INK_LINE = "rgba(11, 11, 11, 0.18)";
 
 /**
  * Where applications are collected.
@@ -73,7 +73,7 @@ export default function Apply() {
         <Reveal delay={0.15}>
           <div
             className="overflow-hidden rounded-sm border"
-            style={{ borderColor: "rgba(10, 11, 14, 0.3)", background: "rgba(255, 255, 255, 0.22)" }}
+            style={{ borderColor: "rgba(11, 11, 11, 0.3)", background: "rgba(255, 255, 255, 0.22)" }}
           >
             {/* A plain iframe rather than Typeform's embed SDK: the SDK is
                 another third-party script on the critical path, and the

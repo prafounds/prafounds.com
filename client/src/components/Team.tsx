@@ -54,7 +54,7 @@ export default function Team() {
             <motion.article key={p.name} variants={fadeUp} className="pf-card group rounded-sm p-7">
               <div className="flex items-start justify-between">
                 <div
-                  className="pf-serif grid h-16 w-16 place-items-center rounded-full border text-[22px] transition-colors group-hover:border-[#d7fe55]"
+                  className="pf-serif grid h-16 w-16 place-items-center rounded-full border text-[22px] transition-colors group-hover:border-[#f4f4f4]"
                   style={{ fontStyle: "italic", borderColor: "var(--pf-line-2)", color: "var(--pf-acid)" }}
                 >
                   {p.initials}

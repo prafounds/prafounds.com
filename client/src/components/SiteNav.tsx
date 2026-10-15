@@ -35,7 +35,7 @@ export default function SiteNav() {
   return (
     <header
       className="fixed inset-x-0 top-0 z-50 border-b backdrop-blur-md"
-      style={{ borderColor: "var(--pf-line)", background: "rgba(10, 11, 14, 0.62)" }}
+      style={{ borderColor: "var(--pf-line)", background: "rgba(11, 11, 11, 0.62)" }}
     >
       <div className="mx-auto flex h-16 max-w-[1320px] items-center justify-between px-5 sm:px-10">
         <Link href="/" className="flex items-center" aria-label="PraFounds Ventures — home">
@@ -62,7 +62,7 @@ export default function SiteNav() {
                 key={l.href}
                 href={l.href}
                 aria-current={active ? "page" : undefined}
-                className="relative transition-colors hover:text-[#d7fe55]"
+                className="relative transition-colors hover:text-[#f4f4f4]"
                 style={{ color: active ? "var(--pf-acid)" : "var(--pf-muted)" }}
               >
                 {l.label}

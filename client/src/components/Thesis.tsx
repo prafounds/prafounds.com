@@ -101,7 +101,7 @@ export default function Thesis() {
                   </span>
                 </div>
                 <h3
-                  className="pf-display mt-6 text-[25px] font-semibold leading-[1.1] tracking-[-0.015em] transition-colors group-hover:text-[#d7fe55]"
+                  className="pf-display mt-6 text-[25px] font-semibold leading-[1.1] tracking-[-0.015em] transition-colors group-hover:text-[#f4f4f4]"
                   style={{ color: "var(--pf-text)" }}
                 >
                   {p.name}

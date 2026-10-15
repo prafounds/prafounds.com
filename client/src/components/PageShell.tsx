@@ -32,7 +32,7 @@ export default function PageShell({
             <div className="pf-mono flex items-center gap-3 text-[11px] uppercase tracking-[0.24em]">
               <Link
                 href="/"
-                className="-my-2 inline-block py-2 transition-colors hover:text-[#d7fe55]"
+                className="-my-2 inline-block py-2 transition-colors hover:text-[#f4f4f4]"
                 style={{ color: "var(--pf-dim)" }}
               >
                 Index
