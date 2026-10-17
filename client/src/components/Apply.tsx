@@ -1,4 +1,5 @@
 import { Reveal } from "./reveal";
+import { useApplyDialog } from "./ApplyDialog";
 
 const DETAILS: [string, string][] = [
   ["Stage", "Pre-seed and seed (we sometimes follow on)"],
@@ -12,22 +13,14 @@ const INK_MUTED = "rgba(11, 11, 11, 0.62)";
 const INK_LINE = "rgba(11, 11, 11, 0.18)";
 
 /**
- * Where applications are collected.
+ * Where applications are pitched.
  *
- * The questions, validation and storage all live in Typeform now - this
- * component only frames and embeds the form. The previous hand-rolled
- * form posted to `/api/applications`; that route and its table still
- * exist server-side but nothing in the client calls them any more.
- *
- * NOTE ON DELIVERY: where a completed response is emailed is a Typeform
- * account setting, not something this code can set. It is configured on
- * the form itself under Connect -> Notifications -> Self notifications.
- * Changing the address here does nothing.
+ * The form itself no longer lives here - it opens as an overlay from any
+ * "send a deck" button on the site. See ApplyDialog.
  */
-const TYPEFORM_ID = "YhLztiSK";
-const TYPEFORM_URL = `https://h9o6fjobcym.typeform.com/to/${TYPEFORM_ID}`;
-
 export default function Apply() {
+  const { openApply } = useApplyDialog();
+
   return (
     <section
       id="apply"
@@ -36,16 +29,14 @@ export default function Apply() {
     >
       <div aria-hidden="true" className="pf-noise pointer-events-none absolute inset-0 -z-10 opacity-[0.05]" />
 
-      <div className="mx-auto grid max-w-[1320px] gap-14 px-5 sm:px-10 lg:grid-cols-[1fr_minmax(0,1.05fr)] lg:items-start lg:gap-20">
-        {/* Sticky beside the form so the pitch and criteria stay in view
-            while a founder fills it in, instead of scrolling away. */}
-        <Reveal className="lg:sticky lg:top-24">
+      <div className="mx-auto grid max-w-[1320px] gap-14 px-5 sm:px-10 lg:grid-cols-[1fr_minmax(0,0.8fr)] lg:items-start lg:gap-20">
+        <Reveal>
           <div className="pf-mono flex items-center gap-3 text-[11px] uppercase tracking-[0.24em]" style={{ color: INK_MUTED }}>
-            <span style={{ color: INK }}>06</span>
+            <span style={{ color: INK }}>05</span>
             <span aria-hidden="true" className="h-px w-8" style={{ background: INK_LINE }} />
             <span>Send a deck</span>
           </div>
-          <h2 className="pf-display mt-6 font-semibold leading-[0.98] tracking-[-0.03em]" style={{ fontSize: "clamp(42px, 6.5vw, 84px)" }}>
+          <h2 className="pf-display mt-6 font-medium leading-[1.0] tracking-[-0.018em]" style={{ fontSize: "clamp(42px, 6.5vw, 84px)" }}>
             Reply within{" "}
             <em className="pf-serif font-normal" style={{ fontStyle: "italic" }}>
               seven days.
@@ -58,7 +49,21 @@ export default function Apply() {
             farm out diligence to associates, and we don't ghost.
           </p>
 
-          <ul className="mt-10 space-y-3 text-[14px]">
+          {/* The section is named "send a deck"; without the embed it would
+              otherwise state the criteria and offer no way to act on them. */}
+          <button
+            type="button"
+            onClick={openApply}
+            className="pf-mono mt-10 inline-flex h-12 items-center gap-2 rounded-sm px-6 text-[12px] font-medium uppercase tracking-[0.14em] transition-opacity hover:opacity-85"
+            style={{ background: INK, color: "var(--pf-acid)" }}
+          >
+            Send a deck
+            <span aria-hidden="true">↗</span>
+          </button>
+        </Reveal>
+
+        <Reveal delay={0.15}>
+          <ul className="space-y-3 text-[14px]">
             {DETAILS.map(([k, v]) => (
               <li key={k} className="grid gap-1 border-b pb-3 sm:grid-cols-[100px_1fr] sm:gap-4" style={{ borderColor: INK_LINE }}>
                 <span className="pf-mono text-[10px] uppercase tracking-[0.18em]" style={{ color: INK_MUTED }}>
@@ -68,42 +73,6 @@ export default function Apply() {
               </li>
             ))}
           </ul>
-        </Reveal>
-
-        <Reveal delay={0.15}>
-          <div
-            className="overflow-hidden rounded-sm border"
-            style={{ borderColor: "rgba(11, 11, 11, 0.3)", background: "rgba(255, 255, 255, 0.22)" }}
-          >
-            {/* A plain iframe rather than Typeform's embed SDK: the SDK is
-                another third-party script on the critical path, and the
-                form needs none of what it adds here. */}
-            <iframe
-              src={TYPEFORM_URL}
-              title="PraFounds application form"
-              loading="lazy"
-              allow="camera; microphone; autoplay; encrypted-media;"
-              className="block h-[70vh] min-h-[560px] w-full border-0"
-            />
-          </div>
-
-          {/* If the iframe is blocked - strict privacy settings, an
-              extension, an old browser - the form is still reachable. */}
-          <p className="pf-mono mt-3 text-[10px] uppercase tracking-[0.1em]" style={{ color: INK_MUTED }}>
-            Form not loading?{" "}
-            <a
-              href={TYPEFORM_URL}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="underline underline-offset-2"
-              style={{ color: INK }}
-            >
-              Open it in a new tab →
-            </a>
-          </p>
-          <p className="pf-mono mt-2 text-[10px] uppercase tracking-[0.1em]" style={{ color: INK_MUTED }}>
-            We reply within 7 days · always · no boilerplate
-          </p>
         </Reveal>
       </div>
     </section>

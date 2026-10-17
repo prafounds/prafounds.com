@@ -48,7 +48,7 @@ export default function Thesis() {
           <Eyebrow index="01">The thesis</Eyebrow>
           <div className="mt-6 grid gap-6 md:grid-cols-[1.4fr_minmax(0,1fr)] md:items-end md:gap-12">
             <h2
-              className="pf-display font-semibold leading-[1.02] tracking-[-0.025em]"
+              className="pf-display font-medium leading-[1.06] tracking-[-0.012em]"
               style={{ fontSize: "clamp(34px, 4.6vw, 60px)", color: "var(--pf-text)" }}
             >
               Where we{" "}
@@ -101,7 +101,7 @@ export default function Thesis() {
                   </span>
                 </div>
                 <h3
-                  className="pf-display mt-6 text-[25px] font-semibold leading-[1.1] tracking-[-0.015em] transition-colors group-hover:text-[#f4f4f4]"
+                  className="pf-display mt-6 text-[25px] font-semibold leading-[1.1] tracking-[-0.008em] transition-colors group-hover:text-[#f4f4f4]"
                   style={{ color: "var(--pf-text)" }}
                 >
                   {p.name}

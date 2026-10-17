@@ -15,7 +15,7 @@ export default function Process() {
         <Reveal>
           <Eyebrow index="02">How we partner</Eyebrow>
           <h2
-            className="pf-display mt-6 max-w-2xl font-semibold leading-[1.02] tracking-[-0.025em]"
+            className="pf-display mt-6 max-w-2xl font-medium leading-[1.06] tracking-[-0.012em]"
             style={{ fontSize: "clamp(36px, 5vw, 64px)", color: "var(--pf-text)" }}
           >
             Quietly.{" "}
@@ -48,7 +48,7 @@ export default function Process() {
                 <span className="pf-mono text-[11px] tracking-[0.2em]" style={{ color: "var(--pf-acid)" }}>
                   {s.n}
                 </span>
-                <h3 className="pf-display mt-3 text-[21px] font-semibold leading-snug tracking-[-0.01em]" style={{ color: "var(--pf-text)" }}>
+                <h3 className="pf-display mt-3 text-[21px] font-semibold leading-snug tracking-[-0.005em]" style={{ color: "var(--pf-text)" }}>
                   {s.t}
                 </h3>
                 <p className="mt-3 text-[14px] leading-relaxed" style={{ color: "var(--pf-muted)" }}>

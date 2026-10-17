@@ -3,7 +3,6 @@ import Hero from "@/components/Hero";
 import Marquee from "@/components/Marquee";
 import Thesis from "@/components/Thesis";
 import Process from "@/components/Process";
-import Voices from "@/components/Voices";
 import Dispatches from "@/components/Dispatches";
 import Team from "@/components/Team";
 import Apply from "@/components/Apply";
@@ -20,7 +19,6 @@ export default function Home() {
         <Marquee />
         <Thesis />
         <Process />
-        <Voices />
         <Dispatches />
         <Team />
         <Apply />

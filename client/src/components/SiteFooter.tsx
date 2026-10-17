@@ -12,12 +12,14 @@ export default function SiteFooter() {
         <div className="grid gap-12 md:grid-cols-[1.6fr_repeat(2,1fr)]">
           <div>
             <div className="flex items-center">
+              {/* Name-only crop of the reverse wordmark — the stacked
+                  "VENTURES" sub-line is dropped here. */}
               <img
-                src="/logo-wordmark-reverse.png"
-                alt="PraFounds Ventures"
+                src="/logo-wordmark-reverse-nosub.png"
+                alt="PraFounds"
                 width={900}
-                height={268}
-                className="h-12 w-auto"
+                height={168}
+                className="h-[30px] w-auto"
               />
             </div>
             <p className="mt-4 max-w-xs text-[13px] leading-relaxed" style={{ color: "var(--pf-muted)" }}>
@@ -50,7 +52,7 @@ export default function SiteFooter() {
         <Reveal className="mt-16 select-none">
           <div
             aria-hidden="true"
-            className="pf-display pf-outline-text whitespace-nowrap text-center font-bold leading-[0.8] tracking-[-0.04em]"
+            className="pf-display pf-outline-text whitespace-nowrap text-center font-semibold leading-[0.86] tracking-[-0.02em]"
             style={{ fontSize: "clamp(64px, 13.5vw, 196px)" }}
           >
             PRAFOUNDS

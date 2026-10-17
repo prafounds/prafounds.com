@@ -11,7 +11,11 @@ const STATS = [
 
 function HeadlineLine({ children, delay }: { children: React.ReactNode; delay: number }) {
   return (
-    <span className="block overflow-hidden pb-[0.08em]">
+    // The reveal mask clips at the padding edge, so the padding is what
+    // keeps Fraunces' descenders (the y in "yes", the founders' comma) from
+    // being sliced off. The serif hangs far deeper than the grotesk this
+    // replaced, hence 0.16em rather than 0.08em.
+    <span className="block overflow-hidden pb-[0.16em]">
       <motion.span
         className="block"
         initial={{ y: "110%" }}
@@ -67,7 +71,7 @@ export default function Hero() {
 
         {/* headline */}
         <h1
-          className="pf-display mt-8 font-semibold leading-[0.96] tracking-[-0.03em]"
+          className="pf-display mt-8 font-medium leading-[0.94] tracking-[-0.018em]"
           style={{ fontSize: "clamp(52px, 9.2vw, 138px)", color: "var(--pf-text)" }}
         >
           <HeadlineLine delay={0.15}>
@@ -82,41 +86,17 @@ export default function Hero() {
           </HeadlineLine>
         </h1>
 
-        {/* sub + ctas */}
-        <div className="mt-10 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-          <motion.p
-            className="max-w-xl text-[17px] leading-relaxed sm:text-[19px]"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: EASE, delay: 0.55 }}
-            style={{ color: "var(--pf-muted)" }}
-          >
-            PraFounds backs pre-seed and seed teams building the developer tools,
-            infrastructure, and applied AI that the next decade will run on.
-          </motion.p>
-
-          <motion.div
-            className="flex flex-wrap gap-3"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: EASE, delay: 0.65 }}
-          >
-            <a
-              href="#apply"
-              className="pf-mono inline-flex items-center gap-2 rounded-sm px-6 py-3.5 text-[12.5px] font-medium uppercase tracking-[0.14em] transition-opacity hover:opacity-85"
-              style={{ background: "var(--pf-acid)", color: "var(--pf-ink)" }}
-            >
-              Send your deck <span aria-hidden="true">↗</span>
-            </a>
-            <a
-              href="#thesis"
-              className="pf-mono inline-flex items-center gap-2 rounded-sm border px-6 py-3.5 text-[12.5px] font-medium uppercase tracking-[0.14em] transition-colors hover:border-[#f4f4f4]"
-              style={{ borderColor: "var(--pf-line-2)", color: "var(--pf-text)" }}
-            >
-              Read the thesis
-            </a>
-          </motion.div>
-        </div>
+        {/* sub */}
+        <motion.p
+          className="mt-10 max-w-xl text-[17px] leading-relaxed sm:text-[19px]"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: EASE, delay: 0.55 }}
+          style={{ color: "var(--pf-muted)" }}
+        >
+          PraFounds backs pre-seed and seed teams building the developer tools,
+          infrastructure, and applied AI that the next decade will run on.
+        </motion.p>
       </div>
 
       {/* stat rail */}
