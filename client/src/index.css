@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -92,8 +92,14 @@
      scene survives at the edges without staining the text. */
   --pf-card:      rgba(16, 16, 16, 0.94);
 
-  --pf-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
-  --pf-serif:   'Instrument Serif', Georgia, ui-serif, serif;
+  /* Editorial serif masthead over a neutral sans body — the type pairing
+     established funds use. Display and accent are the *same* family: the
+     contrast inside a headline comes from roman vs. italic, not from two
+     competing typefaces. Fraunces is variable on opsz/wght/SOFT/WONK, so
+     large headings pick up true display cuts rather than a scaled-up
+     text face. */
+  --pf-display: 'Fraunces', Georgia, ui-serif, serif;
+  --pf-serif:   'Fraunces', Georgia, ui-serif, serif;
   --pf-sans:    'Inter', ui-sans-serif, system-ui, sans-serif;
   --pf-mono:    'JetBrains Mono', ui-monospace, monospace;
 }
@@ -117,7 +123,10 @@
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--pf-display);
-    @apply tracking-tight;
+    /* Serifs need far less negative tracking than the grotesk this
+       replaced — at -0.025em Fraunces' serifs start to collide. */
+    letter-spacing: -0.015em;
+    font-optical-sizing: auto;
   }
   code, pre {
     font-family: var(--pf-mono);
@@ -139,9 +148,17 @@
 }
 
 /* ── Font utilities ── */
-.pf-display { font-family: var(--pf-display); }
-.pf-serif   { font-family: var(--pf-serif); }
+.pf-display { font-family: var(--pf-display); font-optical-sizing: auto; }
+.pf-serif   { font-family: var(--pf-serif); font-optical-sizing: auto; }
 .pf-mono    { font-family: var(--pf-mono); }
+
+/* The accent word inside a headline is always an <em>. Now that it shares
+   the headline's family, lean on Fraunces' WONK axis so the italic reads
+   as a deliberate editorial cut (swashed g, curved leg) rather than a
+   slant of the same letterforms. */
+em.pf-serif {
+  font-variation-settings: 'SOFT' 24, 'WONK' 1;
+}
 
 /* ── Noise grain ── */
 .pf-noise {

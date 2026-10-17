@@ -5,6 +5,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import PageTransition from "@/components/PageTransition";
+import { ApplyDialogProvider } from "@/components/ApplyDialog";
 import Home from "@/pages/Home";
 import ThesisPage from "@/pages/ThesisPage";
 import ProcessPage from "@/pages/ProcessPage";
@@ -39,12 +40,16 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
-        {/* The WebGL background scene was removed. The page sits on the
-            flat --pf-bg instead; z-10 is kept so the existing stacking
-            inside pages is undisturbed. */}
-        <div className="relative z-10">
-          <Router />
-        </div>
+        {/* Above the router, so the application overlay survives a route
+            change and every page's "send a deck" reaches the same form. */}
+        <ApplyDialogProvider>
+          {/* The WebGL background scene was removed. The page sits on the
+              flat --pf-bg instead; z-10 is kept so the existing stacking
+              inside pages is undisturbed. */}
+          <div className="relative z-10">
+            <Router />
+          </div>
+        </ApplyDialogProvider>
       </TooltipProvider>
     </QueryClientProvider>
   );

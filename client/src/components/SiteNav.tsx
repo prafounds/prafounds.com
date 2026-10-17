@@ -2,6 +2,7 @@ import { AnimatePresence, motion, useScroll } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Menu, X } from "lucide-react";
+import { useApplyDialog } from "./ApplyDialog";
 
 const LINKS = [
   { href: "/thesis", label: "Thesis" },
@@ -14,6 +15,7 @@ export default function SiteNav() {
   const { scrollYProgress } = useScroll();
   const [location] = useLocation();
   const [open, setOpen] = useState(false);
+  const { openApply } = useApplyDialog();
 
   // Close on navigate — otherwise the panel stays over the page you just
   // asked for.
@@ -38,16 +40,17 @@ export default function SiteNav() {
       style={{ borderColor: "var(--pf-line)", background: "rgba(11, 11, 11, 0.62)" }}
     >
       <div className="mx-auto flex h-16 max-w-[1320px] items-center justify-between px-5 sm:px-10">
-        <Link href="/" className="flex items-center" aria-label="PraFounds Ventures — home">
-          {/* Stacked "Prafounds / VENTURES" wordmark. The reverse asset is a
-              white-inked alpha mask, so it sits on the dark chrome without a
-              plate. It already contains the company name — no text sibling. */}
+        <Link href="/" className="flex items-center" aria-label="PraFounds — home">
+          {/* Name-only crop of the reverse wordmark — the stacked "VENTURES"
+              sub-line is dropped. The reverse asset is a white-inked alpha
+              mask, so it sits on the dark chrome without a plate. It already
+              contains the company name — no text sibling. */}
           <img
-            src="/logo-wordmark-reverse.png"
-            alt="PraFounds Ventures"
+            src="/logo-wordmark-reverse-nosub.png"
+            alt="PraFounds"
             width={900}
-            height={268}
-            className="h-9 w-auto sm:h-10"
+            height={168}
+            className="h-[23px] w-auto sm:h-[25px]"
           />
         </Link>
 
@@ -83,14 +86,15 @@ export default function SiteNav() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Link
-            href="/#apply"
+          <button
+            type="button"
+            onClick={openApply}
             className="pf-mono inline-flex h-11 shrink-0 items-center gap-2 rounded-sm px-3.5 text-[11.5px] font-medium uppercase tracking-[0.14em] transition-opacity hover:opacity-85 sm:h-auto sm:px-4 sm:py-2"
             style={{ background: "var(--pf-acid)", color: "var(--pf-ink)" }}
           >
             Send a deck
             <span aria-hidden="true">↗</span>
-          </Link>
+          </button>
 
           {/* The primary links are hidden below md; without this the five
               section pages are unreachable on a phone. */}
@@ -129,7 +133,7 @@ export default function SiteNav() {
                     key={l.href}
                     href={l.href}
                     aria-current={active ? "page" : undefined}
-                    className="pf-display border-b py-4 text-[26px] font-semibold tracking-[-0.02em] last:border-b-0"
+                    className="pf-display border-b py-4 text-[26px] font-semibold tracking-[-0.01em] last:border-b-0"
                     style={{
                       borderColor: "var(--pf-line)",
                       color: active ? "var(--pf-acid)" : "var(--pf-text)",

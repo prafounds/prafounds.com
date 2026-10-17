@@ -25,10 +25,10 @@ export default function Team() {
     <section id="team" className="relative py-24 sm:py-32" style={{ background: "var(--pf-veil)" }}>
       <div className="mx-auto max-w-[1320px] px-5 sm:px-10">
         <Reveal>
-          <Eyebrow index="05">The team</Eyebrow>
+          <Eyebrow index="04">The team</Eyebrow>
           <div className="mt-6 grid gap-4 md:grid-cols-[1fr_minmax(0,1fr)] md:items-end md:gap-12">
             <h2
-              className="pf-display font-semibold leading-[1.02] tracking-[-0.025em]"
+              className="pf-display font-medium leading-[1.06] tracking-[-0.012em]"
               style={{ fontSize: "clamp(36px, 5vw, 64px)", color: "var(--pf-text)" }}
             >
               Not a firm.{" "}
@@ -67,7 +67,7 @@ export default function Team() {
                 </span>
               </div>
               <h3
-                className="pf-display mt-6 text-[22px] font-semibold leading-tight tracking-[-0.015em]"
+                className="pf-display mt-6 text-[22px] font-semibold leading-tight tracking-[-0.008em]"
                 style={{ color: "var(--pf-text)" }}
               >
                 {p.name}

@@ -13,10 +13,10 @@ export default function Dispatches() {
     <section id="dispatches" className="relative border-b py-24 sm:py-32" style={{ borderColor: "var(--pf-line)" }}>
       <div className="mx-auto max-w-[1320px] px-5 sm:px-10">
         <Reveal>
-          <Eyebrow index="04">Dispatches</Eyebrow>
+          <Eyebrow index="03">Dispatches</Eyebrow>
           <div className="mt-6 grid gap-4 md:grid-cols-[1fr_minmax(0,1fr)] md:items-end md:gap-12">
             <h2
-              className="pf-display font-semibold leading-[1.02] tracking-[-0.025em]"
+              className="pf-display font-medium leading-[1.06] tracking-[-0.012em]"
               style={{ fontSize: "clamp(36px, 5vw, 64px)", color: "var(--pf-text)" }}
             >
               Working{" "}
@@ -49,7 +49,7 @@ export default function Dispatches() {
                   {p.tag}
                 </span>
                 <div>
-                  <h3 className="pf-display text-[22px] font-semibold leading-snug tracking-[-0.01em] sm:text-[26px]" style={{ color: "var(--pf-text)" }}>
+                  <h3 className="pf-display text-[22px] font-semibold leading-snug tracking-[-0.005em] sm:text-[26px]" style={{ color: "var(--pf-text)" }}>
                     {p.title}
                   </h3>
                   <p className="mt-1.5 max-w-prose text-[14px] leading-relaxed" style={{ color: "var(--pf-muted)" }}>

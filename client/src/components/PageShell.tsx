@@ -43,7 +43,7 @@ export default function PageShell({
               <span style={{ color: "var(--pf-acid)" }}>{index}</span>
             </div>
             <h1
-              className="pf-display mt-5 font-semibold leading-[1.02] tracking-[-0.03em]"
+              className="pf-display mt-5 font-medium leading-[1.06] tracking-[-0.015em]"
               style={{ fontSize: "clamp(42px, 7vw, 92px)", color: "var(--pf-text)" }}
             >
               {title}
